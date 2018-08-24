@@ -327,6 +327,7 @@ class HostSerializerWithAdmins(serializers.ModelSerializer):
             'category',
             'events_hosting_in_future',
             'admins',
+            'admins_id',
             'description',
             'website',
             'image',

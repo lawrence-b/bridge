@@ -1,0 +1,58 @@
+Type is aaaa: <class 'core.models.UserCategory'>
+Type is aaaa: <class 'NoneType'>
+
+
+
+
+
+None
+University of Cambridge
+<class 'core.models.UserCategory'>     Public
+<class 'NoneType'>    None
+<class 'list'>    [<Host: Lawrence's New Society!>]
+<class 'list'>    [<Host: Lawrence's New Society!>]    <class 'core.models.Host'>
+<class 'core.models.Event'>    Lawrence's first event
+False
+True
+True
+{}
+{}
+{'email': 'test1@test.com'}
+{'email': 'test@test.com'}
+{'email': 'test@test.com'}
+{'email': 'hello@1.com'}
+{'email': 'hello@1.com'}
+{'email': 'test@test.com'}
+{'email': 'hello@w.com'}
+{'email': 'test1@test.com'}
+{'email': '1@1.com'}
+{}
+{}
+{}
+{}
+{}
+{}
+Context: {}
+Context: {}
+Context: {}
+Context: {}
+Context: {}
+Context: {}
+Context: {'request': <rest_framework.request.Request object at 0x104da5a58>, 'format': None, 'view': <core.views.EventViewSet object at 0x104d6d390>}
+Context: {'request': <rest_framework.request.Request object at 0x104da5a58>, 'format': None, 'view': <core.views.EventViewSet object at 0x104d6d390>}
+Context: {'request': <rest_framework.request.Request object at 0x104da5a58>, 'format': None, 'view': <core.views.EventViewSet object at 0x104d6d390>}
+Context: {'request': <rest_framework.request.Request object at 0x104da5a58>, 'format': None, 'view': <core.views.EventViewSet object at 0x104d6d390>}
+Context: {'request': <rest_framework.request.Request object at 0x104db51d0>, 'format': None, 'view': <core.views.EventViewSet object at 0x104dd1e48>}
+Context: {'request': <rest_framework.request.Request object at 0x10544b2b0>, 'format': None, 'view': <core.views.EventViewSet object at 0x104dd1e48>}
+Context: {'request': <rest_framework.request.Request object at 0x10544b320>, 'format': None, 'view': <core.views.EventViewSet object at 0x104dd1e48>}
+Context: {'request': <rest_framework.request.Request object at 0x105433940>, 'format': None, 'view': <core.views.EventViewSet object at 0x104dd1e48>}
+Context: {'request': <rest_framework.request.Request object at 0x10544b978>, 'format': None, 'view': <core.views.EventViewSet object at 0x1054474e0>}
+Context: {'request': <rest_framework.request.Request object at 0x105437630>, 'format': None, 'view': <core.views.EventViewSet object at 0x1054474e0>}
+Context: {'request': <rest_framework.request.Request object at 0x105437470>, 'format': None, 'view': <core.views.EventViewSet object at 0x1054474e0>}
+Context: {'request': <rest_framework.request.Request object at 0x1054c4c50>, 'format': None, 'view': <core.views.EventViewSet object at 0x1054474e0>}
+Context: {'request': <rest_framework.request.Request object at 0x10e164240>}
+Context: {'request': <rest_framework.request.Request object at 0x10e164240>}
+Context: {'request': <rest_framework.request.Request object at 0x10e164240>}
+Context: {'request': <rest_framework.request.Request object at 0x10e52e550>}
+Context: {'request': <rest_framework.request.Request object at 0x10e52e550>}
+Context: {'request': <rest_framework.request.Request object at 0x10e52e550>}

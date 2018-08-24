@@ -22,7 +22,7 @@ SECRET_KEY = 'a=m-m0d7j6s(jckxg(hc^fc3e3(sh&gffxni*wfz)+t(^bz3k4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['bridge-backend-dev.eu-west-2.elasticbeanstalk.com', '127.0.0.1', 'localhost:8000',]
+ALLOWED_HOSTS = ['bridge-backend-dev.eu-west-2.elasticbeanstalk.com', '127.0.0.1', 'localhost',]
 
 
 # Application definition

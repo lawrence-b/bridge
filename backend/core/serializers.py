@@ -309,7 +309,8 @@ class HostSerializerWithAdmins(serializers.ModelSerializer):
             ('thumbnail', 'thumbnail__100x100'),
             ('medium_square_crop', 'crop__400x400'),
             ('small_square_crop', 'crop__50x50')
-        ]
+        ],
+        required=False,
     )
 
     subscribed_to_check = serializers.SerializerMethodField()
@@ -371,7 +372,8 @@ class HostSerializer(serializers.ModelSerializer):
             ('thumbnail', 'thumbnail__100x100'),
             ('medium_square_crop', 'crop__400x400'),
             ('small_square_crop', 'crop__50x50')
-        ]
+        ],
+        required=False,
     )
 
     subscribed_to_check = serializers.SerializerMethodField()

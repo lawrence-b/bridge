@@ -86,6 +86,20 @@ class UserCategory(MPTTModel):
         """Defines the informal string representation of the object. i.e. the result of str(object)."""
         return self.name
 
+class Subject(models.Model):
+    """A simple model defining an undergraduate subject. Used to maintain a list of available subjects that a user can
+    select during sign up."""
+
+    name = models.CharField(max_length=255)
+
+    class Meta:
+        """Meta information defining the verbose naming of the model."""
+        verbose_name = 'Subject'
+        verbose_name_plural = 'Subjects'
+
+    def __str__(self):
+        """Defines the informal string representation of the object. i.e. the result of str(object)."""
+        return self.name
 
 class User(AbstractUser):
     """User model. Stores an email address, password (inherited from AbstractUser), and profile data."""
@@ -104,6 +118,20 @@ class User(AbstractUser):
     interested_in = models.ManyToManyField('Event', related_name='users_interested', blank=True)
 
     subscribed_to = models.ManyToManyField('Host', related_name='users_subscribed', blank=True)
+
+    # If you select university level, you get an age category dropdown menu
+
+    # Age category - if university category level, open box to add age category
+    # Undergraduate
+    # Postgraduate
+    # Faculty and staff
+
+    # If you select the undergrad options, you get to select matriculation year and subject
+
+    matriculation_year = models.IntegerField(blank=True, null=True)
+
+    subject = models.ForeignKey('Subject', related_name='undergraduates_studying', null=True, blank=True,
+                                on_delete=models.SET_NULL)
 
     def currently_interested_in(self):
         "Returns future events the user is interested in."

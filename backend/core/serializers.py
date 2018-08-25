@@ -203,6 +203,17 @@ class EventBasicInfoSerializer(serializers.ModelSerializer):
     duration = serializers.DurationField(read_only=True)
 
     open_to = UserCategoryChildrenSerializer(read_only=True)
+
+    image = VersatileImageFieldSerializer(
+        sizes=[
+            ('full_size', 'url'),
+            ('thumbnail', 'thumbnail__100x100'),
+            ('medium_square_crop', 'crop__400x400'),
+            ('small_square_crop', 'crop__50x50')
+        ],
+        required=False, read_only=True,
+    )
+
     class Meta:
         """Defines the source model and the fields to be serialized. May additionally specify whether any fields are
         read or write only."""
@@ -216,6 +227,7 @@ class EventBasicInfoSerializer(serializers.ModelSerializer):
             'duration',
             'location',
             'open_to',
+            'image',
         )
 
 

@@ -33,13 +33,15 @@ class AccountPane extends Component {
         </div>
 
         <div className="AccountPane-main">
-          <div className="AccountPane-panel">
+          <div className="AccountPane-panel" style={{alignSelf: 'flex-start', maxWidth: '35%'}}>
             <label className="AccountPane-panel-title">Details</label>
 
             <div className="AccountPane-row" style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
               <label className="AccountPane-label">Email: </label>
               <label className="AccountPane-text-field" style={{border: 'none'}}>{this.state.user.email}</label>
             </div>
+
+            <p>You can change your password on the right-hand side. To manage your host, click the "Manage" link on the left menu bar.</p>
           </div>
 
           <div className="AccountPane-panel">

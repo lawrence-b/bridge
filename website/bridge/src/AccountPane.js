@@ -62,6 +62,13 @@ class AccountPane extends Component {
               <input type="text" onChange={(e) => {this.state.newPassword2 = e.target.value; this.setState(this.state);}} className="AccountPane-text-field" value={this.state.newPassword2} />
             </div>
 
+            <label style={{color: '#d55', marginBottom: 12, fontSize: 14}}>
+              {this.state.warningMessage}
+            </label>
+            <label style={{color: '#5d5', marginBottom: 12, fontSize: 14}}>
+              {this.state.successMessage}
+            </label>
+
             <div className="AccountPane-buttons">
               <Button positive={true} text="Submit" onClick={() => this.changePassword()} style={bonusButtonStyle} />
             </div>
@@ -72,25 +79,37 @@ class AccountPane extends Component {
   }
 
   changePassword() {
-    if (this.state.newPassword1.length <= 0 ||  this.state.newPassword1 !== this.state.newPassword2) {
-      console.log("Must enter new password");
-      console.log(this.state);
+    if (this.state.oldPassword.length <= 0) {
+      this.setState({...this.state, warningMessage: "Must enter your old password", successMessage: null});
       return;
     }
-
-    console.log(this.state);
-
-    // TODO: present appropriate response to user
+    else if (this.state.newPassword1.length <= 0 || this.state.newPassword2.length <= 0) {
+      this.setState({...this.state, warningMessage: "Must enter a new password", successMessage: null});
+      return;
+    }
+    else if (this.state.newPassword1 !== this.state.newPassword2) {
+      this.setState({...this.state, warningMessage: 'The "new" and "confirm" password fields must match', successMessage: null});
+      return;
+    }
 
     sendRequest({
       address: "password/",
       method: "POST",
       authorizationToken: this.props.user.token,
       body: {current_password: this.state.oldPassword, new_password: this.state.newPassword1},
-      failureHandler: () => console.log("Incorrect old password"),
-      responseHandlerNoJson: () => console.log("Password changed"),
-      successHandler: () => console.log("Success"),
-      errorHandler: (error) => {console.log("There was an error..."); console.log(error);}
+      responseHandlerNoJson: (response) => {
+        if (response.status < 400) {
+          this.setState({...this.state, warningMessage: null, successMessage: "Password changed successfully"});
+        }
+        else {
+          this.setState({...this.state, warningMessage: "Incorrect old password, or new password too weak", successMessage: null});
+        }
+      },
+      errorHandler: (error) => {
+        this.setState({...this.state, warningMessage: "There was an error processing your request", successMessage: null});
+        console.log("There was an error...");
+        console.log(error);
+      }
     });
   }
 

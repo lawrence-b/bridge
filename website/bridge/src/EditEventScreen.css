@@ -21,7 +21,8 @@
 }
 
 .EditEventScreen-main {
-
+  display: flex;
+  flex-direction: column;
 }
 
 .EditEventScreen-row {

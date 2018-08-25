@@ -83,6 +83,8 @@ class EditEventScreen extends Component {
             <textarea placeholder="Description" onChange={(e) => {this.state.event.description = e.target.value; this.setState(this.state);}} className="EditEventScreen-text-field" value={this.state.event.description} />
           </div>
 
+          <label style={{alignSelf: 'center', alignText: 'center', color: '#d55'}}>{this.state.warningMessage}</label>
+
           <div className="EditEventScreen-buttons">
             <Button positive={false} text="Cancel" onClick={() => this.props.onExit()} style={bonusButtonStyle} />
 
@@ -96,7 +98,6 @@ class EditEventScreen extends Component {
   onEventCategoryChanged(category) {
     if (this.props.creating) {
       this.state.event.category_id = category.id;
-      console.log(this.state.event.category_id);
     }
     else {
       this.state.event.category = category;
@@ -112,9 +113,33 @@ class EditEventScreen extends Component {
     }
   }
 
-  newEvent() {
+  checkIfEventValid() {
     if (this.state.event.title.length <= 0) {
-      console.log("Need a title");
+      this.setState({...this.state, warningMessage: "Event needs a title"});
+      return false;
+    }
+    else if (this.state.event.start_time === null) {
+      this.setState({...this.state, warningMessage: "Event needs a start time"});
+      return false;
+    }
+    else if (this.state.event.end_time === null) {
+      this.setState({...this.state, warningMessage: "Event needs an end time"});
+      return false;
+    }
+    else if (this.state.event.start_time >= this.state.event.end_time) {
+      this.setState({...this.state, warningMessage: "End time must be after start time"});
+      return false;
+    }
+    else if (this.state.event.end_time <= (new Date())) {
+      this.setState({...this.state, warningMessage: "End time must be in the future"});
+      return false;
+    }
+
+    return true;
+  }
+
+  newEvent() {
+    if (!this.checkIfEventValid()) {
       return;
     }
 
@@ -130,8 +155,7 @@ class EditEventScreen extends Component {
   }
 
   updateEvent() {
-    if (this.state.event.title.length <= 0) {
-      console.log("Need a title");
+    if (!this.checkIfEventValid()) {
       return;
     }
 

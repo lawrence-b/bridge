@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, TextInput, KeyboardAvoidingView, AsyncStorage } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 
+import sendRequest from '../sendRequest'
 
 class LoginScreen extends Component {
 
@@ -54,40 +55,12 @@ class LoginScreen extends Component {
   }
 
   done() {
-    console.log("Username: " + this.username);
-    console.log("Password: " + this.password);
-
-    fetch("http://localhost:8000/auth/token/login/", {
-        method: "POST", // *GET, POST, PUT, DELETE, etc.
-        mode: "cors", // no-cors, cors, *same-origin
-        headers: {
-            "Content-Type": "application/json; charset=utf-8",
-        },
-        body: JSON.stringify({email: this.username, password: this.password})
-    }).then(res => res.status === 400 ? null : res.json())
-      .then(
-        (result) => {
-          console.log("Got result:");
-          console.log(result);
-
-          if (result === null || result === undefined) {
-            // TODO: Tell user incorrect username/password
-            console.log("Access denied");
-            return;
-          }
-
-          this.enterApp({email: "mpozzi@hotmail.co.uk", token: result.auth_token});
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
-          console.log("Got error:");
-          console.log(error);
-
-          // TODO: Handle error
-        }
-    )
+    sendRequest({
+      address: "auth/token/login/",
+      method: "POST",
+      body: {email: this.username, password: this.password},
+      successHandler: (result) => this.enterApp({email: this.username, token: result.auth_token})
+    });
   }
 
   enterApp(user) {

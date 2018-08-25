@@ -195,6 +195,7 @@ class Host(models.Model):
     )
 
     logo_ppoi = PPOIField(blank=True)
+
     def events_hosting_in_future(self):
         """"Returns all future events that the host is hosting."""
         return self.events_hosting.filter(end_time__gte=datetime.now())

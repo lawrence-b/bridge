@@ -38,11 +38,7 @@ class EventDetailsScreen extends Component {
       <View style={{ flex: 1, backgroundColor: '#F18B35' }}>
         <ScrollView>
           <EventInfo
-            title={this.state.event.title}
-            host={this.state.event.hosts[0]}
-            start_time={this.state.event.start_time}
-            location={this.state.event.location}
-            description={this.state.event.description} />
+            event={this.state.event} />
         </ScrollView>
         <EventInterestedBar onPress={this.buttonPressed} isInterested={true} />
       </View>

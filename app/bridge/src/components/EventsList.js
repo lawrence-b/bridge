@@ -8,9 +8,9 @@ class EventsList extends Component {
   renderTiles() {
     var { size, margin } = getTileDims(Dimensions.get('window').width, 2);
 
-    return this.props.events.map(event =>
+    return this.props.events.map((event, index) =>
       <EventTile
-        key={event.id}
+        key={index}
         event={event}
         size={size}
         margin={margin}

@@ -232,7 +232,7 @@ class EventSerializer(serializers.ModelSerializer):
 
     open_to = UserCategoryChildrenSerializer(read_only=True)
     open_to_id = serializers.PrimaryKeyRelatedField(queryset=UserCategory.objects.all(), source='open_to',
-                                                    write_only=True, required=False)
+                                                    write_only=True)
 
     duration = serializers.DurationField(read_only=True)
 
@@ -313,6 +313,16 @@ class HostSerializerWithAdmins(serializers.ModelSerializer):
         required=False,
     )
 
+    logo = VersatileImageFieldSerializer(
+        sizes=[
+            ('full_size', 'url'),
+            ('thumbnail', 'thumbnail__100x100'),
+            ('medium_square_crop', 'crop__400x400'),
+            ('small_square_crop', 'crop__50x50')
+        ],
+        required=False,
+    )
+
     subscribed_to_check = serializers.SerializerMethodField()
 
     class Meta:
@@ -332,6 +342,8 @@ class HostSerializerWithAdmins(serializers.ModelSerializer):
             'website',
             'image',
             'image_ppoi',
+            'logo',
+            'logo_ppoi',
             'open_to',
             'open_to_id',
             'subscribed_to_check',
@@ -339,6 +351,7 @@ class HostSerializerWithAdmins(serializers.ModelSerializer):
         extra_kwargs = {
             'id': {'read_only': True},
             'image_ppoi': {'read_only': False},
+            'logo_ppoi': {'read_only': False},
         }
 
     def get_subscribed_to_check(self, obj):
@@ -377,6 +390,16 @@ class HostSerializer(serializers.ModelSerializer):
         required=False,
     )
 
+    logo = VersatileImageFieldSerializer(
+        sizes=[
+            ('full_size', 'url'),
+            ('thumbnail', 'thumbnail__100x100'),
+            ('medium_square_crop', 'crop__400x400'),
+            ('small_square_crop', 'crop__50x50')
+        ],
+        required=False,
+    )
+
     subscribed_to_check = serializers.SerializerMethodField()
 
     class Meta:
@@ -395,12 +418,16 @@ class HostSerializer(serializers.ModelSerializer):
             'website',
             'image',
             'image_ppoi',
+            'logo',
+            'logo_ppoi',
             'open_to',
             'open_to_id',
             'subscribed_to_check',
         )
         extra_kwargs = {
             'id': {'read_only': True},
+            'image_ppoi': {'read_only': False},
+            'logo_ppoi': {'read_only': False},
         }
 
     def get_subscribed_to_check(self, obj):

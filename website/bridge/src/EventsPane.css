@@ -1,0 +1,34 @@
+.EventsPane {
+  background-color: #fff;
+  padding-left:   23px;
+  padding-right:  23px;
+  padding-top:    18px;
+  padding-bottom: 18px;
+  border-radius: 6px;
+
+  align-self: stretch;
+}
+
+.EventsPane-top-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 30px;
+}
+
+.EventsPane-header {
+  color: #333;
+  font-size: 24px;
+}
+
+.EventsPane-events-number {
+  color: #888;
+  font-size: 14px;
+  margin-left: 20px;
+}
+
+.EventsPane-events-list {
+
+}

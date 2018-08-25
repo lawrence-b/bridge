@@ -1,0 +1,120 @@
+.LoginOrSignUpScreen {
+  background-color: #ccc;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  height: 100vh;
+
+  //background-image: url('./images/login_background.png');
+}
+
+.LoginOrSignUpScreen-title-and-subtitle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.LoginOrSignUpScreen-title {
+  font-size: 2em;
+  font-weight: lighter;
+  color: #fff;
+
+  margin-bottom: 20px;
+}
+
+.LoginOrSignUpScreen-subtitle {
+  font-size: 1.2em;
+  font-weight: lighter;
+  color: #fff;
+}
+
+.LoginOrSignUpScreen-buttons {
+  margin-top: 30vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.LoginOrSignUpScreen-button {
+  margin      : 0;
+  padding     : 0;
+  border      : 0;
+  background  : transparent;
+  font-family : inherit;
+  font-size   : 1em;
+  cursor      : pointer;
+}
+
+.LoginOrSignUpScreen-button-span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 16px;
+  font-weight: 300;
+  color: #fff;
+
+  width: 270px;
+
+  border-radius: 30px;
+
+  padding: 6px;
+
+  margin: 10px;
+
+  line-height : 24px;
+}
+
+.LoginOrSignUpScreen-terms-text {
+  color: #fff;
+  font-weight: 300;
+
+  font-size: 14px;
+
+  margin-top: 17px;
+
+  cursor: pointer;
+}
+
+.LoginOrSignUpScreen-input-pane {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  background-color: #fff;
+
+  padding: 30px 70px;
+
+  border-radius: 8px;
+}
+
+.LoginOrSignUpScreen-input-pane-title {
+  font-size: 25px;
+  font-weight: 500;
+  font-family: 'avenir';
+
+  margin-bottom: 28px;
+}
+
+.LoginOrSignUpScreen-input-pane-text-field {
+  font-size: 12px;
+
+  border-radius: 30px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  padding: 7px 12px;
+
+  width: 230px;
+
+  margin-bottom: 10px;
+}
+
+.LoginOrSignUpScreen-input-pane-label {
+  font-size: 13px;
+  margin-top: 12px;
+}

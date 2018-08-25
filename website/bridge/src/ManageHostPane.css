@@ -1,0 +1,99 @@
+.ManageHostPane {
+  background-color: #fff;
+  padding-left:   23px;
+  padding-right:  23px;
+  padding-top:    18px;
+  padding-bottom: 18px;
+  border-radius: 6px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+}
+
+.ManageHostPane-top-bar {
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: flex-start;
+  align-self: stretch;
+
+  padding-bottom: 5px;
+
+  border-bottom: 1px solid #ccc;
+}
+
+.ManageHostPane-header {
+  color: #333;
+  font-size: 24px;
+}
+
+.ManageHostPane-main {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-between;
+  align-self: stretch;
+}
+
+.ManageHostPane-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  margin-right: 50px;
+}
+
+.ManageHostPane-panel-title {
+  color: #333;
+  font-size: 20px;
+
+  padding-bottom: 5px;
+  margin-bottom: 35px;
+
+  border-bottom: 1px solid #3cab4b;
+}
+
+.ManageHostPane-row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  margin-bottom: 16px;
+}
+
+.ManageHostPane-label {
+  color: #333;
+  font-size: 18px;
+  margin-right: 20px;
+  margin-bottom: 4px;
+}
+
+.ManageHostPane-text-field {
+  color: #333;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  padding: 8px;
+  font-size: 16px;
+
+  width: 330px;
+}
+
+.ManageHostPane-buttons {
+  display: flex;
+  justify-content: center;
+  align-self: flex-start;
+}
+
+.ManageHostPane-admin-row {
+  width: 380px;
+
+  border-bottom: 1px solid #ccc;
+  padding: 8px;
+  padding-left: 0px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}

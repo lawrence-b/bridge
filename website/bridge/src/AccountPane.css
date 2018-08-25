@@ -1,0 +1,105 @@
+.AccountPane {
+  background-color: #fff;
+  padding-left:   23px;
+  padding-right:  23px;
+  padding-top:    18px;
+  padding-bottom: 18px;
+  border-radius: 6px;
+
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+}
+
+.AccountPane-top-bar {
+  margin-bottom: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-self: stretch;
+  align-items: center;
+
+  padding-bottom: 5px;
+
+  border-bottom: 1px solid #ccc;
+}
+
+.AccountPane-header {
+  color: #333;
+  font-size: 24px;
+}
+
+.AccountPane-main {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  align-self: stretch;
+}
+
+.AccountPane-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  align-self: stretch;
+
+  margin-right: 50px;
+}
+
+.AccountPane-panel-title {
+  color: #333;
+  font-size: 20px;
+
+  padding-bottom: 5px;
+  margin-bottom: 35px;
+
+  border-bottom: 1px solid #3cab4b;
+}
+
+.AccountPane-row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  flex: 1;
+
+  margin-bottom: 40px;
+}
+
+.AccountPane-label {
+  color: #333;
+  font-size: 18px;
+  margin-right: 20px;
+  margin-bottom: 4px;
+}
+
+.AccountPane-text-field {
+  color: #333;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  padding: 8px;
+  font-size: 16px;
+
+  width: 330px;
+}
+
+.AccountPane-text-field-old {
+  color: #333;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 1px solid #ccc;
+  padding: 8px;
+  padding-left: 0px;
+  font-size: 16px;
+
+  width: 330px;
+}
+
+.AccountPane-buttons {
+  display: flex;
+  justify-content: center;
+  align-self: flex-start;
+}

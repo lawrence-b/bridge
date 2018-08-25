@@ -1,0 +1,53 @@
+.HomePane {
+  background-color: #fff;
+  padding-left:   23px;
+  padding-right:  23px;
+  padding-top:    18px;
+  padding-bottom: 18px;
+  border-radius: 6px;
+
+  align-self: stretch;
+}
+
+.HomePane-top-bar {
+  margin-bottom: 56px;
+  display: flex;
+  justify-content: flex-start;
+  align-self: stretch;
+
+  padding-bottom: 5px;
+
+  border-bottom: 1px solid #ccc;
+}
+
+.HomePane-header {
+  color: #333;
+  font-size: 24px;
+}
+
+.HomePane-welcome-panel {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.HomePane-sub-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.HomePane-welcome-text {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 40px;
+}
+
+.HomePane-body-text {
+  font-size: 16px;
+}
+
+.HomePane-host-row {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+}

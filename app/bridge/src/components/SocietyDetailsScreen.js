@@ -17,56 +17,6 @@ class SocietyDetailsScreen extends Component {
     headerTintColor: '#fff'
   };
 
-  componentWillMount() {
-    /*
-    if (this.props.navigation.getParam('society', {}).name === "Emmanuel College Association Football Club") {
-      this.setState({ events: [
-        {
-          descriptionBrief: {
-            title: "Annual AGM",
-            time: "17 Jun, 21:00"
-          },
-          descriptionExtended: {
-            title: 'Emmanuel College June Event',
-            host: 'Emmanuel College',
-            time: 'Sun 17th Jun, 21:00-03:00',
-            location: 'Emmanuel College',
-            description: 'Emma June Event presents "Twist and Shout!"'
-          },
-          interested: true
-        },
-        {
-          descriptionBrief: {
-            title: "Emma Is vs Queen's Is",
-            time: "18 Jun, 14:00"
-          },
-          descriptionExtended: {
-            title: 'Emmanuel College June Event',
-            host: 'Emmanuel College',
-            time: 'Sun 17th Jun, 21:00-03:00',
-            location: 'Emmanuel College',
-            description: 'Emma June Event presents "Twist and Shout!"'
-          },
-          interested: true
-        },
-        {
-          descriptionBrief: {
-            title: "Emma IIIs vs Clare IIs",
-            time: "18 Jun, 15:00"
-          },
-          descriptionExtended: {
-            title: 'Emmanuel College June Event',
-            host: 'Emmanuel College',
-            time: 'Sun 17th Jun, 21:00-03:00',
-            location: 'Emmanuel College',
-            description: 'Emma June Event presents "Twist and Shout!"'
-          },
-          interested: true
-        }
-      ]});
-    }*/
-  }
-
   renderTiles() {
     var society = this.props.navigation.getParam('society', {});
     if (society === null) return;
@@ -89,9 +39,7 @@ class SocietyDetailsScreen extends Component {
       <View style={{ flex: 1, backgroundColor: '#F18B35' }}>
         <ScrollView>
           <SocietyInfo
-            name={society.name}
-            category={society.category}
-            description={society.description} />
+            host={society} />
 
           <View style={styles.textViewStyle}>
             <Text style={styles.textStyle}>Upcoming events: </Text>

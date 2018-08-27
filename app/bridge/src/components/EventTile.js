@@ -1,17 +1,25 @@
 import React from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/EvilIcons';
 
 const EventTile = (props) => {
+  console.log(props.event.image);
 
   return (
     <TouchableOpacity style={[styles.viewStyle, {width: props.size, height: props.size, marginHorizontal: props.margin}]}
           onPress={props.onPress} >
-      <Text style={styles.titleTextStyle}>{props.event.title}</Text>
+      {props.event.image === undefined
+      ? null
+      : <Image
+          style={{flex: 1, width: props.size-20, borderRadius: 6}}
+          source={{uri: props.event.image.medium_square_crop}}
+        />}
 
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
+      <Text style={styles.titleTextStyle} numberOfLines={1}>{props.event.title}</Text>
+
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 6 }}>
         <Icon name='clock' size={22} color='#000' style={{ marginLeft: -3, marginRight: 5, marginTop: 2 }} />
-        <Text style={styles.timeTextStyle}>{formatTime(props.event.start_time)}</Text>
+        <Text style={styles.timeTextStyle} numberOfLines={1}>{formatTime(props.event.start_time)}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -48,7 +56,7 @@ const styles = {
     shadowRadius: 2,
   },
   titleTextStyle: {
-    marginTop: 20,
+    marginTop: 10,
     fontSize: 14,
     fontWeight: 'bold',
     color: '#000000'

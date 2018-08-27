@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'djoser',
     'rest_framework_tracking',
     'corsheaders',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -54,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -132,6 +134,39 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root')
 MEDIA_URL = '/media/'
 
 AUTH_USER_MODEL = 'core.User' # Tells Django to use our custom User model
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'djoser.social.backends.facebook.FacebookOAuth2Override',
+    #'social_core.backends.facebook.FacebookOAuth2',
+]
+
+# Social authentication settings
+SOCIAL_AUTH_USER_MODEL = 'core.User'
+SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
+
+SOCIAL_AUTH_FACEBOOK_KEY = '944457685762311'  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = 'd3e5db0e149e69a24f603fd09792f1be'  # App Secret
+
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+    'fields': 'id, name, email'
+}
+
+USER_FIELDS = ['email',]
+SOCIAL_AUTH_FACEBOOK_API_VERSION = '3.1'
+
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    'social_core.pipeline.user.create_user',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+    'social_core.pipeline.social_auth.associate_by_email',
+)
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -259,7 +294,10 @@ DJOSER = {
         'confirmation': 'djoser.email.ConfirmationEmail',
         'password_reset': 'djoser.email.PasswordResetEmail',
         'admin_confirmation': 'core.email.AdminConfirmationEmail',
-    }
+    },
+    'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS': ['https://localhost:8000/','http://localhost:8000/',],
+    'SOCIAL_AUTH_TOKEN_STRATEGY': 'core.token.SocialTokenStrategy'
+
 }
 
 CORS_ORIGIN_ALLOW_ALL = True

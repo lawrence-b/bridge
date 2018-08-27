@@ -15,9 +15,10 @@
         <entry file="file://$PROJECT_DIR$/backend/settings.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="652">
-              <caret line="262" column="1" lean-forward="false" selection-start-line="262" selection-start-column="1" selection-end-line="262" selection-end-column="1" />
+              <caret line="300" column="1" lean-forward="false" selection-start-line="300" selection-start-column="1" selection-end-line="300" selection-end-column="1" />
               <folding>
-                <marker date="1535384913601" expanded="true" signature="9014:9015" ph="..." />
+                <marker date="1535381952825" expanded="true" signature="894:1272" ph="..." />
+                <marker date="1535381952825" expanded="true" signature="10385:10386" ph="..." />
               </folding>
             </state>
           </provider>
@@ -26,8 +27,8 @@
       <file leaf-file-name="urls.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/core/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="555">
-              <caret line="47" column="6" lean-forward="true" selection-start-line="47" selection-start-column="6" selection-end-line="47" selection-end-column="6" />
+            <state relative-caret-position="390">
+              <caret line="36" column="25" lean-forward="false" selection-start-line="36" selection-start-column="25" selection-end-line="36" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -185,7 +186,6 @@
         <option value="$PROJECT_DIR$/core/auth_urls.py" />
         <option value="$PROJECT_DIR$/core/templates/email/add_admin.html" />
         <option value="$PROJECT_DIR$/core/tokens.py" />
-        <option value="$PROJECT_DIR$/core/urls.py" />
         <option value="$PROJECT_DIR$/core/permissions.py" />
         <option value="$PROJECT_DIR$/core/email.py" />
         <option value="$PROJECT_DIR$/core/admin.py" />
@@ -200,6 +200,7 @@
         <option value="$PROJECT_DIR$/core/templates/email/password_reset.html" />
         <option value="$PROJECT_DIR$/core/models.py" />
         <option value="$PROJECT_DIR$/core/serializers.py" />
+        <option value="$PROJECT_DIR$/core/urls.py" />
       </list>
     </option>
   </component>
@@ -421,7 +422,8 @@
         <state relative-caret-position="630">
           <caret line="42" column="9" lean-forward="false" selection-start-line="42" selection-start-column="9" selection-end-line="42" selection-end-column="9" />
           <folding>
-            <marker date="1535384913601" expanded="true" signature="9014:9015" ph="..." />
+            <marker date="1535381952825" expanded="true" signature="894:1272" ph="..." />
+            <marker date="1535381952825" expanded="true" signature="10385:10386" ph="..." />
           </folding>
         </state>
       </provider>
@@ -473,7 +475,8 @@
         <state relative-caret-position="510">
           <caret line="34" column="26" lean-forward="true" selection-start-line="34" selection-start-column="26" selection-end-line="34" selection-end-column="26" />
           <folding>
-            <marker date="1535384913601" expanded="true" signature="9014:9015" ph="..." />
+            <marker date="1535381952825" expanded="true" signature="894:1272" ph="..." />
+            <marker date="1535381952825" expanded="true" signature="10385:10386" ph="..." />
           </folding>
         </state>
       </provider>
@@ -562,8 +565,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/core/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="555">
-          <caret line="47" column="6" lean-forward="true" selection-start-line="47" selection-start-column="6" selection-end-line="47" selection-end-column="6" />
+        <state relative-caret-position="390">
+          <caret line="36" column="25" lean-forward="false" selection-start-line="36" selection-start-column="25" selection-end-line="36" selection-end-column="25" />
           <folding />
         </state>
       </provider>
@@ -696,9 +699,10 @@
     <entry file="file://$PROJECT_DIR$/backend/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="652">
-          <caret line="262" column="1" lean-forward="false" selection-start-line="262" selection-start-column="1" selection-end-line="262" selection-end-column="1" />
+          <caret line="300" column="1" lean-forward="false" selection-start-line="300" selection-start-column="1" selection-end-line="300" selection-end-column="1" />
           <folding>
-            <marker date="1535384913601" expanded="true" signature="9014:9015" ph="..." />
+            <marker date="1535381952825" expanded="true" signature="894:1272" ph="..." />
+            <marker date="1535381952825" expanded="true" signature="10385:10386" ph="..." />
           </folding>
         </state>
       </provider>

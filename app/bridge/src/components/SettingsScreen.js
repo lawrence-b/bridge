@@ -6,6 +6,8 @@ import Icon from 'react-native-vector-icons/EvilIcons';
 import HeaderWrapper from './HeaderWrapper'
 import HeaderStyles from './HeaderWrapper'
 
+import sendRequest from '../sendRequest'
+
 class SettingsScreen extends React.Component {
   static navigationOptions = {
     headerTitle: 'Settings',
@@ -14,11 +16,20 @@ class SettingsScreen extends React.Component {
   }
 
   componentWillMount() {
-    var userData = this.props.screenProps.userData;
-
     this.setState({
       user: this.props.screenProps.userData,
-      password: {oldPassword: "", newPassword: "", confirmPassword: ""}
+      password: {oldPassword: "", newPassword: "", confirmPassword: ""},
+      warningMessage: "Tap Submit to confirm",
+      isWarning: false
+    });
+
+    this.props.navigation.addListener('willFocus', (playload) => {
+      this.setState({
+        user: this.props.screenProps.userData,
+        password: {oldPassword: "", newPassword: "", confirmPassword: ""},
+        warningMessage: "Tap Submit to confirm",
+        isWarning: false
+      });
     });
   }
 
@@ -44,7 +55,10 @@ class SettingsScreen extends React.Component {
             <View style={styles.textViewStyle}>
               <TextInput
                 style={{flex: 1}}
-                onChangeText={(text) => this.setState({text})}
+                onChangeText={(text) => this.setState({
+                  user: this.state.user,
+                  password: {...this.state.password, oldPassword: text}
+                })}
                 value={this.state.password.oldPassword}
                 placeholder="Old password"
                 secureTextEntry={true}
@@ -54,7 +68,10 @@ class SettingsScreen extends React.Component {
             <View style={styles.textViewStyle}>
               <TextInput
                 style={{flex: 1}}
-                onChangeText={(text) => this.setState({text})}
+                onChangeText={(text) => this.setState({
+                  user: this.state.user,
+                  password: {...this.state.password, newPassword: text}
+                })}
                 value={this.state.password.newPassword}
                 placeholder="New password"
                 secureTextEntry={true}
@@ -64,7 +81,10 @@ class SettingsScreen extends React.Component {
             <View style={styles.textViewStyle}>
               <TextInput
                 style={{flex: 1}}
-                onChangeText={(text) => this.setState({text})}
+                onChangeText={(text) => this.setState({
+                  user: this.state.user,
+                  password: {...this.state.password, confirmPassword: text}
+                })}
                 value={this.state.password.confirmPassword}
                 placeholder="Confirm password"
                 secureTextEntry={true}
@@ -72,7 +92,8 @@ class SettingsScreen extends React.Component {
             </View>
 
             <View style={styles.infoTextViewStyle}>
-              <Text style={{fontSize: 12, fontWeight: 'bold', color: '#888'}}>Tap Submit to confirm</Text>
+              <Text style={{fontSize: 12, fontWeight: 'bold',
+                            color: this.state.isWarning ? '#d55' : '#888'}}>{this.state.warningMessage}</Text>
             </View>
 
             <TouchableOpacity style={{...styles.buttonStyle, backgroundColor: '#5555ff'}}
@@ -91,7 +112,38 @@ class SettingsScreen extends React.Component {
   }
 
   submitNewAccountInfo() {
+    if (this.state.password.oldPassword.length <= 0) {
+      this.setState({...this.state, warningMessage: "Must enter your old password", isWarning: true});
+      return;
+    }
+    else if (this.state.password.newPassword.length <= 0 || this.state.password.confirmPassword.length <= 0) {
+      this.setState({...this.state, warningMessage: "Must enter a new password", isWarning: true});
+      return;
+    }
+    else if (this.state.password.newPassword !== this.state.password.confirmPassword) {
+      this.setState({...this.state, warningMessage: 'The "new" and "confirm" password fields must match', isWarning: true});
+      return;
+    }
 
+    sendRequest({
+      address: "password/",
+      method: "POST",
+      authorizationToken: this.state.user.token,
+      body: {current_password: this.state.password.oldPassword, new_password: this.state.password.newPassword},
+      responseHandlerNoJson: (response) => {
+        if (response.status < 400) {
+          this.setState({...this.state, warningMessage: "Password changed successfully", isWarning: false});
+        }
+        else {
+          this.setState({...this.state, warningMessage: "Incorrect old password, or new password too weak", isWarning: true});
+        }
+      },
+      errorHandler: (error) => {
+        this.setState({...this.state, warningMessage: "There was an error processing your request", isWarning: true});
+        console.log("There was an error...");
+        console.log(error);
+      }
+    });
   }
 
   logOut() {

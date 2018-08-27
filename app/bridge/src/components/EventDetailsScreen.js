@@ -40,7 +40,7 @@ class EventDetailsScreen extends Component {
           <EventInfo
             event={this.state.event} />
         </ScrollView>
-        <EventInterestedBar onPress={this.buttonPressed} isInterested={true} />
+        <EventInterestedBar onPress={() => this.toggleInterested()} isInterested={this.state.event.interested_check} />
       </View>
     );
   }
@@ -57,7 +57,7 @@ class EventDetailsScreen extends Component {
     });
   }
 
-  buttonPressed() {
+  toggleInterested() {
 
   }
 }

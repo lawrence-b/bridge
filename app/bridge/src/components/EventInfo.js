@@ -15,7 +15,7 @@ const EventInfo = (props) => {
         />}
 
       <View style={styles.textViewStyle}>
-        <Text style={{fontSize: 22, fontWeight: 'bold'}}>{props.event.title}</Text>
+        <Text style={{fontSize: 22, fontWeight: 'bold', marginTop: 8}}>{props.event.title}</Text>
       </View>
 
       <View style={styles.textViewStyle}>

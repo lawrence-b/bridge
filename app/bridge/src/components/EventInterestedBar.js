@@ -8,7 +8,7 @@ const EventInterestedBar = (props) => {
   return (
     <View style={styles.viewStyle} >
       <TouchableOpacity style={[styles.buttonStyle, { backgroundColor: bgCol }]} onPress={props.onPress} >
-        <Text style={styles.textStyle}>{props.isInterested ? "Not interested" : "Interested"}</Text>
+        <Text style={styles.textStyle}>{props.isInterested ? "No longer interested" : "Interested"}</Text>
       </TouchableOpacity>
     </View>
   );

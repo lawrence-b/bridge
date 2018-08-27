@@ -15,7 +15,7 @@ const SocietyInfo = (props) => {
         />}
 
       <View style={styles.textViewStyle}>
-        <Text style={{fontSize: 22, fontWeight: 'bold'}}>{props.host.name}</Text>
+        <Text style={{fontSize: 22, fontWeight: 'bold', marginTop: 8}}>{props.host.name}</Text>
       </View>
 
       <View style={styles.textViewStyle}>

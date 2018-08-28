@@ -3,8 +3,7 @@ import { Text, View, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/EvilIcons';
 
 const EventTile = (props) => {
-  console.log(props.event.image);
-
+  
   return (
     <TouchableOpacity style={[styles.viewStyle, {width: props.size, height: props.size, marginHorizontal: props.margin}]}
           onPress={props.onPress} >

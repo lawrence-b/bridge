@@ -12,6 +12,9 @@ class EditEventScreen extends Component {
   constructor(props) {
     super(props);
 
+    this.imageFile = null;
+    this.imageFilePreview = null;
+
     if (this.props.creating) {
       this.state = {event: {title: '', hosts_id: [this.props.host.id], category_id: 1, open_to_id: 1, location: '', start_time: null, end_time: null, description: ''}};
     }
@@ -79,6 +82,19 @@ class EditEventScreen extends Component {
           </div>
 
           <div className="EditEventScreen-row">
+             <label className="EditEventScreen-label">Image: </label>
+             {this.getImageData() === null
+               ? null
+               : <img src={this.getImageData()}
+                    width={100}
+                    height={100}
+                    style={{marginLeft: 40, marginRight: 20}} />}
+             <input type="file"
+               accept="image/png, image/jpeg"
+               onChange={(e) => this.fileChanged(e.target.files)} />
+          </div>
+
+          <div className="EditEventScreen-row">
             <label className="EditEventScreen-label">Description: </label>
             <textarea placeholder="Description" onChange={(e) => {this.state.event.description = e.target.value; this.setState(this.state);}} className="EditEventScreen-text-field" value={this.state.event.description} />
           </div>
@@ -93,6 +109,37 @@ class EditEventScreen extends Component {
         </div>
       </div>
     );
+  }
+
+  getImageData() {
+    if (this.imageFilePreview !== null && this.imageFilePreview !== undefined) {
+      return this.imageFilePreview;
+    }
+    else if (this.state.event.image !== null && this.state.event.image !== undefined) {
+      return this.state.event.image.medium_square_crop;
+    }
+
+    return null;
+  }
+
+  fileChanged(files) {
+    if (files === null || files === undefined) {
+      return;
+    }
+    if (files.length <= 0) {
+      return;
+    }
+
+    this.imageFile = files[0];
+
+    if (FileReader) {
+      var fr = new FileReader();
+      fr.onload = () =>  {
+          this.imageFilePreview = fr.result;
+          this.setState(this.state);
+      }
+      fr.readAsDataURL(this.imageFile);
+    }
   }
 
   onEventCategoryChanged(category) {

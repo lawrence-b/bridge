@@ -34,7 +34,7 @@ urlpatterns += [
     # Admin site
     path('admin/', admin.site.urls),
 
-    # Customised Djoser Auth
+    # Customised Djoser auth
     url(r'^password/?$', views.SetPasswordView.as_view(), name='set_password'), #####
     url(
         r'^password/reset/?$',
@@ -47,8 +47,9 @@ urlpatterns += [
         name='password_reset_confirm'
     ),
     url(r'^auth/', include('djoser.urls.authtoken')),
+    url(r'^auth/', include('djoser.social.urls')),
 
     # Schema and docs
     url(r'^schema/$', schema_view_coreapi),
-    url(r'^docs/', include_docs_urls(title='Docs'))
+    url(r'^docs/', include_docs_urls(title='Docs')),
 ]

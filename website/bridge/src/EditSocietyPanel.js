@@ -11,6 +11,9 @@ class EditSocietyPanel extends Component {
   constructor(props) {
     super(props);
 
+    this.imageFile = null;
+    this.imageFilePreview = null;
+
     if (this.props.creating) {
       this.state = {newHost: {name: '', category_id: 1, open_to_id: 1, description: ''}};
     }
@@ -41,6 +44,21 @@ class EditSocietyPanel extends Component {
             </div>
 
             <div className="EditSocietyPanel-new-host-row">
+               <label className="EditSocietyPanel-new-host-label">Image: </label>
+               <div>
+                 {this.getImageData() === null
+                   ? null
+                   : <img src={this.getImageData()}
+                        width={100}
+                        height={100}
+                        style={{marginTop: 4, marginBottom: 10}} />}
+               </div>
+               <input type="file"
+                 accept="image/png, image/jpeg"
+                 onChange={(e) => this.fileChanged(e.target.files)} />
+            </div>
+
+            <div className="EditSocietyPanel-new-host-row">
               <label className="EditSocietyPanel-new-host-label">Description: </label>
               <textarea type="text" onChange={(e) => {this.state.newHost.description = e.target.value; this.setState(this.state);}}
                         className="EditSocietyPanel-text-field" value={this.state.newHost.description} style={{maxWidth: 330}} />
@@ -53,6 +71,38 @@ class EditSocietyPanel extends Component {
     );
   }
 
+  getImageData() {
+    if (this.imageFilePreview !== null && this.imageFilePreview !== undefined) {
+      return this.imageFilePreview;
+    }
+    else if (this.props.host !== null && this.props.host !== undefined
+          && this.props.host.image !== null && this.props.host.image !== undefined) {
+      return this.props.host.image.medium_square_crop;
+    }
+
+    return null;
+  }
+
+  fileChanged(files) {
+    if (files === null || files === undefined) {
+      return;
+    }
+    if (files.length <= 0) {
+      return;
+    }
+
+    this.imageFile = files[0];
+
+    if (FileReader) {
+      var fr = new FileReader();
+      fr.onload = () =>  {
+          this.imageFilePreview = fr.result;
+          this.setState(this.state);
+      }
+      fr.readAsDataURL(this.imageFile);
+    }
+  }
+
   onHostCategoryChanged(category) {
     this.state.newHost.category_id = category.id;
   }
@@ -62,18 +112,26 @@ class EditSocietyPanel extends Component {
   }
 
   createHost() {
-    console.log(this.state.newHost);
-
     sendRequest({
       address: "users/me/",
       method: "GET",
       authorizationToken: this.props.user.token,
       successHandler: (result) => {
+        var form = new FormData();
+        form.append('name', this.state.newHost.name);
+        form.append('category_id', this.state.newHost.category_id);
+        form.append('open_to_id', this.state.newHost.open_to_id);
+        form.append('description', this.state.newHost.description);
+        form.append('admins_id', [result.id]);
+        if (this.imageFile !== null) {
+          form.append('image', this.imageFile);
+        }
+
         sendRequest({
           address: "hosts/",
           method: "POST",
           authorizationToken: this.props.user.token,
-          body: {...this.state.newHost, admins_id: [result.id]},
+          body: form,
           responseHandlerNoJson: (response) => {
             this.setState({newHost: {name: '', category_id: 1, open_to_id: 1, description: ''}});
             this.props.onCreate();
@@ -84,16 +142,20 @@ class EditSocietyPanel extends Component {
   }
 
   editHost() {
-    console.log(this.state.newHost);
+    var form = new FormData();
+    form.append('name', this.state.newHost.name);
+    form.append('category_id', this.state.newHost.category_id);
+    form.append('open_to_id', this.state.newHost.open_to_id);
+    form.append('description', this.state.newHost.description);
+    if (this.imageFile !== null) {
+      form.append('image', this.imageFile);
+    }
+
     sendRequest({
       address: "hosts/" + this.props.host.id + "/",
       method: "PATCH",
       authorizationToken: this.props.user.token,
-      body: {
-        name: this.state.newHost.name,
-        category_id: this.state.newHost.category_id,
-        open_to_id: this.state.newHost.open_to_id,
-        description: this.state.newHost.description},
+      body: form,
       responseHandlerNoJson: (response) => {this.props.onEdit();},
     });
   }

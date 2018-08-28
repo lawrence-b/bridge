@@ -15,7 +15,7 @@ export default function sendRequest({
                     "Authorization": ("Token " + authorizationToken)
                   }
                 : {
-                    
+                    "Content-Type": "application/json"
                   };
 
   var params = body !== null && body !== undefined

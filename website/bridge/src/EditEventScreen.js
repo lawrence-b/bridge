@@ -83,12 +83,14 @@ class EditEventScreen extends Component {
 
           <div className="EditEventScreen-row">
              <label className="EditEventScreen-label">Image: </label>
-             {this.getImageData() === null
-               ? null
-               : <img src={this.getImageData()}
-                    width={100}
-                    height={100}
-                    style={{marginLeft: 40, marginRight: 20}} />}
+             <div style={this.getImageData() === null ? {} : {marginLeft: 40}}>
+               {this.getImageData() === null
+                 ? null
+                 : <img src={this.getImageData()}
+                      width={100}
+                      height={100}
+                      style={{marginRight: 20}} />}
+             </div>
              <input type="file"
                accept="image/png, image/jpeg"
                onChange={(e) => this.fileChanged(e.target.files)} />
@@ -190,11 +192,28 @@ class EditEventScreen extends Component {
       return;
     }
 
+    var form = new FormData();
+    form.append('title', this.state.event.title);
+    form.append('hosts_id', this.state.event.hosts_id);
+    form.append('category_id', this.state.event.category_id);
+    form.append('open_to_id', this.state.event.open_to_id);
+    if (this.state.event.start_time !== null && this.state.event.start_time !== undefined) {
+      form.append('start_time', this.state.event.start_time.toISOString());
+    }
+    if (this.state.event.end_time !== null && this.state.event.end_time !== undefined) {
+      form.append('end_time', this.state.event.end_time.toISOString());
+    }
+    form.append('location', this.state.event.location);
+    form.append('description', this.state.event.description);
+    if (this.imageFile !== null) {
+      form.append('image', this.imageFile);
+    }
+
     sendRequest({
       address: "events/",
       method: "POST",
       authorizationToken: this.props.user.token,
-      body: this.state.event,
+      body: form,
       successHandler: (result) => this.props.onExit(),
       failureHandler: () => this.props.onExit(),
       errorHandler: (error) => this.props.onExit()
@@ -206,19 +225,27 @@ class EditEventScreen extends Component {
       return;
     }
 
+    var form = new FormData();
+    form.append('title', this.state.event.title);
+    form.append('category_id', this.state.event.category.id);
+    form.append('open_to_id', this.state.event.open_to.id);
+    if (this.state.event.start_time !== null && this.state.event.start_time !== undefined) {
+      form.append('start_time', this.state.event.start_time.toISOString());
+    }
+    if (this.state.event.end_time !== null && this.state.event.end_time !== undefined) {
+      form.append('end_time', this.state.event.end_time.toISOString());
+    }
+    form.append('location', this.state.event.location);
+    form.append('description', this.state.event.description);
+    if (this.imageFile !== null) {
+      form.append('image', this.imageFile);
+    }
+
     sendRequest({
       address: "events/" + this.state.event.id + "/",
       method: "PATCH",
       authorizationToken: this.props.user.token,
-      body: {
-        title: this.state.event.title,
-        category_id: this.state.event.category.id,
-        open_to_id: this.state.event.open_to.id,
-        start_time: this.state.event.start_time,
-        end_time: this.state.event.end_time,
-        location: this.state.event.location,
-        description: this.state.event.description
-      },
+      body: form,
       successHandler: (result) => this.props.onExit(),
       failureHandler: () => this.props.onExit(),
       errorHandler: (error) => this.props.onExit()

@@ -12,11 +12,10 @@ export default function sendRequest({
 }) {
   var headers = authorizationToken !== null && authorizationToken !== undefined
                 ? {
-                    "Content-Type": "application/json; charset=utf-8",
                     "Authorization": ("Token " + authorizationToken)
                   }
                 : {
-                    "Content-Type": "application/json; charset=utf-8"
+                    
                   };
 
   var params = body !== null && body !== undefined
@@ -24,7 +23,7 @@ export default function sendRequest({
                    method: method,
                    mode: "cors",
                    headers: headers,
-                   body: JSON.stringify(body)
+                   body: (body instanceof FormData ? body : JSON.stringify(body))
                  }
                : {
                    method: method,

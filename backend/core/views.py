@@ -24,25 +24,18 @@ from rest_framework_tracking.mixins import LoggingMixin
 
 
 class UserCategoryViewSet(viewsets.ViewSet):
-    """
-    retrieve:
-    Returns a particular branch of user categories via GET. Allows any.
-
-    list:
-    Returns the tree of all user categories via GET. Allows any.
-    """
 
     permission_classes = ()
 
     def list(self, request):
-        """Defines list action."""
+        """Returns the tree of all user categories via GET. Allows any."""
 
         queryset = UserCategory.objects.filter(parent=None)
         serializer = UserCategoryChildrenSerializer(queryset, many=True, context={'request':request})
         return Response(serializer.data)
 
     def retrieve(self, request, pk):
-        """Defines retrieve action."""
+        """Returns a particular branch of user categories via GET. Allows any."""
 
         queryset = UserCategory.objects.all()
         category = get_object_or_404(queryset, pk=pk)
@@ -106,7 +99,7 @@ class HostViewSet(viewsets.ModelViewSet):
 
     @action(methods=['post'], detail=True, permission_classes=[AddAdminPermission,])
     def add_admin(self, request, pk=None):
-        """Defines the add_admin custom action. Takes an email address, validates it, and if a corresponding user can be
+        """Accepts an email address, validates it, and if a corresponding user can be
         found, adds that user as an admin to the host."""
 
         host = self.get_object()
@@ -125,23 +118,16 @@ class HostViewSet(viewsets.ModelViewSet):
 
 
 class HostCategoryViewSet(viewsets.ViewSet):
-    """
-        retrieve:
-        Returns a particular branch of host categories via GET. Allows any.
-
-        list:
-        Returns the tree of all host categories via GET. Allows any.
-        """
 
     def list(self, request):
-        """Defines list action."""
+        """Returns the tree of all host categories via GET. Allows any."""
 
         queryset = HostCategory.objects.filter(parent=None)
         serializer = HostCategoryChildrenSerializer(queryset, many=True, context={'request':request})
         return Response(serializer.data)
 
     def retrieve(self, request, pk):
-        """Defines retrieve action."""
+        """Returns a particular branch of host categories via GET. Allows any."""
 
         queryset = HostCategory.objects.all()
         category = get_object_or_404(queryset, pk=pk)
@@ -168,7 +154,7 @@ class EventViewSet(LoggingMixin, viewsets.ModelViewSet):
 
         delete:
         Deletes event via DELETE. Host admins only.
-        """
+    """
 
     permission_classes = (EventPermission,)
 
@@ -182,23 +168,16 @@ class EventViewSet(LoggingMixin, viewsets.ModelViewSet):
 
 
 class EventCategoryViewSet(viewsets.ViewSet):
-    """
-        retrieve:
-        Returns a particular branch of event categories via GET. Allows any.
-
-        list:
-        Returns the tree of all event categories via GET. Allows any.
-        """
 
     def list(self, request):
-        """Defines list action."""
+        """Returns the tree of all event categories via GET. Allows any."""
 
         queryset = EventCategory.objects.filter(parent=None)
         serializer = EventCategoryChildrenSerializer(queryset, many=True, context={'request':request})
         return Response(serializer.data)
 
     def retrieve(self, request, pk):
-        """Defines retrieve action."""
+        """Returns a particular branch of event categories via GET. Allows any."""
 
         queryset = EventCategory.objects.all()
         category = get_object_or_404(queryset, pk=pk)
@@ -207,8 +186,25 @@ class EventCategoryViewSet(viewsets.ViewSet):
 
 
 class UserViewSet(djoser.views.UserViewSet):
-    """A ViewSet to access User objects. Inherits retrieve, list, create, update, partial_update and delete methods from
-    djoser.views.UserViewSet."""
+    """
+        retrieve:
+        Returns the given user via GET. Only the associated user is permitted.
+
+        list:
+        Returns a list of all events via GET. Superuser only.
+
+        create:
+        Create a new event via POST. Allows any.
+
+        update:
+        Update an event via PUT. Only the associated user is permitted.
+
+        partial_update:
+        Partially update an event via PATCH. Only the associated user is permitted.
+
+        delete:
+        Deletes event via DELETE. Only the associated user is permitted.
+    """
 
     @action(methods=['post'], detail=False)
     def confirm(self, request, *args, **kwargs):
@@ -240,21 +236,18 @@ class UserViewSet(djoser.views.UserViewSet):
 
 
 class SetPasswordView(djoser.views.SetPasswordView):
-    """Defines the SetPasswordView. Inherits from djoser.views.SetPasswordView. Overriden here so we can define a custom
-    URL for this view."""
+    """Use this endpoint to change user password."""
 
     pass
 
 
 class PasswordResetView(djoser.views.PasswordResetView):
-    """Defines the PasswordResetView. Inherits from djoser.views.PasswordResetView. Overriden here so we can define a
-    custom URL for this view."""
+    """Use this endpoint to send email to user with password reset link."""
 
     pass
 
 
 class PasswordResetConfirmView(djoser.views.PasswordResetConfirmView):
-    """Defines the PasswordResetConfirmView. Inherits from djoser.views.PasswordResetConfirmView. Overriden here so we
-    can define a custom URL for this view."""
+    """Use this endpoint to finish reset password process."""
 
     pass

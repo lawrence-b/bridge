@@ -7,12 +7,19 @@ from django.contrib import admin
 from rest_framework.routers import DefaultRouter
 from rest_framework.documentation import include_docs_urls
 from rest_framework.schemas import get_schema_view
+from rest_framework.renderers import DocumentationRenderer
 
 # Import from core
 from core import views
 
 
+# Create coreapi schema
 schema_view_coreapi = get_schema_view(title='Schema') # Get the JSON schema for display at /schema/
+
+# Define custom renderer for docs
+class CustomRenderer(DocumentationRenderer):
+    languages = []
+
 
 # Create router and register the ViewSets to be routed
 router = DefaultRouter()
@@ -51,5 +58,5 @@ urlpatterns += [
 
     # Schema and docs
     url(r'^schema/$', schema_view_coreapi),
-    url(r'^docs/', include_docs_urls(title='Docs')),
+    url(r'^docs/', include_docs_urls(title='Bridge API Docs', public=False, renderer_classes=[CustomRenderer])),
 ]

@@ -26,7 +26,6 @@ class SocietiesList extends Component {
 const styles = {
   viewStyle: {
     flex: 1,
-    marginTop: 20,
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'stretch'

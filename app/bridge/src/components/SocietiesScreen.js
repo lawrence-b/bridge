@@ -8,6 +8,7 @@ import SocietiesList from './SocietiesList'
 import SocietyDetailsScreen from './SocietyDetailsScreen'
 import EventDetailsScreen from './EventDetailsScreen'
 import HeaderStyles from './HeaderWrapper'
+import CategoriesTray from './CategoriesTray'
 
 import sendRequest from '../sendRequest'
 
@@ -24,26 +25,38 @@ class SocietiesScreen extends React.Component {
   componentWillMount() {
     this.userData = this.props.screenProps.userData;
 
-    this.getSocieties();
+    this.getSocieties(studentSocietyCategoryId);
   }
 
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: '#F18B35' }}>
+        <CategoriesTray categoryType='host' user={this.userData} onCategorySelected={(id) => this.onCategorySelected(id)} />
         <SocietiesList societies={this.state != null ? this.state.societies : []} navigation={this.props.navigation} user={this.userData} />
       </View>
     );
   }
 
-  getSocieties() {
+  getSocieties(categoryId) {
     sendRequest({
-      address: "hosts/?host_category=1",
+      address: "hosts/?ordering=name&host_category=" + categoryId,
       method: "GET",
       authorizationToken: this.userData.token,
       successHandler: (result) => this.setState({societies: result.results})
     })
   }
+
+  onCategorySelected(id) {
+    if (id === 0) {
+      this.getSocieties(studentSocietyCategoryId);
+    }
+    else {
+      this.getSocieties(id);
+    }
+  }
 }
+
+const studentSocietyCategoryId = 1;
 
 const SocietiesScreenWrapper = createStackNavigator(
   {

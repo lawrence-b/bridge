@@ -101,6 +101,7 @@ class Subject(models.Model):
         """Defines the informal string representation of the object. i.e. the result of str(object)."""
         return self.name
 
+
 class User(AbstractUser):
     """User model. Stores an email address, password (inherited from AbstractUser), and profile data."""
 
@@ -122,16 +123,22 @@ class User(AbstractUser):
     # If you select university level, you get an age category dropdown menu
 
     # Age category - if university category level, open box to add age category
-    # Undergraduate
-    # Postgraduate
-    # Faculty and staff
+    AGE_CATEGORY_CHOICES = (
+        ('Undergraduate', 'Undergraduate'),
+        ('Postgraduate', 'Postgraduate'),
+        ('Faculty and staff', 'Faculty and staff'),
+    )
+    university_age_category = models.CharField(max_length=255, blank=True, choices=AGE_CATEGORY_CHOICES)
 
     # If you select the undergrad options, you get to select matriculation year and subject
+    PHYS = 'Physics'
+    SUBJECT_CHOICES = (
+        (PHYS, 'Physics'),
+    )
+    subject = models.CharField(max_length=255, blank=True, choices=SUBJECT_CHOICES)
 
     matriculation_year = models.IntegerField(blank=True, null=True)
 
-    subject = models.ForeignKey('Subject', related_name='undergraduates_studying', null=True, blank=True,
-                                on_delete=models.SET_NULL)
 
     def currently_interested_in(self):
         "Returns future events the user is interested in."

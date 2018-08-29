@@ -18,7 +18,7 @@ def hosts_filter(user_category):
         new_user_category_queryset = ancestor.hosts.all()
         user_category_queryset = user_category_queryset | new_user_category_queryset
 
-    return user_category_queryset
+    return user_category_queryset.order_by('id')
 
 
 class OptionalHostsFilters(filters.FilterSet):
@@ -43,22 +43,22 @@ class OptionalHostsFilters(filters.FilterSet):
         model = Host
         fields = ['search', 'host_category']
 
-    def host_category_filter(self, queryset, name, value):
-        """A filter that returns only hosts belonging to a particular category, or a subcategory of that
-        category."""
+def host_category_filter(self, queryset, name, value):
+    """A filter that returns only hosts belonging to a particular category, or a subcategory of that
+    category."""
 
-        host_category = HostCategory.objects.get(pk=value)
-        host_category_queryset = host_category.hosts.all()
-        descendants = host_category.get_descendants()
-        for descendant in descendants:
-            new_host_category_queryset = descendant.hosts.all()
-            host_category_queryset = host_category_queryset | new_host_category_queryset
-        return queryset & host_category_queryset
+    host_category = HostCategory.objects.get(pk=value)
+    host_category_queryset = host_category.hosts.all()
+    descendants = host_category.get_descendants()
+    for descendant in descendants:
+        new_host_category_queryset = descendant.hosts.all()
+        host_category_queryset = host_category_queryset | new_host_category_queryset
+    return queryset & host_category_queryset
 
-    def search_filter(self, queryset, name, value):
-        """A filter that returns only hosts whose name contains a particular string. Case-insensitive."""
+def search_filter(self, queryset, name, value):
+    """A filter that returns only hosts whose name contains a particular string. Case-insensitive."""
 
-        return queryset.filter(name__icontains=value)
+    return queryset.filter(name__icontains=value)
 
 
 def events_filter(user_category, user):
@@ -74,7 +74,7 @@ def events_filter(user_category, user):
     events_hosting = Event.objects.filter(hosts__admins=user)
     user_category_queryset = user_category_queryset | events_hosting
 
-    return user_category_queryset
+    return user_category_queryset.order_by('start_time')
 
 
 class OptionalEventsFilters(filters.FilterSet):

@@ -362,8 +362,8 @@ class HostSerializerWithAdmins(serializers.ModelSerializer):
         )
         extra_kwargs = {
             'id': {'read_only': True},
-            'image_ppoi': {'read_only': False},
-            'logo_ppoi': {'read_only': False},
+            'image_ppoi': {'read_only': False, 'required': False},
+            'logo_ppoi': {'read_only': False, 'required': False},
         }
 
     def get_subscribed_to_check(self, obj):
@@ -438,8 +438,8 @@ class HostSerializer(serializers.ModelSerializer):
         )
         extra_kwargs = {
             'id': {'read_only': True},
-            'image_ppoi': {'read_only': False},
-            'logo_ppoi': {'read_only': False},
+            'image_ppoi': {'read_only': False, 'required': False},
+            'logo_ppoi': {'read_only': False, 'required': False},
         }
 
     def get_subscribed_to_check(self, obj):
@@ -465,7 +465,16 @@ class UserCreateSerializer(djoser_serializers.UserCreateSerializer, serializers.
         """Defines the source model and the fields to be serialized. May additionally specify whether any fields are
         read or write only, or are not required. Inherits fields from djoser.serializers.UserCreateSerializer."""
 
-        djoser_serializers.UserCreateSerializer.Meta.fields += ('user_category',)
+        djoser_serializers.UserCreateSerializer.Meta.fields += ('user_category', 'first_name', 'last_name',
+                                                                'university_age_category', 'subject',
+                                                                'matriculation_year',)
+        extra_kwargs = {
+            'first_name': {'required': False},
+            'last_name': {'required': False},
+            'university_age_category': {'required': False},
+            'subject': {'required': False},
+            'matriculation_year': {'required': False},
+        }
 
 
 class UserSerializer(djoser_serializers.UserSerializer, serializers.ModelSerializer):
@@ -503,11 +512,21 @@ class UserSerializer(djoser_serializers.UserSerializer, serializers.ModelSeriali
             'subscribed_to',
             'add_interested_in',
             'remove_interested_in',
+            'first_name',
+            'last_name',
+            'university_age_category',
+            'subject',
+            'matriculation_year',
         )
         extra_kwargs = {
             'id': {'read_only': True},
             'email': {'required': False},
             'password': {'write_only': True, 'required': False},
+            'first_name': {'required': False},
+            'last_name': {'required': False},
+            'university_age_category': {'required': False},
+            'subject': {'required': False},
+            'matriculation_year': {'required': False},
         }
 
     def update(self, instance, validated_data):

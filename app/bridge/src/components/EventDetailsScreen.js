@@ -40,7 +40,7 @@ class EventDetailsScreen extends Component {
           <EventInfo
             event={this.state.event} />
         </ScrollView>
-        <EventInterestedBar onPress={() => this.toggleInterested()} isInterested={this.state.event.interested_check} />
+        <EventInterestedBar onPress={() => this.toggleInterested()} isInterested={this.state.event.interested_in_check} />
       </View>
     );
   }
@@ -58,7 +58,18 @@ class EventDetailsScreen extends Component {
   }
 
   toggleInterested() {
+    var shouldUnsubscribe = this.state.event.interested_in_check;
 
+    sendRequest({
+      address: 'users/me/',
+      method: 'PATCH',
+      authorizationToken: this.props.navigation.getParam('user').token,
+      body: (shouldUnsubscribe ? {remove_interested_in: [this.state.event.id]} : {add_interested_in: [this.state.event.id]}),
+      responseHandlerNoJson: (response) => {
+        this.state.event.interested_in_check = !this.state.event.interested_in_check;
+        this.setState(this.state);
+      }
+    });
   }
 }
 

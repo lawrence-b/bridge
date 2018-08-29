@@ -43,17 +43,17 @@ class OptionalHostsFilters(filters.FilterSet):
         model = Host
         fields = ['search', 'host_category']
 
-def host_category_filter(self, queryset, name, value):
-    """A filter that returns only hosts belonging to a particular category, or a subcategory of that
-    category."""
+    def host_category_filter(self, queryset, name, value):
+        """A filter that returns only hosts belonging to a particular category, or a subcategory of that
+        category."""
 
-    host_category = HostCategory.objects.get(pk=value)
-    host_category_queryset = host_category.hosts.all()
-    descendants = host_category.get_descendants()
-    for descendant in descendants:
-        new_host_category_queryset = descendant.hosts.all()
-        host_category_queryset = host_category_queryset | new_host_category_queryset
-    return queryset & host_category_queryset
+        host_category = HostCategory.objects.get(pk=value)
+        host_category_queryset = host_category.hosts.all()
+        descendants = host_category.get_descendants()
+        for descendant in descendants:
+            new_host_category_queryset = descendant.hosts.all()
+            host_category_queryset = host_category_queryset | new_host_category_queryset
+        return queryset & host_category_queryset
 
 def search_filter(self, queryset, name, value):
     """A filter that returns only hosts whose name contains a particular string. Case-insensitive."""

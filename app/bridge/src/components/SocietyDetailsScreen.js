@@ -8,6 +8,8 @@ import SocietyInterestedBar from './SocietyInterestedBar';
 import EventTile from './EventTile';
 import HeaderStyles from './HeaderWrapper';
 
+import sendRequest from '../sendRequest';
+
 class SocietyDetailsScreen extends Component {
   static navigationOptions = {
     headerRight: (
@@ -17,29 +19,29 @@ class SocietyDetailsScreen extends Component {
     headerTintColor: '#fff'
   };
 
-  renderTiles() {
-    var society = this.props.navigation.getParam('society', {});
-    if (society === null) return;
+  componentWillMount() {
+    this.setState({host: this.props.navigation.getParam('society')});
+  }
 
-    return society.events_hosting_in_future.map(event =>
+  renderTiles() {
+    return this.state.host.events_hosting_in_future.map(event =>
       <EventTile
         key={event.id}
         event={event}
         size={150}
         margin={15}
-        onPress={() => this.props.navigation.navigate('SelectedEvent', {event: {...event, hosts: [society]}, user: this.props.navigation.getParam('user')})} />
+        onPress={() => this.props.navigation.navigate('SelectedEvent', {event: {...event, hosts: [this.state.host]}, user: this.props.navigation.getParam('user')})} />
     );
   }
 
   render() {
-    var society = this.props.navigation.getParam('society', {});
-    console.log(society);
+    console.log(this.state.host);
 
     return (
       <View style={{ flex: 1, backgroundColor: '#F18B35' }}>
         <ScrollView>
           <SocietyInfo
-            host={society} />
+            host={this.state.host} />
 
           <View style={styles.textViewStyle}>
             <Text style={styles.textStyle}>Upcoming events: </Text>
@@ -49,13 +51,48 @@ class SocietyDetailsScreen extends Component {
             {this.renderTiles()}
           </ScrollView>
         </ScrollView>
-        <SocietyInterestedBar onPress={() => this.toggleSignUp()} isInterested={society.subscribed_to_check} />
+        <SocietyInterestedBar onPress={() => this.toggleSignUp()} isInterested={this.state.host.subscribed_to_check} />
       </View>
     );
   }
 
   toggleSignUp() {
+    var shouldUnsubscribe = this.state.host.subscribed_to_check;
 
+    sendRequest({
+      address: 'users/me/',
+      method: 'GET',
+      authorizationToken: this.props.navigation.getParam('user').token,
+      successHandler: (result) => {
+        var subscribedToIds = result.subscribed_to.map(host => host.id);
+
+        if (shouldUnsubscribe) {
+          var index = subscribedToIds.indexOf(this.state.host.id);
+
+          if (index > -1) {
+            subscribedToIds.splice(index, 1);
+          }
+          else {
+            console.log("Index not found when removing admin");
+            return;
+          }
+        }
+        else {
+          subscribedToIds.push(this.state.host.id);
+        }
+
+        sendRequest({
+          address: 'users/me/',
+          method: 'PATCH',
+          authorizationToken: this.props.navigation.getParam('user').token,
+          body: {subscribed_to_id: subscribedToIds},
+          successHandler: (result) => {
+            this.state.host.subscribed_to_check = !this.state.host.subscribed_to_check;
+            this.setState(this.state);
+          }
+        });
+      }
+    });
   }
 }
 

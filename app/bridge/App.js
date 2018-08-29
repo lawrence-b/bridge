@@ -3,6 +3,7 @@ import { View, AsyncStorage } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+import HomeScreenWrapper from './src/components/HomeScreen';
 import EventsScreenWrapper from './src/components/EventsScreen';
 import SocietiesScreenWrapper from './src/components/SocietiesScreen';
 import SettingsScreen from './src/components/SettingsScreen';
@@ -13,6 +14,7 @@ import SignUpScreen from './src/components/SignUpScreen';
 
 const AppWrapper =  createBottomTabNavigator(
   {
+    Home: HomeScreenWrapper,
     Societies: SocietiesScreenWrapper,
     Events: EventsScreenWrapper,
     Settings: SettingsScreen
@@ -22,7 +24,10 @@ const AppWrapper =  createBottomTabNavigator(
       tabBarIcon: ({ focused, tintColor }) => {
         const { routeName } = navigation.state;
         let iconName;
-        if (routeName === 'Societies') {
+        if (routeName === 'Home') {
+          iconName = `ios-home${focused ? '' : '-outline'}`;
+        }
+        else if (routeName === 'Societies') {
           iconName = `ios-contacts${focused ? '' : '-outline'}`;
         } else if (routeName === 'Events') {
           iconName = `ios-bowtie${focused ? '' : '-outline'}`;

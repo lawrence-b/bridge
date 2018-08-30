@@ -9,6 +9,8 @@ from versatileimagefield.serializers import VersatileImageFieldSerializer
 from djoser import serializers as djoser_serializers
 from djoser.compat import get_user_email, get_user_email_field_name
 from djoser.conf import settings
+import djoser.utils
+from social_django.utils import load_backend, load_strategy
 
 
 class UserCategoryChildrenSerializer(serializers.ModelSerializer):
@@ -552,3 +554,40 @@ class UserSerializer(djoser_serializers.UserSerializer, serializers.ModelSeriali
                 instance.interested_in.remove(event)
 
         return super(UserSerializer, self).update(instance, validated_data)
+
+
+class FacebookLoginSerializer(serializers.Serializer):
+    access_token = serializers.CharField(write_only=True)
+
+    token = serializers.CharField(read_only=True)
+    user_information_required = serializers.BooleanField(read_only=True)
+    user = serializers.CharField(read_only=True)
+
+    def create(self, validated_data):
+        request = self.context['request']
+        user = validated_data['user']
+        token = djoser.utils.login_user(user=user, request=request)
+        user_information_required = (user.user_category is None)
+        return {
+            'token': token,
+            'user_information_required': user_information_required,
+        }
+
+    def validate(self, attrs):
+        request = self.context['request']
+
+        strategy = load_strategy(request)
+        redirect_uri = strategy.session_get('redirect_uri')
+
+        backend_name = 'facebook'
+        access_token = request.data['access_token']
+
+        backend = load_backend(
+            strategy, backend_name, redirect_uri=redirect_uri
+        )
+
+        try:
+            user = backend.do_auth(access_token)
+        except:
+            raise serializers.ValidationError('Authentication details incorrect.')
+        return {'user': user}

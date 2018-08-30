@@ -13,16 +13,26 @@ class CategoriesTray extends React.Component {
   }
 
   componentWillMount() {
-    sendRequest({
-      address: this.props.categoryType + '-categories/',
-      method: 'GET',
-      authorizationToken: this.props.user.token,
-      successHandler: (result) => {
-        var categories = result[1].children;
-        categories.unshift({id: 0, name: 'All'});
-        this.setState({categories: categories});
-      }
-    });
+    if (this.props.categories !== null && this.props.categories !== undefined) {
+      var categories = this.props.categories.slice(0);
+      var name = (this.props.parentCategoryName !== null && this.props.parentCategoryName !== undefined
+                  ? 'All ' + this.props.parentCategoryName
+                  : 'All');
+      categories.unshift({id: 0, name: name});
+      this.setState({categories: categories});
+    }
+    else {
+      sendRequest({
+        address: this.props.categoryType + '-categories/',
+        method: 'GET',
+        authorizationToken: this.props.user.token,
+        successHandler: (result) => {
+          var categories = (this.props.categoryType === 'host' ? result[1].children : result);
+          categories.unshift({id: 0, name: 'All'});
+          this.setState({categories: categories});
+        }
+      });
+    }
   }
 
   generateCategoryTiles() {
@@ -32,7 +42,7 @@ class CategoriesTray extends React.Component {
                                                  marginRight: (index === this.state.categories.length-1 ? 16 : 0),
                                                  backgroundColor: (index !== this.state.selectedIndex
                                                                 ? this.colors[index % this.colors.length]
-                                                                : '#fff')}} onPress={() => this.onCategorySelected(category.id, index)}>
+                                                                : '#fff')}} onPress={() => this.onCategorySelected(category, index)}>
           <Text style={index !== this.state.selectedIndex
                      ? styles.textStyle
                      : {...styles.textStyle, color: '#F18B35'}}>
@@ -53,8 +63,8 @@ class CategoriesTray extends React.Component {
     );
   }
 
-  onCategorySelected(id, index) {
-    this.props.onCategorySelected(id);
+  onCategorySelected(category, index) {
+    this.props.onCategorySelected(category);
     this.setState({...this.state, selectedIndex: index});
   }
 
@@ -64,7 +74,7 @@ const styles = {
   scrollViewStyle: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   categoryTileStyle: {
     marginLeft: 16,

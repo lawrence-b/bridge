@@ -40,7 +40,7 @@ class HomeScreen extends React.Component {
           event={event}
           size={150}
           margin={15}
-          onPress={() => this.props.navigation.navigate('SelectedEvent', {event: {...event, hosts: event.hosts}, user: this.userData, onGoBack: () => this.getEvents()})} />
+          onPress={() => this.props.navigation.navigate('SelectedEvent', {event: event, user: this.userData, onGoBack: () => this.getEvents()})} />
       );
     }
   }

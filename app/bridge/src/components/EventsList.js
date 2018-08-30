@@ -14,7 +14,7 @@ class EventsList extends Component {
         event={event}
         size={size}
         margin={margin}
-        onPress={() => this.props.navigation.navigate('SelectedEvent', {event: event})} />
+        onPress={() => this.props.navigation.navigate('SelectedEvent', {event: event, user: this.props.user})} />
     );
   }
 

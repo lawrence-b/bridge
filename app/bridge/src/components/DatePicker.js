@@ -15,7 +15,7 @@ class DatePicker extends React.Component {
 
         <TouchableOpacity onPress={() => {
           previousDay(this.state.date);
-          this.props.delegate.dateUpdated(this.state.date);
+          this.props.dateUpdated(this.state.date);
           this.setState(this.state)}} >
           <Icon name='arrow-left'  size={26} color='#fff' style={{marginLeft: 14}}  />
         </TouchableOpacity>
@@ -24,7 +24,7 @@ class DatePicker extends React.Component {
 
         <TouchableOpacity onPress={() => {
           nextDay(this.state.date);
-          this.props.delegate.dateUpdated(this.state.date);
+          this.props.dateUpdated(this.state.date);
           this.setState(this.state)}} >
           <Icon name='arrow-right' size={26} color='#fff' style={{marginRight: 14}} />
         </TouchableOpacity>

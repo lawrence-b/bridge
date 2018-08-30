@@ -31,7 +31,7 @@ class SocietiesScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: '#F18B35' }}>
-        <CategoriesTray categoryType='host' user={this.userData} onCategorySelected={(id) => this.onCategorySelected(id)} />
+        <CategoriesTray categoryType='host' user={this.userData} onCategorySelected={(category) => this.onCategorySelected(category.id)} />
         <SocietiesList societies={this.state != null ? this.state.societies : []} navigation={this.props.navigation} user={this.userData} />
       </View>
     );

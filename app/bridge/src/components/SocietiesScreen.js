@@ -5,33 +5,28 @@ import Icon from 'react-native-vector-icons/EvilIcons';
 
 import HeaderWrapper from './HeaderWrapper'
 import SocietiesList from './SocietiesList'
-import SocietyDetailsScreen from './SocietyDetailsScreen'
-import EventDetailsScreen from './EventDetailsScreen'
 import HeaderStyles from './HeaderWrapper'
 import CategoriesTray from './CategoriesTray'
 
 import sendRequest from '../sendRequest'
 
 class SocietiesScreen extends React.Component {
-  static navigationOptions = {
-    headerTitle: 'Societies',
-    headerRight: (
-      <Icon name='search' size={26} color='#fff' style={{marginRight: 14}} />
-    ),
+  static navigationOptions = ({navigation}) => ({
+    headerTitle: navigation.getParam('category').name,
     headerStyle: HeaderStyles.viewStyle,
-    headerTitleStyle: HeaderStyles.textStyle
-  }
+    headerTitleStyle: HeaderStyles.textStyle,
+    headerTintColor: '#fff'
+  });
 
   componentWillMount() {
-    this.userData = this.props.screenProps.userData;
+    this.userData = this.props.navigation.getParam('user');
 
-    this.getSocieties(studentSocietyCategoryId);
+    this.getSocieties(this.props.navigation.getParam('category').id);
   }
 
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: '#F18B35' }}>
-        <CategoriesTray categoryType='host' user={this.userData} onCategorySelected={(category) => this.onCategorySelected(category.id)} />
         <SocietiesList societies={this.state != null ? this.state.societies : []} navigation={this.props.navigation} user={this.userData} />
       </View>
     );
@@ -45,28 +40,6 @@ class SocietiesScreen extends React.Component {
       successHandler: (result) => this.setState({societies: result.results})
     })
   }
-
-  onCategorySelected(id) {
-    if (id === 0) {
-      this.getSocieties(studentSocietyCategoryId);
-    }
-    else {
-      this.getSocieties(id);
-    }
-  }
 }
 
-const studentSocietyCategoryId = 1;
-
-const SocietiesScreenWrapper = createStackNavigator(
-  {
-    Societies: SocietiesScreen,
-    SelectedSociety: SocietyDetailsScreen,
-    SelectedEvent: EventDetailsScreen
-  },
-  {
-    initialRouteName: 'Societies'
-  }
-);
-
-export default SocietiesScreenWrapper;
+export default SocietiesScreen;

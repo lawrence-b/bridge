@@ -5,7 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import HomeScreenWrapper from './src/components/HomeScreen';
 import EventsScreenWrapper from './src/components/EventsScreen';
-import SocietiesScreenWrapper from './src/components/SocietiesScreen';
+import SocietiesScreenWrapper from './src/components/SocietyCategoriesScreen';
 import SettingsScreen from './src/components/SettingsScreen';
 
 import LoginOrSignUpScreen from './src/components/LoginOrSignUpScreen';

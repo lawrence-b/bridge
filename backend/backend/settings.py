@@ -17,12 +17,28 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'a=m-m0d7j6s(jckxg(hc^fc3e3(sh&gffxni*wfz)+t(^bz3k4'
+with open('backend/secret_key.txt') as f:
+    SECRET_KEY = f.read().strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['bridge-backend-dev.eu-west-2.elasticbeanstalk.com', '127.0.0.1', 'localhost',]
+
+# Extra security measures
+CORS_ORIGIN_ALLOW_ALL = True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+X_FRAME_OPTIONS = 'DENY'
+SECURE_SSL_REDIRECT = True
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# NOTE: The default Django LOGGER is set up, see
+# https://docs.djangoproject.com/en/2.0/topics/logging/#django-s-default-logging-configuration
+# Logging emails are sent for levels ERROR or CRITICAL to the following site admins:
+ADMINS = [('Current admin', 'bridgeapp18@gmail.com')]
+# A custom logger is still set for manual output during development, see further down.
 
 
 # Application definition
@@ -39,7 +55,6 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'mptt',
     'django_filters',
-    'versatileimagefield',
     'djoser',
     'rest_framework_tracking',
     'corsheaders',
@@ -137,8 +152,7 @@ AUTH_USER_MODEL = 'core.User' # Tells Django to use our custom User model
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'djoser.social.backends.facebook.FacebookOAuth2Override',
-    #'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
 ]
 
 # Social authentication settings
@@ -154,7 +168,9 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
 }
 
 USER_FIELDS = ['email',]
+
 SOCIAL_AUTH_FACEBOOK_API_VERSION = '3.1'
+#SOCIAL_AUTH_POSTGRES_JSONFIELD = True
 
 SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_details',
@@ -212,68 +228,20 @@ LOGGING = {
     },
 }
 
-VERSATILEIMAGEFIELD_SETTINGS = {
-    # The amount of time, in seconds, that references to created images
-    # should be stored in the cache. Defaults to `2592000` (30 days)
-    'cache_length': 2592000,
-    # The name of the cache you'd like `django-versatileimagefield` to use.
-    # Defaults to 'versatileimagefield_cache'. If no cache exists with the name
-    # provided, the 'default' cache will be used instead.
-    'cache_name': 'versatileimagefield_cache',
-    # The save quality of modified JPEG images. More info here:
-    # https://pillow.readthedocs.io/en/latest/handbook/image-file-formats.html#jpeg
-    # Defaults to 70
-    'jpeg_resize_quality': 70,
-    # The name of the top-level folder within storage classes to save all
-    # sized images. Defaults to '__sized__'
-    'sized_directory_name': '__sized__',
-    # The name of the directory to save all filtered images within.
-    # Defaults to '__filtered__':
-    'filtered_directory_name': '__filtered__',
-    # The name of the directory to save placeholder images within.
-    # Defaults to '__placeholder__':
-    'placeholder_directory_name': '__placeholder__',
-    # Whether or not to create new images on-the-fly. Set this to `False` for
-    # speedy performance but don't forget to 'pre-warm' to ensure they're
-    # created and available at the appropriate URL.
-    'create_images_on_demand': True,
-    # A dot-notated python path string to a function that processes sized
-    # image keys. Typically used to md5-ify the 'image key' portion of the
-    # filename, giving each a uniform length.
-    # `django-versatileimagefield` ships with two post processors:
-    # 1. 'versatileimagefield.processors.md5' Returns a full length (32 char)
-    #    md5 hash of `image_key`.
-    # 2. 'versatileimagefield.processors.md5_16' Returns the first 16 chars
-    #    of the 32 character md5 hash of `image_key`.
-    # By default, image_keys are unprocessed. To write your own processor,
-    # just define a function (that can be imported from your project's
-    # python path) that takes a single argument, `image_key` and returns
-    # a string.
-    'image_key_post_processor': None,
-    # Whether to create progressive JPEGs. Read more about progressive JPEGs
-    # here: https://optimus.io/support/progressive-jpeg/
-    'progressive_jpeg': False
-}
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'bridgeapp18@gmail.com'
 EMAIL_HOST_PASSWORD = 'henrythe5th'
 EMAIL_PORT = 587
-'''
-EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'emails')
-'''
+
 DJOSER = {
-    #'DOMAIN': 'frontend.com',
-    #'SITE_NAME': 'Frontend',
+    'DOMAIN': 'www.bridge-uni.com',
+    'SITE_NAME': 'Bridge',
     'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
     'ACTIVATION_URL': '#/activate/{uid}/{token}',
-    'ADD_ADMIN_URL': '#/add-admin/{host_id}',
     'SEND_ACTIVATION_EMAIL': True,
     'SEND_CONFIRMATION_EMAIL': True,
-    'SEND_ADMIN_CONFIRMATION_EMAIL': True,
     'SERIALIZERS': {
         'activation': 'djoser.serializers.ActivationSerializer',
         'password_reset': 'djoser.serializers.PasswordResetSerializer',
@@ -290,14 +258,10 @@ DJOSER = {
         'token_create': 'djoser.serializers.TokenCreateSerializer',
     },
     'EMAIL': {
-        'activation': 'djoser.email.ActivationEmail',
+        'activation': 'core.email.ActivationEmail',
         'confirmation': 'djoser.email.ConfirmationEmail',
         'password_reset': 'djoser.email.PasswordResetEmail',
-        'admin_confirmation': 'core.email.AdminConfirmationEmail',
     },
     'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS': ['https://localhost:8000/','http://localhost:8000/',],
-    'SOCIAL_AUTH_TOKEN_STRATEGY': 'core.token.SocialTokenStrategy'
 
 }
-
-CORS_ORIGIN_ALLOW_ALL = True

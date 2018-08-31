@@ -10,8 +10,6 @@ from django.conf import settings
 
 # Import from additional packages
 from mptt.models import MPTTModel, TreeForeignKey
-from versatileimagefield.fields import VersatileImageField, PPOIField
-from versatileimagefield.placeholder import OnDiscPlaceholderImage
 
 
 class UserManager(BaseUserManager):
@@ -58,21 +56,6 @@ class UserCategory(MPTTModel):
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children', db_index=True,
                             on_delete=models.SET_NULL)
 
-    thumbnail = VersatileImageField(
-        'Image',
-        upload_to='images/host-categories/%Y/%m/%d/',
-        ppoi_field='thumbnail_ppoi',
-        blank=True,
-        placeholder_image=OnDiscPlaceholderImage(
-            path=os.path.join(
-                settings.MEDIA_ROOT,
-                'placeholders/user_category.jpeg'
-            )
-        )
-    )
-
-    thumbnail_ppoi = PPOIField(blank=True)
-
     class MPTTMeta:
         """Meta information defining the order of insertion into the tree when a new category is added."""
         order_insertion_by = ['name']
@@ -81,21 +64,6 @@ class UserCategory(MPTTModel):
         """Meta information defining the verbose naming of the model."""
         verbose_name = 'User Category'
         verbose_name_plural = 'User Categories'
-
-    def __str__(self):
-        """Defines the informal string representation of the object. i.e. the result of str(object)."""
-        return self.name
-
-class Subject(models.Model):
-    """A simple model defining an undergraduate subject. Used to maintain a list of available subjects that a user can
-    select during sign up."""
-
-    name = models.CharField(max_length=255)
-
-    class Meta:
-        """Meta information defining the verbose naming of the model."""
-        verbose_name = 'Subject'
-        verbose_name_plural = 'Subjects'
 
     def __str__(self):
         """Defines the informal string representation of the object. i.e. the result of str(object)."""
@@ -139,7 +107,6 @@ class User(AbstractUser):
 
     matriculation_year = models.IntegerField(blank=True, null=True)
 
-
     def currently_interested_in(self):
         "Returns future events the user is interested in."
         return self.interested_in.filter(end_time__gte=datetime.now())
@@ -163,20 +130,7 @@ class HostCategory(MPTTModel):
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children', db_index=True,
                             on_delete=models.SET_NULL)
 
-    thumbnail = VersatileImageField(
-        'Image',
-        upload_to='images/host-categories/%Y/%m/%d/',
-        ppoi_field='thumbnail_ppoi',
-        blank=True,
-        placeholder_image=OnDiscPlaceholderImage(
-            path=os.path.join(
-                settings.MEDIA_ROOT,
-                'placeholders/host_category.jpeg'
-            )
-        )
-    )
-
-    thumbnail_ppoi = PPOIField(blank=True)
+    thumbnail = models.ImageField(upload_to='thumbnails/host_categories/%Y/%m/%d/', blank=True)
 
     class MPTTMeta:
         """Meta information defining the order of insertion into the tree when a new category is added."""
@@ -207,29 +161,10 @@ class Host(models.Model):
 
     website = models.URLField(max_length=200, blank=True)
 
-    image = VersatileImageField(
-        'Image',
-        upload_to='images/hosts/pictures/%Y/%m/%d/',
-        ppoi_field='image_ppoi',
-        blank=True,
-        placeholder_image=OnDiscPlaceholderImage(
-            path=os.path.join(
-                settings.MEDIA_ROOT,
-                'placeholders/host.jpeg'
-            )
-        )
-    )
+    image = models.ImageField(upload_to='images/hosts/pictures/%Y/%m/%d/', default=os.path.join(settings.MEDIA_ROOT,
+                'placeholders/host.jpeg'))
 
-    image_ppoi = PPOIField(blank=True)
-
-    logo = VersatileImageField(
-        'Logo',
-        upload_to='images/hosts/logos/%Y/%m/%d/',
-        ppoi_field='logo_ppoi',
-        blank=True,
-    )
-
-    logo_ppoi = PPOIField(blank=True)
+    logo = models.ImageField(upload_to='images/hosts/logos/%Y/%m/%d/', blank=True)
 
     def events_hosting_in_future(self):
         """"Returns all future events that the host is hosting."""
@@ -256,20 +191,7 @@ class EventCategory(MPTTModel):
 
     featured = models.BooleanField(default=False)
 
-    thumbnail = VersatileImageField(
-        'Image',
-        upload_to='thumbnails/event-categories/',
-        ppoi_field='thumbnail_ppoi',
-        blank=True,
-        placeholder_image=OnDiscPlaceholderImage(
-            path=os.path.join(
-                settings.MEDIA_ROOT,
-                'placeholders/event_category.jpeg'
-            )
-        )
-    )
-
-    thumbnail_ppoi = PPOIField(blank=True)
+    thumbnail = models.ImageField(upload_to='thumbnails/event_categories/%Y/%m/%d/', blank=True)
 
     class MPTTMeta:
         """Meta information defining the order of insertion into the tree when a new category is added."""
@@ -306,20 +228,9 @@ class Event(models.Model):
 
     location = models.CharField(max_length=250, blank=True)
 
-    image = VersatileImageField(
-        'Image',
-        upload_to='images/events/%Y/%m/%d/',
-        ppoi_field='image_ppoi',
-        blank=True,
-        placeholder_image=OnDiscPlaceholderImage(
-            path=os.path.join(
-                settings.MEDIA_ROOT,
-                'placeholders/event.jpeg'
-            )
-        )
-    )
+    image = models.ImageField(upload_to='images/events/%Y/%m/%d/', default=os.path.join(settings.MEDIA_ROOT,
+                'placeholders/event.jpeg'))
 
-    image_ppoi = PPOIField(blank=True)
 
     def duration(self):
         """"Returns the duration of the event"""

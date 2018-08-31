@@ -259,9 +259,8 @@ DJOSER = {
     },
     'EMAIL': {
         'activation': 'core.email.ActivationEmail',
-        'confirmation': 'djoser.email.ConfirmationEmail',
-        'password_reset': 'djoser.email.PasswordResetEmail',
+        'confirmation': 'core.email.ConfirmationEmail',
+        'password_reset': 'core.email.PasswordResetEmail',
+        'admin_confirmation': 'core.email.AdminConfirmationEmail'
     },
-    'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS': ['https://localhost:8000/','http://localhost:8000/',],
-
 }

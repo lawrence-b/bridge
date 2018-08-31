@@ -38,8 +38,9 @@ class EventsScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: '#F18B35' }}>
+        {this.state.currentSecondaryBar.type === DatePicker ? this.state.currentSecondaryBar : null}
         <CategoriesTray categoryType='event' user={this.userData} onCategorySelected={(category) => this.onCategorySelected(category)} />
-        {this.state.currentSecondaryBar}
+        {this.state.currentSecondaryBar.type === CategoriesTray ? this.state.currentSecondaryBar : null}
         <EventsList events={this.state.events} navigation={this.props.navigation} user={this.userData} />
       </View>
     );

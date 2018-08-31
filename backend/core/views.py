@@ -9,18 +9,19 @@ from djoser.conf import settings as djoser_settings
 # Import from Django Rest Framework
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, permissions
 
 # Import from core
 from .models import User, UserCategory, HostCategory, EventCategory
 from .serializers import UserCategoryChildrenSerializer, HostSerializer,\
     HostSerializerWithAdmins, HostCategoryChildrenSerializer, EventSerializer, EventCategoryChildrenSerializer,\
-    EmailSerializer
+    EmailSerializer, FacebookLoginSerializer
 from .filters import hosts_filter, events_filter, OptionalEventsFilters, OptionalHostsFilters
 from .permissions import HostPermission, EventPermission, AddAdminPermission
 
 # Import from rest_framework_tracking
 from rest_framework_tracking.mixins import LoggingMixin
+from rest_framework.generics import CreateAPIView
 
 
 class UserCategoryViewSet(viewsets.ViewSet):
@@ -251,3 +252,10 @@ class PasswordResetConfirmView(djoser.views.PasswordResetConfirmView):
     """Use this endpoint to finish reset password process."""
 
     pass
+
+
+class FacebookLogin(CreateAPIView):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = FacebookLoginSerializer
+
+

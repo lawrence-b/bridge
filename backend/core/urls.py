@@ -54,7 +54,7 @@ urlpatterns += [
         name='password_reset_confirm'
     ),
     url(r'^auth/', include('djoser.urls.authtoken')),
-    url(r'^auth/', include('djoser.social.urls')),
+    url(r'^auth/facebook/login/$', views.FacebookLogin.as_view(),),
 
     # Schema and docs
     url(r'^schema/$', schema_view_coreapi),

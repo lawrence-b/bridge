@@ -13,39 +13,57 @@ class DatePicker extends React.Component {
     return (
       <View style={styles.viewStyle}>
 
-        <TouchableOpacity onPress={() => {
-          previousDay(this.state.date);
-          this.props.dateUpdated(this.state.date);
-          this.setState(this.state)}} >
-          <Icon name='arrow-left'  size={26} color='#fff' style={{marginLeft: 14}}  />
-        </TouchableOpacity>
-
-        <Text style={styles.textStyle}>{formatDate(this.state.date)}</Text>
-
-        <TouchableOpacity onPress={() => {
-          nextDay(this.state.date);
-          this.props.dateUpdated(this.state.date);
-          this.setState(this.state)}} >
-          <Icon name='arrow-right' size={26} color='#fff' style={{marginRight: 14}} />
-        </TouchableOpacity>
+        {this.generateDateTile(-3)}
+        {this.generateDateTile(-2)}
+        {this.generateDateTile(-1)}
+        {this.generateDateTile( 0)}
+        {this.generateDateTile(+1)}
+        {this.generateDateTile(+2)}
+        {this.generateDateTile(+3)}
 
       </View>
     );
   }
+
+  generateDateTile(offset) {
+    var textStyle = {...styles.textStyle, color: (offset === 0 ? '#000' : styles.textStyle.color)};
+    var textViewStyle = (offset === 0
+                         ? {...styles.textViewStyle,
+                            backgroundColor: '#fff',
+                            borderRadius: 100,
+                            shadowOffset: {width: 0, height: 2},
+                            shadowColor: '#000',
+                            shadowOpacity: 0.2}
+                         : styles.textViewStyle);
+
+    var newDate = new Date(this.state.date.getTime());
+    newDate.setDate(newDate.getDate() + offset);
+
+    return (
+      <TouchableOpacity onPress={() => {
+          shiftDate(this.state.date, offset);
+          this.props.dateUpdated(this.state.date);
+          this.setState(this.state)}} >
+
+        <View style={textViewStyle}>
+          <Text style={textStyle}>{getDayString(newDate)}</Text>
+          <Text style={textStyle}>{newDate.getDate()}</Text>
+        </View>
+
+      </TouchableOpacity>
+    )
+  }
+
 }
 
-const nextDay     = date => {date.setDate(date.getDate() + 1);}
-const previousDay = date => {date.setDate(date.getDate() - 1);}
+const shiftDate = (date, offset) => {console.log(date); date.setDate(date.getDate() + offset);}
 
-const formatDate = date => {
-  var day  = date.getDay();
-  var dayNumber   = date.getDate();
-  var monthNumber = date.getMonth();
+const getDayString = date => {
+  var dayNumber = date.getDay();
 
   var daysOfTheWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-  return daysOfTheWeek[day] + ' ' + dayNumber + ' ' + months[monthNumber];
+  return daysOfTheWeek[dayNumber];
 };
 
 const styles = {
@@ -54,11 +72,19 @@ const styles = {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: 35,
+    height: 40,
     elevation: 2
   },
+  textViewStyle: {
+    width: 42,
+    height: 42,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   textStyle: {
-    fontSize: 16,
+    fontSize: 12,
+    fontWeight: 'bold',
     color: "#FFFFFF"
   }
 };

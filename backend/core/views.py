@@ -10,6 +10,7 @@ from djoser.conf import settings as djoser_settings
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework import viewsets, status, permissions
+from rest_framework.generics import CreateAPIView
 
 # Import from core
 from .models import User, UserCategory, HostCategory, EventCategory
@@ -18,10 +19,6 @@ from .serializers import UserCategoryChildrenSerializer, HostSerializer,\
     EmailSerializer, FacebookLoginSerializer
 from .filters import hosts_filter, events_filter, OptionalEventsFilters, OptionalHostsFilters
 from .permissions import HostPermission, EventPermission, AddAdminPermission
-
-# Import from rest_framework_tracking
-from rest_framework_tracking.mixins import LoggingMixin
-from rest_framework.generics import CreateAPIView
 
 
 class UserCategoryViewSet(viewsets.ViewSet):
@@ -136,7 +133,7 @@ class HostCategoryViewSet(viewsets.ViewSet):
         return Response(serializer.data)
 
 
-class EventViewSet(LoggingMixin, viewsets.ModelViewSet):
+class EventViewSet(viewsets.ModelViewSet):
     """
         retrieve:
         Returns the given event via GET. Authenticated only.

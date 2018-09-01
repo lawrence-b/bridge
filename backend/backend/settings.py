@@ -57,7 +57,6 @@ INSTALLED_APPS = [
     'mptt',
     'django_filters',
     'djoser',
-    'rest_framework_tracking',
     'corsheaders',
     'social_django',
 ]

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import Ionicon from 'react-ionicons';
 import './App.css';
@@ -8,24 +9,39 @@ import LoginOrSignUpScreen from './LoginOrSignUpScreen.js';
 
 class App extends Component {
 
-  componentWillMount() {
-    this.displayLoginOrSignupScreen();
+  constructor(props) {
+    super(props);
 
+    this.userData = null;
+    this.state = {cookieBanner: this.generateCookieBanner()};
+  }
+
+  componentWillMount() {
     const cookies = new Cookies();
 
     const userData = cookies.get('bridge_user_data');
+    const cookiePermissions = cookies.get('bridge_cookie_permissions');
+
+    if (cookiePermissions !== undefined) {
+      this.setState({cookieBanner: null});
+    }
 
     if (userData !== undefined) {
-      this.displayMainScreen(userData);
+      this.userData = userData;
     }
   }
 
   render() {
     return (
       <div>
-        {this.state.currentScreen}
+        <Router>
+          <div>
+            {this.generateMainRoute()}
+            <Route path="/login" exact render={({ history }) => this.generateLoginOrSignupScreen(history)} />
+          </div>
+        </Router>
 
-        
+        {this.state.cookieBanner}
       </div>
     );
   }
@@ -39,28 +55,48 @@ class App extends Component {
           on your machine. Read our Terms and Conditions.
         </p>
 
-        <Ionicon icon="md-close" fontSize="22px" color="#fff" style={{margin: 10, cursor: 'pointer'}} />
+        <Ionicon icon="md-close" fontSize="22px" color="#fff" style={{margin: 10, cursor: 'pointer'}}
+          onClick={() => this.cookiesExplicitPermission()} />
       </div>
     );
   }
 
-  displayMainScreen(userData) {
-    this.setState({currentScreen: <MainScreen userData={userData} logOut={() => this.onLogout()}/>});
+  cookiesExplicitPermission() {
+    const cookies = new Cookies();
+    cookies.set('bridge_cookie_permissions', {dismissed: true}, { path: '/' });
+    this.setState({cookieBanner: null});
   }
 
-  displayLoginOrSignupScreen() {
-    this.setState({currentScreen: <LoginOrSignUpScreen onLogin={(userData) => this.onLogin(userData)} />});
+  generateMainRoute() {
+    return <Route path='/' exact render={({ history }) => {
+      if (this.userData !== null && this.userData !== undefined) {
+        return this.generateMainScreen(this.userData, history);
+      }
+      else {
+        return <Redirect to='/login' />;
+      }
+    }} />;
   }
 
-  onLogin(userData) {
-    this.displayMainScreen(userData);
+  generateMainScreen(userData, history) {
+    return <MainScreen userData={userData} logOut={() => this.onLogout(history)} />;
   }
 
-  onLogout() {
+  generateLoginOrSignupScreen(history) {
+    return <LoginOrSignUpScreen onLogin={(userData) => this.onLogin(userData, history)} />;
+  }
+
+  onLogin(userData, history) {
+    this.userData = userData;
+    history.push('/');
+  }
+
+  onLogout(history) {
     const cookies = new Cookies();
     cookies.remove('bridge_user_data');
 
-    this.displayLoginOrSignupScreen();
+    this.userData = null;
+    history.push('/');
   }
 }
 

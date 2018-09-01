@@ -64,7 +64,7 @@ class MainScreen extends Component {
 
         <div style={{display: 'flex', flex: 1, flexDirection: 'column', alignItems: 'stretch'}}>
           <div className="MainScreen-top-bar">
-            <h1 className="MainScreen-host-title">{this.state.currentScreen.type === HomePane ? "Bridge" : this.currentHost().name}</h1>
+            <h1 className="MainScreen-host-title">{this.state.currentScreen.type === HomePane || this.state.currentScreen.type === AccountPane ? "Bridge" : this.currentHost().name}</h1>
 
             <div className="MainScreen-top-bar-buttons">
               {this.hosts.length <= 0

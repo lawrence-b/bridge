@@ -6,6 +6,7 @@ import './App.css';
 
 import MainScreen from './MainScreen.js';
 import LoginOrSignUpScreen from './LoginOrSignUpScreen.js';
+import ForgottenPasswordScreen from './ForgottenPasswordScreen.js';
 
 class App extends Component {
 
@@ -38,6 +39,7 @@ class App extends Component {
           <div>
             {this.generateMainRoute()}
             <Route path="/login" exact render={({ history }) => this.generateLoginOrSignupScreen(history)} />
+            <Route path="/password/reset/confirm/:uid/:token" component={ForgottenPasswordScreen} />
           </div>
         </Router>
 
@@ -83,6 +85,11 @@ class App extends Component {
   }
 
   generateLoginOrSignupScreen(history) {
+    const cookies = new Cookies();
+    cookies.remove('bridge_user_data');
+
+    this.userData = null;
+
     return <LoginOrSignUpScreen onLogin={(userData) => this.onLogin(userData, history)} />;
   }
 

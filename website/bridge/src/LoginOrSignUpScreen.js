@@ -49,7 +49,7 @@ class LoginOrSignUpScreen extends Component {
   generateLoginScreen() {
     return (
       <div className="LoginOrSignUpScreen">
-        <div className="LoginOrSignUpScreen-input-pane">
+        <div className="LoginOrSignUpScreen-input-pane" onKeyPress={(e) => e.key === 'Enter' ? this.logIn() : null} >
           <label className="LoginOrSignUpScreen-input-pane-title">Log In</label>
           <input type="text" className="LoginOrSignUpScreen-input-pane-text-field" placeholder="Email"
           ref={(textInput) => {this.loginEmailTextInput = textInput}} />

@@ -77,7 +77,7 @@ class EditSocietyPanel extends Component {
     }
     else if (this.props.host !== null && this.props.host !== undefined
           && this.props.host.image !== null && this.props.host.image !== undefined) {
-      return this.props.host.image.medium_square_crop;
+      return this.props.host.image;
     }
 
     return null;

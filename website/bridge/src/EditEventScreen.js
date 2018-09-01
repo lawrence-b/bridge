@@ -118,7 +118,7 @@ class EditEventScreen extends Component {
       return this.imageFilePreview;
     }
     else if (this.state.event.image !== null && this.state.event.image !== undefined) {
-      return this.state.event.image.medium_square_crop;
+      return this.state.event.image;
     }
 
     return null;

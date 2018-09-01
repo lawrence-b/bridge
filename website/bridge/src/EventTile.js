@@ -10,7 +10,7 @@ class EventTile extends Component {
     return (
       <div className="EventTile">
         <span className="EventTile-span">
-          <img src={this.props.event.image.medium_square_crop} width={50} height={50} style={{marginRight: 24}} />
+          <img src={this.props.event.image} width={50} height={50} style={{marginRight: 24}} />
 
           <label className="EventTile-title">{this.props.event.title}</label>
 

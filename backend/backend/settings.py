@@ -20,21 +20,21 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if 'SECRET_KEY' in os.environ:
     SECRET_KEY = os.environ['SECRET_KEY']
 else:
-    SECRET_KEY = 'asdjkqw234wdfmsn'
+    SECRET_KEY = 'secret_key'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['bridge-backend-production.eu-west-2.elasticbeanstalk.com','localhost',]
 
 # Extra security measures
 CORS_ORIGIN_ALLOW_ALL = True
-#CSRF_COOKIE_SECURE = True
-#SESSION_COOKIE_SECURE = True
-#X_FRAME_OPTIONS = 'DENY'
-SECURE_SSL_REDIRECT = False
-#SECURE_BROWSER_XSS_FILTER = True
-#SECURE_CONTENT_TYPE_NOSNIFF = True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+X_FRAME_OPTIONS = 'DENY'
+SECURE_SSL_REDIRECT = True
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
 
 # NOTE: The default Django LOGGER is set up, see
 # https://docs.djangoproject.com/en/2.0/topics/logging/#django-s-default-logging-configuration
@@ -109,15 +109,12 @@ if 'RDS_HOSTNAME' in os.environ:
             'PORT': os.environ['RDS_PORT'],
         }
     }
+
 else:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'newbridgedb',
-            'USER': '',
-            'PASSWORD': '',
-            'HOST': 'localhost',
-            'PORT': '',
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'db',
         }
     }
 
@@ -158,7 +155,7 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, "..", "www", "static")
+STATIC_ROOT = os.path.join(BASE_DIR, "static_root")
 STATIC_URL = '/static/'
 
 # Media files
@@ -187,7 +184,7 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
 USER_FIELDS = ['email',]
 
 SOCIAL_AUTH_FACEBOOK_API_VERSION = '3.1'
-#SOCIAL_AUTH_POSTGRES_JSONFIELD = False
+SOCIAL_AUTH_POSTGRES_JSONFIELD = True
 
 SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = ['email', 'first_name', 'last_name']
 
@@ -238,8 +235,8 @@ EMAIL_PORT = 587
 DJOSER = {
     'DOMAIN': 'www.bridge-uni.com',
     'SITE_NAME': 'Bridge',
-    'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
-    'ACTIVATION_URL': '#/activate/{uid}/{token}',
+    'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL': 'activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
     'SEND_CONFIRMATION_EMAIL': True,
     'SERIALIZERS': {

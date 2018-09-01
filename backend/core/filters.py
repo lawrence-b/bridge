@@ -124,7 +124,7 @@ class OptionalEventsFilters(filters.FilterSet):
         """A filter that returns only events whose title contains a particular string, or events whose hosts' names
         contain that particular string. Case-insensitive."""
 
-        return queryset.filter(title__icontains=value) | queryset.filter(hosts__name__icontains=value)
+        return queryset & (queryset.filter(title__icontains=value) | queryset.filter(hosts__name__icontains=value))
 
     def subscribed_to_filter(self, queryset, name, value):
         """A filter that returns only events hosted by hosts to whom the user is subscribed."""

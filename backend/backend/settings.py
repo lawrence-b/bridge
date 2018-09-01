@@ -21,18 +21,18 @@ with open('backend/secret_key.txt') as f:
     SECRET_KEY = f.read().strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['bridge-backend-dev.eu-west-2.elasticbeanstalk.com', '127.0.0.1', 'localhost',]
+ALLOWED_HOSTS = ['bridge-backend-production.eu-west-2.elasticbeanstalk.com',]
 
 # Extra security measures
 CORS_ORIGIN_ALLOW_ALL = True
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-X_FRAME_OPTIONS = 'DENY'
-SECURE_SSL_REDIRECT = True
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
+#CSRF_COOKIE_SECURE = True
+#SESSION_COOKIE_SECURE = True
+#X_FRAME_OPTIONS = 'DENY'
+SECURE_SSL_REDIRECT = False
+#SECURE_BROWSER_XSS_FILTER = True
+#SECURE_CONTENT_TYPE_NOSNIFF = True
 
 # NOTE: The default Django LOGGER is set up, see
 # https://docs.djangoproject.com/en/2.0/topics/logging/#django-s-default-logging-configuration
@@ -99,8 +99,12 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'lawrence',
+        'USER': 'lawrence',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -170,7 +174,7 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
 USER_FIELDS = ['email',]
 
 SOCIAL_AUTH_FACEBOOK_API_VERSION = '3.1'
-#SOCIAL_AUTH_POSTGRES_JSONFIELD = True
+SOCIAL_AUTH_POSTGRES_JSONFIELD = True
 
 SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_details',

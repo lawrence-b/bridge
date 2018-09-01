@@ -14,11 +14,11 @@
       <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/backend/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="367">
-              <caret line="176" column="0" lean-forward="false" selection-start-line="176" selection-start-column="0" selection-end-line="176" selection-end-column="0" />
+            <state relative-caret-position="519">
+              <caret line="117" column="27" lean-forward="true" selection-start-line="117" selection-start-column="27" selection-end-line="117" selection-end-column="27" />
               <folding>
-                <marker date="1535802756611" expanded="true" signature="1493:1844" ph="..." />
-                <marker date="1535802756611" expanded="true" signature="8319:8320" ph="..." />
+                <marker date="1535816161996" expanded="true" signature="1457:1808" ph="..." />
+                <marker date="1535816161996" expanded="true" signature="8320:8321" ph="..." />
               </folding>
             </state>
           </provider>
@@ -345,8 +345,8 @@
         <state relative-caret-position="630">
           <caret line="42" column="9" lean-forward="false" selection-start-line="42" selection-start-column="9" selection-end-line="42" selection-end-column="9" />
           <folding>
-            <marker date="1535802756611" expanded="true" signature="1493:1844" ph="..." />
-            <marker date="1535802756611" expanded="true" signature="8319:8320" ph="..." />
+            <marker date="1535816161996" expanded="true" signature="1457:1808" ph="..." />
+            <marker date="1535816161996" expanded="true" signature="8320:8321" ph="..." />
           </folding>
         </state>
       </provider>
@@ -398,8 +398,8 @@
         <state relative-caret-position="510">
           <caret line="34" column="26" lean-forward="true" selection-start-line="34" selection-start-column="26" selection-end-line="34" selection-end-column="26" />
           <folding>
-            <marker date="1535802756611" expanded="true" signature="1493:1844" ph="..." />
-            <marker date="1535802756611" expanded="true" signature="8319:8320" ph="..." />
+            <marker date="1535816161996" expanded="true" signature="1457:1808" ph="..." />
+            <marker date="1535816161996" expanded="true" signature="8320:8321" ph="..." />
           </folding>
         </state>
       </provider>
@@ -620,11 +620,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/backend/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="367">
-          <caret line="176" column="0" lean-forward="false" selection-start-line="176" selection-start-column="0" selection-end-line="176" selection-end-column="0" />
+        <state relative-caret-position="519">
+          <caret line="117" column="27" lean-forward="true" selection-start-line="117" selection-start-column="27" selection-end-line="117" selection-end-column="27" />
           <folding>
-            <marker date="1535802756611" expanded="true" signature="1493:1844" ph="..." />
-            <marker date="1535802756611" expanded="true" signature="8319:8320" ph="..." />
+            <marker date="1535816161996" expanded="true" signature="1457:1808" ph="..." />
+            <marker date="1535816161996" expanded="true" signature="8320:8321" ph="..." />
           </folding>
         </state>
       </provider>

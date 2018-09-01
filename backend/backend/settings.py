@@ -17,13 +17,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-with open('backend/secret_key.txt') as f:
-    SECRET_KEY = f.read().strip()
+if 'SECRET_KEY' in os.environ:
+    SECRET_KEY = os.environ['SECRET_KEY']
+else:
+    SECRET_KEY = 'asdjkqw234wdfmsn'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['bridge-backend-production.eu-west-2.elasticbeanstalk.com',]
+ALLOWED_HOSTS = ['bridge-backend-production.eu-west-2.elasticbeanstalk.com','localhost',]
 
 # Extra security measures
 CORS_ORIGIN_ALLOW_ALL = True
@@ -38,7 +40,6 @@ SECURE_SSL_REDIRECT = False
 # https://docs.djangoproject.com/en/2.0/topics/logging/#django-s-default-logging-configuration
 # Logging emails are sent for levels ERROR or CRITICAL to the following site admins:
 ADMINS = [('Current admin', 'bridgeapp18@gmail.com')]
-# A custom logger is still set for manual output during development, see further down.
 
 
 # Application definition
@@ -97,16 +98,28 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'lawrence',
-        'USER': 'lawrence',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '5432',
+if 'RDS_HOSTNAME' in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.environ['RDS_DB_NAME'],
+            'USER': os.environ['RDS_USERNAME'],
+            'PASSWORD': os.environ['RDS_PASSWORD'],
+            'HOST': os.environ['RDS_HOSTNAME'],
+            'PORT': os.environ['RDS_PORT'],
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'lawrence',
+            'USER': 'lawrence',
+            'PASSWORD': '',
+            'HOST': 'localhost',
+            'PORT': '5432',
+        }
+    }
 
 
 # Password validation
@@ -145,7 +158,7 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
+STATIC_ROOT = os.path.join(BASE_DIR, "..", "www", "static")
 STATIC_URL = '/static/'
 
 # Media files
@@ -211,25 +224,6 @@ REST_FRAMEWORK = {
         'user': '10000/minute',
         'add_admin': '20/day',
     }
-}
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'backend/debug.log'),
-        },
-    },
-    'loggers': {
-        'core': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-    },
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

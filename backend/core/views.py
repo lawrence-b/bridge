@@ -255,6 +255,7 @@ class PasswordResetConfirmView(djoser.views.PasswordResetConfirmView):
 
 
 class FacebookLogin(CreateAPIView):
+    """Use this endpoint to exchange a Facebook access token for an API authentication token."""
     permission_classes = [permissions.AllowAny]
     serializer_class = FacebookLoginSerializer
 

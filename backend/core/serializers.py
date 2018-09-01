@@ -5,7 +5,6 @@ from .models import User, UserCategory, Host, HostCategory, Event, EventCategory
 from rest_framework import serializers
 
 # Import from additional packages
-from versatileimagefield.serializers import VersatileImageFieldSerializer
 from djoser import serializers as djoser_serializers
 from djoser.compat import get_user_email, get_user_email_field_name
 from djoser.conf import settings
@@ -20,16 +19,10 @@ class UserCategoryChildrenSerializer(serializers.ModelSerializer):
 
     children = serializers.SerializerMethodField()
 
-    thumbnail = VersatileImageFieldSerializer(
-        sizes=[
-            ('full_size', 'url'),
-        ]
-    )
-
     class Meta:
         """Defines the source model and the fields to be serialized."""
         model = UserCategory
-        fields = ('id', 'name', 'thumbnail', 'children',)  # add here rest of the fields from model
+        fields = ('id', 'name', 'children',)  # add here rest of the fields from model
 
     def get_children(self, obj):
         """Defines the recursive serialization of children categories."""
@@ -45,16 +38,10 @@ class UserCategoryParentSerializer(serializers.ModelSerializer):
 
     parent = serializers.SerializerMethodField()
 
-    thumbnail = VersatileImageFieldSerializer(
-        sizes=[
-            ('full_size', 'url'),
-        ]
-    )
-
     class Meta:
         """Defines the source model and the fields to be serialized."""
         model = UserCategory
-        fields = ('id', 'name', 'thumbnail', 'parent',)
+        fields = ('id', 'name', 'parent',)
 
     def get_parent(self, obj):
         """Defines the recursive serialization of parent categories."""
@@ -70,11 +57,7 @@ class HostCategoryChildrenSerializer(serializers.ModelSerializer):
 
     children = serializers.SerializerMethodField()
 
-    thumbnail = VersatileImageFieldSerializer(
-        sizes=[
-            ('full_size', 'url'),
-        ]
-    )
+    thumbnail = serializers.ImageField()
 
     class Meta:
         """Defines the source model and the fields to be serialized."""
@@ -95,11 +78,7 @@ class HostCategoryParentSerializer(serializers.ModelSerializer):
 
     parent = serializers.SerializerMethodField()
 
-    thumbnail = VersatileImageFieldSerializer(
-        sizes=[
-            ('full_size', 'url'),
-        ]
-    )
+    thumbnail = serializers.ImageField()
 
     class Meta:
         """Defines the source model and the fields to be serialized."""
@@ -120,11 +99,7 @@ class EventCategoryChildrenSerializer(serializers.ModelSerializer):
 
     children = serializers.SerializerMethodField()
 
-    thumbnail = VersatileImageFieldSerializer(
-        sizes=[
-            ('full_size', 'url'),
-        ]
-    )
+    thumbnail = serializers.ImageField()
 
     class Meta:
         """Defines the source model and the fields to be serialized."""
@@ -145,11 +120,7 @@ class EventCategoryParentSerializer(serializers.ModelSerializer):
 
     parent = serializers.SerializerMethodField()
 
-    thumbnail = VersatileImageFieldSerializer(
-        sizes=[
-            ('full_size', 'url'),
-        ]
-    )
+    thumbnail = serializers.ImageField()
 
     class Meta:
         """Defines the source model and the fields to be serialized."""
@@ -206,15 +177,7 @@ class EventBasicInfoSerializer(serializers.ModelSerializer):
 
     open_to = UserCategoryChildrenSerializer(read_only=True)
 
-    image = VersatileImageFieldSerializer(
-        sizes=[
-            ('full_size', 'url'),
-            ('thumbnail', 'thumbnail__100x100'),
-            ('medium_square_crop', 'crop__400x400'),
-            ('small_square_crop', 'crop__50x50')
-        ],
-        required=False, read_only=True,
-    )
+    image = serializers.ImageField(read_only=True)
 
     class Meta:
         """Defines the source model and the fields to be serialized. May additionally specify whether any fields are
@@ -250,15 +213,7 @@ class EventSerializer(serializers.ModelSerializer):
 
     duration = serializers.DurationField(read_only=True)
 
-    image = VersatileImageFieldSerializer(
-        sizes=[
-            ('full_size', 'url'),
-            ('thumbnail', 'thumbnail__100x100'),
-            ('medium_square_crop', 'crop__400x400'),
-            ('small_square_crop', 'crop__50x50')
-        ],
-        required=False,
-    )
+    image = serializers.ImageField(required=False)
 
     interested_in_check = serializers.SerializerMethodField()
 
@@ -280,14 +235,12 @@ class EventSerializer(serializers.ModelSerializer):
             'location',
             'description',
             'image',
-            'image_ppoi',
             'open_to',
             'open_to_id',
             'interested_in_check',
         )
         extra_kwargs = {
             'id': {'read_only': True},
-            'image_ppoi': {'read_only': False, 'required': False},
         }
 
     def get_interested_in_check(self, obj):
@@ -317,25 +270,9 @@ class HostSerializerWithAdmins(serializers.ModelSerializer):
     open_to_id = serializers.PrimaryKeyRelatedField(queryset=UserCategory.objects.all(), source='open_to',
                                                     write_only=True)
 
-    image = VersatileImageFieldSerializer(
-        sizes=[
-            ('full_size', 'url'),
-            ('thumbnail', 'thumbnail__100x100'),
-            ('medium_square_crop', 'crop__400x400'),
-            ('small_square_crop', 'crop__50x50')
-        ],
-        required=False,
-    )
+    image = serializers.ImageField(required=False)
 
-    logo = VersatileImageFieldSerializer(
-        sizes=[
-            ('full_size', 'url'),
-            ('thumbnail', 'thumbnail__100x100'),
-            ('medium_square_crop', 'crop__400x400'),
-            ('small_square_crop', 'crop__50x50')
-        ],
-        required=False,
-    )
+    logo = serializers.ImageField(required=False)
 
     subscribed_to_check = serializers.SerializerMethodField()
 
@@ -355,17 +292,13 @@ class HostSerializerWithAdmins(serializers.ModelSerializer):
             'description',
             'website',
             'image',
-            'image_ppoi',
             'logo',
-            'logo_ppoi',
             'open_to',
             'open_to_id',
             'subscribed_to_check',
         )
         extra_kwargs = {
             'id': {'read_only': True},
-            'image_ppoi': {'read_only': False, 'required': False},
-            'logo_ppoi': {'read_only': False, 'required': False},
         }
 
     def get_subscribed_to_check(self, obj):
@@ -394,25 +327,9 @@ class HostSerializer(serializers.ModelSerializer):
     open_to_id = serializers.PrimaryKeyRelatedField(queryset=UserCategory.objects.all(), source='open_to',
                                                     write_only=True)
 
-    image = VersatileImageFieldSerializer(
-        sizes=[
-            ('full_size', 'url'),
-            ('thumbnail', 'thumbnail__100x100'),
-            ('medium_square_crop', 'crop__400x400'),
-            ('small_square_crop', 'crop__50x50')
-        ],
-        required=False,
-    )
+    image = serializers.ImageField(required=False)
 
-    logo = VersatileImageFieldSerializer(
-        sizes=[
-            ('full_size', 'url'),
-            ('thumbnail', 'thumbnail__100x100'),
-            ('medium_square_crop', 'crop__400x400'),
-            ('small_square_crop', 'crop__50x50')
-        ],
-        required=False,
-    )
+    logo = serializers.ImageField(required=False)
 
     subscribed_to_check = serializers.SerializerMethodField()
 
@@ -431,17 +348,13 @@ class HostSerializer(serializers.ModelSerializer):
             'description',
             'website',
             'image',
-            'image_ppoi',
             'logo',
-            'logo_ppoi',
             'open_to',
             'open_to_id',
             'subscribed_to_check',
         )
         extra_kwargs = {
             'id': {'read_only': True},
-            'image_ppoi': {'read_only': False, 'required': False},
-            'logo_ppoi': {'read_only': False, 'required': False},
         }
 
     def get_subscribed_to_check(self, obj):
@@ -557,13 +470,18 @@ class UserSerializer(djoser_serializers.UserSerializer, serializers.ModelSeriali
 
 
 class FacebookLoginSerializer(serializers.Serializer):
+    """Serializes and validates the Facebook access token, returning an API authentication token, and a user information
+    check, if the access token is valid."""
+
     access_token = serializers.CharField(write_only=True)
 
     token = serializers.CharField(read_only=True)
     user_information_required = serializers.BooleanField(read_only=True)
+
     user = serializers.CharField(read_only=True)
 
     def create(self, validated_data):
+        """Upon a create method, authenticates Facebook access token and returns API authentication token."""
         request = self.context['request']
         user = validated_data['user']
         token = djoser.utils.login_user(user=user, request=request)
@@ -574,6 +492,7 @@ class FacebookLoginSerializer(serializers.Serializer):
         }
 
     def validate(self, attrs):
+        """Validates Facebook access token."""
         request = self.context['request']
 
         strategy = load_strategy(request)

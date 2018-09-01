@@ -112,12 +112,12 @@ if 'RDS_HOSTNAME' in os.environ:
 else:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'lawrence',
-            'USER': 'lawrence',
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'newbridgedb',
+            'USER': '',
             'PASSWORD': '',
             'HOST': 'localhost',
-            'PORT': '5432',
+            'PORT': '',
         }
     }
 
@@ -187,7 +187,9 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
 USER_FIELDS = ['email',]
 
 SOCIAL_AUTH_FACEBOOK_API_VERSION = '3.1'
-SOCIAL_AUTH_POSTGRES_JSONFIELD = True
+#SOCIAL_AUTH_POSTGRES_JSONFIELD = False
+
+SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = ['email', 'first_name', 'last_name']
 
 SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_details',

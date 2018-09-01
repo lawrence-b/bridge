@@ -99,9 +99,38 @@ class User(AbstractUser):
     university_age_category = models.CharField(max_length=255, blank=True, choices=AGE_CATEGORY_CHOICES)
 
     # If you select the undergrad options, you get to select matriculation year and subject
-    PHYS = 'Physics'
     SUBJECT_CHOICES = (
-        (PHYS, 'Physics'),
+        ('Anglo-Saxon, Norse, and Celtic','Anglo-Saxon, Norse, and Celtic'),
+        ('Archaeology', 'Archaeology'),
+        ('Architecture', 'Architecture'),
+        ('Asian and Middle Eastern Studies', 'Asian and Middle Eastern Studies'),
+        ('Chemical Engineering', 'Chemical Engineering'),
+        ('Classics', 'Classics'),
+        ('Computer Science', 'Computer Science'),
+        ('Economics', 'Economics'),
+        ('Education', 'Education'),
+        ('Engineering', 'Engineering'),
+        ('English', 'English'),
+        ('Geography', 'Geography'),
+        ('History', 'History'),
+        ('History and Modern Languages', 'History and Modern Languages'),
+        ('History and Politics', 'History and Politics'),
+        ('History of Art', 'History of Art'),
+        ('Human, Social, and Political Sciences', 'Human, Social, and Political Sciences'),
+        ('Land Economy', 'Land Economy'),
+        ('Law', 'Law'),
+        ('Linguistics', 'Linguistics'),
+        ('Management Studies', 'Management Studies'),
+        ('Manufacturing Engineering', 'Manufacturing Engineering'),
+        ('Mathematics', 'Mathematics'),
+        ('Medicine', 'Medicine'),
+        ('Modern and Medieval Languages', 'Modern and Medieval Languages'),
+        ('Music', 'Music'),
+        ('Natural Sciences', 'Natural Sciences'),
+        ('Philosophy', 'Philosophy'),
+        ('Psychological and Behavioural Sciences', 'Psychological and Behavioural Sciences'),
+        ('Theology', 'Theology'),
+        ('Veterinary Medicine', 'Veterinary Medicine'),
     )
     subject = models.CharField(max_length=255, blank=True, choices=SUBJECT_CHOICES)
 

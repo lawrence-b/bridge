@@ -114,7 +114,7 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': 'db',
+            'NAME': 'db.sqlite3',
         }
     }
 
@@ -151,15 +151,20 @@ USE_L10N = True
 
 USE_TZ = False
 
-# Define storage options
+# Storage settings
 AWS_S3_OBJECT_PARAMETERS = {
     'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
     'CacheControl': 'max-age=94608000',
 }
 AWS_STORAGE_BUCKET_NAME = 'bridge-backend-storage'
 AWS_S3_REGION_NAME = 'eu-west-2'  # e.g. us-east-2
-AWS_ACCESS_KEY_ID = 'AKIAJLSVA43KDUZ3MHTQ'
-AWS_SECRET_ACCESS_KEY = 'UgP2dH4py9u63epIhSJEv0+2WNK+fBmFUKDcTaE0'
+
+with open('backend/aws_access_key_id.txt') as f:
+    AWS_ACCESS_KEY_ID = f.read().strip()
+
+with open('backend/aws_secret_access_key.txt') as f:
+    AWS_SECRET_ACCESS_KEY = f.read().strip()
+
 
 # Tell django-storages the domain to use to refer to static files.
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
@@ -253,9 +258,11 @@ EMAIL_HOST_USER = 'bridgeapp18@gmail.com'
 EMAIL_HOST_PASSWORD = 'henrythe5th'
 EMAIL_PORT = 587
 
+# Email template settings
+SITE_NAME = 'Bridge'
+DOMAIN = 'www.bridge-uni.com'
+
 DJOSER = {
-    'DOMAIN': 'www.bridge-uni.com',
-    'SITE_NAME': 'Bridge',
     'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
     'ACTIVATION_URL': 'activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,

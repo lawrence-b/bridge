@@ -59,7 +59,4 @@ urlpatterns += [
     # Schema and docs
     url(r'^schema/$', schema_view_coreapi),
     url(r'^docs/', include_docs_urls(title='Bridge API Docs', public=False, renderer_classes=[CustomRenderer])),
-
-    # Health checks
-    url(r'^health/?', include('health_check.urls')),
 ]

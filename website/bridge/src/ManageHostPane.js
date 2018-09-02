@@ -119,20 +119,15 @@ class ManageHostPane extends Component {
 
   deleteAdmin(adminIdToDelete, shouldRefreshAll) {
     var adminIds = this.state.host.admins.map((admin) => admin.id);
-    console.log(adminIds);
-    console.log(adminIdToDelete);
-    console.log(this.state.user);
     var index = adminIds.indexOf(adminIdToDelete);
 
     if (index > -1) {
       adminIds.splice(index, 1);
     }
     else {
-      console.log("Index not found when removing admin");
+      this.setState({...this.state, statusMessage: 'Oops! Something went wrong.'});
       return;
     }
-
-    console.log({admins_id: adminIds});
 
     sendRequest({
       address: "hosts/" + this.state.host.id + "/",

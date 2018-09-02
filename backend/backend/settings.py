@@ -23,18 +23,21 @@ else:
     SECRET_KEY = 'secret_key'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['bridge-backend.eu-west-2.elasticbeanstalk.com','www.api.bridge-uni.com','localhost',]
+ALLOWED_HOSTS = ['www.api.bridge-uni.com']
 
 # Extra security measures
 CORS_ORIGIN_ALLOW_ALL = True
-#CSRF_COOKIE_SECURE = True
-#SESSION_COOKIE_SECURE = True
-#X_FRAME_OPTIONS = 'DENY'
-SECURE_SSL_REDIRECT = False # Must be false. HTTPS is decrypted at the load balancer, django app still receives HTTP
-#SECURE_BROWSER_XSS_FILTER = True
-#SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+SECURE_SSL_REDIRECT = True
+
+X_FRAME_OPTIONS = 'DENY'
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
 
 # NOTE: The default Django LOGGER is set up, see
 # https://docs.djangoproject.com/en/2.0/topics/logging/#django-s-default-logging-configuration
@@ -247,6 +250,8 @@ REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_RATES': {
         'anon': '100/minute',
         'user': '10000/minute',
+        # add_admin scope sets the throttle rate for the add_admin view, which exposes user emails. This ensures user
+        # email addresses cannot be collected in bulk
         'add_admin': '20/day',
     }
 }

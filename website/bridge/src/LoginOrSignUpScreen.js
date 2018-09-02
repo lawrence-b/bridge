@@ -5,6 +5,7 @@ import './LoginOrSignUpScreen.css';
 import sendRequest from './sendRequest.js';
 import CategoryDropdownMenu from './CategoryDropdownMenu.js';
 import SignUpScreen from './SignUpScreen.js';
+import ResetPasswordScreen from './ResetPasswordScreen.js';
 
 class LoginOrSignUpScreen extends Component {
 
@@ -22,6 +23,8 @@ class LoginOrSignUpScreen extends Component {
     return (
       <div className="LoginOrSignUpScreen">
         <div className="LoginOrSignUpScreen-title-and-subtitle">
+          <img src={require('./images/bridge_logo.png')} style={{width: 160, height: 80, marginBottom: 20}} />
+
           <label className="LoginOrSignUpScreen-title">Bridge</label>
           <label className="LoginOrSignUpScreen-subtitle">Events made simple</label>
         </div>
@@ -63,7 +66,11 @@ class LoginOrSignUpScreen extends Component {
             </span>
           </button>
 
-          <label className="LoginOrSignUpScreen-input-pane-label" style={{cursor: 'pointer'}}>Forgot your password?</label>
+          <label className="LoginOrSignUpScreen-input-pane-label"
+            style={{cursor: 'pointer'}}
+            onClick={() => this.forgottenPassword()}>
+            Forgot your password?
+          </label>
           <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
             <label className="LoginOrSignUpScreen-input-pane-label">{'Don\'t have an account?'}</label>
             <label className="LoginOrSignUpScreen-input-pane-label"
@@ -108,6 +115,15 @@ class LoginOrSignUpScreen extends Component {
      && this.loginPasswordTextInput !== null) this.loginPasswordTextInput.value        = "";
 
     this.setState({currentScreen: this.generateSignupScreen()});
+  }
+
+  forgottenPassword() {
+    if (this.loginEmailTextInput    !== undefined
+     && this.loginEmailTextInput    !== null) this.loginEmailTextInput.value           = "";
+    if (this.loginPasswordTextInput !== undefined
+     && this.loginPasswordTextInput !== null) this.loginPasswordTextInput.value        = "";
+
+     this.setState({currentScreen: <ResetPasswordScreen />})
   }
 
   canEnterApp(userData) {

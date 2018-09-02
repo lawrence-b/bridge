@@ -7,8 +7,6 @@
   align-items: center;
 
   height: 100vh;
-
-  //background-image: url('./images/login_background.png');
 }
 
 .LoginOrSignUpScreen-title-and-subtitle {
@@ -22,7 +20,9 @@
   font-weight: lighter;
   color: #fff;
 
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+
+  font-family: 'avenir';
 }
 
 .LoginOrSignUpScreen-subtitle {
@@ -32,7 +32,7 @@
 }
 
 .LoginOrSignUpScreen-buttons {
-  margin-top: 30vh;
+  margin-top: 20vh;
 
   display: flex;
   flex-direction: column;

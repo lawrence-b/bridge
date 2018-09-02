@@ -59,6 +59,8 @@ class MainScreen extends Component {
     return (
       <div className="MainScreen">
         <div className="MainScreen-menu-bar">
+          <img src={require('./images/bridge_logo.png')} style={{width: 80, height: 40, marginBottom: 20, alignSelf: 'center'}} />
+
           <label className="MainScreen-menu-header">MENU</label>
           <label className="MainScreen-menu-item" style={this.generateSelectedLinkStyle(HomePane)} onClick={() => this.displayHomePage()}>Home</label>
           {this.hosts.length <= 0

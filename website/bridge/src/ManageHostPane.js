@@ -14,29 +14,9 @@ class ManageHostPane extends Component {
       host: this.props.host,
       user: this.props.user,
       newAdmin: '',
-      warningPopUp: null
+      warningPopUp: null,
+      statusMessage: ''
     };
-  }
-
-  generateWarningPopUp() {
-    return (
-      <div className="ManageHostPane-warning-pop-up">
-        <div className="ManageHostPane-warning-pop-up-contents">
-          <label style={{fontSize: 26, fontFamily: 'avenir', marginBottom: 40}}>Confirm Delete</label>
-
-          <label style={{marginBottom: 6}}>{'Are you sure you want to delete "' + this.props.host.name + '"?'}</label>
-          <label>You cannot undo this operation</label>
-
-          <div style={{display: 'flex', flexDirection: 'row', marginTop: 40}}>
-            <Button positive={false} text="Cancel" onClick={() => this.cancelDeleteHost()}
-              style={{marginTop: 0, marginBottom: 10, marginRight: 4}} />
-
-            <Button positive={true} text="Delete" onClick={() => this.deleteHost()}
-              style={{marginTop: 0, marginBottom: 10, marginRight: 4, backgroundColor: '#d44', borderColor: '#b22'}} />
-          </div>
-        </div>
-      </div>
-    );
   }
 
   generateAdminRows() {
@@ -91,7 +71,7 @@ class ManageHostPane extends Component {
           <div className="ManageHostPane-panel">
             <label className="ManageHostPane-panel-title">Admins</label>
 
-            <div style={{borderTop: '1px solid #ccc', flex: 1, overflow: 'scroll'}}>
+            <div style={{borderTop: '1px solid #ccc', overflow: 'scroll'}}>
               {this.generateAdminRows()}
               <div className="ManageHostPane-admin-row">
                 <input type="text" placeholder="New admin" style={{border: 'none', fontSize: 16, flex: 1, marginRight: 30}}
@@ -108,6 +88,29 @@ class ManageHostPane extends Component {
                 }} onClick={() => this.newAdmin()}/>
               </div>
             </div>
+
+            <label style={{marginTop: 40, marginLeft: 5, fontSize: 14, color: '#888'}}>{this.state.statusMessage}</label>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  generateWarningPopUp() {
+    return (
+      <div className="ManageHostPane-warning-pop-up">
+        <div className="ManageHostPane-warning-pop-up-contents">
+          <label style={{fontSize: 26, marginBottom: 40}}>Confirm Delete</label>
+
+          <label style={{marginBottom: 6}}>{'Are you sure you want to delete "' + this.props.host.name + '"?'}</label>
+          <label>You cannot undo this operation.</label>
+
+          <div style={{display: 'flex', flexDirection: 'row', marginTop: 40}}>
+            <Button positive={false} text="Cancel" onClick={() => this.cancelDeleteHost()}
+              style={{marginTop: 0, marginBottom: 10, marginRight: 20}} />
+
+            <Button positive={true} text="Delete" onClick={() => this.deleteHost()}
+              style={{marginTop: 0, marginBottom: 10, backgroundColor: '#d44', borderColor: '#b22'}} />
           </div>
         </div>
       </div>
@@ -129,18 +132,27 @@ class ManageHostPane extends Component {
       return;
     }
 
+    console.log({admins_id: adminIds});
+
     sendRequest({
       address: "hosts/" + this.state.host.id + "/",
       method: "PATCH",
       authorizationToken: this.state.user.token,
       body: {admins_id: adminIds},
-      responseHandlerNoJson: (response) => {shouldRefreshAll ? this.props.onLeftHost() : this.refreshHost()},
+      responseHandlerNoJson: (response) => {
+        if (response.status < 400) {
+          shouldRefreshAll ? this.props.onLeftHost() : this.refreshHost();
+        }
+        else {
+          this.setState({...this.state, statusMessage: 'Oops! Something went wrong.'});
+        }
+      },
     });
   }
 
   newAdmin() {
     if (this.state.newAdmin.length === 0) {
-      // TODO: Tell the user to enter an email
+      this.setState({...this.state, statusMessage: 'Please enter an email address.'});
       return;
     }
 
@@ -149,7 +161,14 @@ class ManageHostPane extends Component {
       method: "POST",
       authorizationToken: this.state.user.token,
       body: {email: this.state.newAdmin},
-      responseHandlerNoJson: (response) => {this.refreshHost();},
+      responseHandlerNoJson: (response) => {
+        if (response.status < 400) {
+          this.refreshHost();
+        }
+        else {
+          this.setState({...this.state, statusMessage: 'Oops! Something went wrong.'});
+        }
+      },
     });
   }
 
@@ -159,7 +178,7 @@ class ManageHostPane extends Component {
       method: "GET",
       authorizationToken: this.state.user.token,
       successHandler: (result) =>
-        {this.setState({...this.state, host: result, user: this.state.user, newAdmin: ''}); this.props.onHostUpdated();},
+        {this.setState({...this.state, host: result, user: this.state.user, newAdmin: '', statusMessage: ''}); this.props.onHostUpdated();},
     });
   }
 

@@ -20,7 +20,7 @@ class CategoryDropdownMenu extends Component {
       successHandler: (result) => {
         this.setState({categories: result});
         this.matchCategoryIndex();
-        if (this.props.initialCategory === null) {
+        if (this.props.initialCategory === null || this.props.initialCategory === undefined) {
           this.props.onCategoryChanged(result[this.currentCategoryIndex]);
         }
         this.setState({categories: result});

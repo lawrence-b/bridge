@@ -29,12 +29,12 @@ ALLOWED_HOSTS = ['bridge-backend.eu-west-2.elasticbeanstalk.com','www.api.bridge
 
 # Extra security measures
 CORS_ORIGIN_ALLOW_ALL = True
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-X_FRAME_OPTIONS = 'DENY'
+#CSRF_COOKIE_SECURE = True
+#SESSION_COOKIE_SECURE = True
+#X_FRAME_OPTIONS = 'DENY'
 SECURE_SSL_REDIRECT = False # Must be false. HTTPS is decrypted at the load balancer, django app still receives HTTP
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
+#SECURE_BROWSER_XSS_FILTER = True
+#SECURE_CONTENT_TYPE_NOSNIFF = True
 
 # NOTE: The default Django LOGGER is set up, see
 # https://docs.djangoproject.com/en/2.0/topics/logging/#django-s-default-logging-configuration

@@ -11,14 +11,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/backend/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="444">
-              <caret line="175" column="0" lean-forward="true" selection-start-line="175" selection-start-column="0" selection-end-line="175" selection-end-column="0" />
+            <state relative-caret-position="1815">
+              <caret line="121" column="21" lean-forward="true" selection-start-line="121" selection-start-column="21" selection-end-line="121" selection-end-column="21" />
               <folding>
-                <marker date="1535893060031" expanded="true" signature="1549:1869" ph="..." />
-                <marker date="1535893060031" expanded="true" signature="9155:9156" ph="..." />
+                <marker date="1535894106452" expanded="true" signature="1554:1874" ph="..." />
+                <marker date="1535894106452" expanded="true" signature="9160:9161" ph="..." />
               </folding>
             </state>
           </provider>
@@ -84,7 +84,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/backend/urls.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="330">
@@ -179,8 +179,8 @@
         <option value="$PROJECT_DIR$/core/subjects.txt" />
         <option value="$PROJECT_DIR$/core/models.py" />
         <option value="$PROJECT_DIR$/custom_storages.py" />
-        <option value="$PROJECT_DIR$/backend/settings.py" />
         <option value="$PROJECT_DIR$/backend/urls.py" />
+        <option value="$PROJECT_DIR$/backend/settings.py" />
       </list>
     </option>
   </component>
@@ -373,8 +373,8 @@
         <state relative-caret-position="510">
           <caret line="34" column="26" lean-forward="true" selection-start-line="34" selection-start-column="26" selection-end-line="34" selection-end-column="26" />
           <folding>
-            <marker date="1535893060031" expanded="true" signature="1549:1869" ph="..." />
-            <marker date="1535893060031" expanded="true" signature="9155:9156" ph="..." />
+            <marker date="1535894106452" expanded="true" signature="1554:1874" ph="..." />
+            <marker date="1535894106452" expanded="true" signature="9160:9161" ph="..." />
           </folding>
         </state>
       </provider>
@@ -573,17 +573,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="444">
-          <caret line="175" column="0" lean-forward="true" selection-start-line="175" selection-start-column="0" selection-end-line="175" selection-end-column="0" />
-          <folding>
-            <marker date="1535893060031" expanded="true" signature="1549:1869" ph="..." />
-            <marker date="1535893060031" expanded="true" signature="9155:9156" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="710">
@@ -599,6 +588,17 @@
         <state relative-caret-position="330">
           <caret line="24" column="1" lean-forward="false" selection-start-line="24" selection-start-column="1" selection-end-line="24" selection-end-column="1" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1815">
+          <caret line="121" column="21" lean-forward="true" selection-start-line="121" selection-start-column="21" selection-end-line="121" selection-end-column="21" />
+          <folding>
+            <marker date="1535894106452" expanded="true" signature="1554:1874" ph="..." />
+            <marker date="1535894106452" expanded="true" signature="9160:9161" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>

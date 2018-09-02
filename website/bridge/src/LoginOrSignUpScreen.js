@@ -26,7 +26,6 @@ class LoginOrSignUpScreen extends Component {
           <img src={require('./images/bridge_logo.png')} style={{width: 160, height: 80, marginBottom: 20}} />
 
           <label className="LoginOrSignUpScreen-title">Bridge</label>
-          <label className="LoginOrSignUpScreen-subtitle">Events made simple</label>
         </div>
 
         <div className="LoginOrSignUpScreen-buttons">
@@ -42,7 +41,8 @@ class LoginOrSignUpScreen extends Component {
             </span>
           </button>
 
-          <label className="LoginOrSignUpScreen-terms-text">Read Terms & Conditions</label>
+          <label className="LoginOrSignUpScreen-terms-text"
+            style={{backgroundColor: '#555c', borderRadius: 30, padding: 10, marginTop: 20}}>Read Terms & Conditions</label>
         </div>
       </div>
     );

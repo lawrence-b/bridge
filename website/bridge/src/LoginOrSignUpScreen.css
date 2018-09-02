@@ -7,6 +7,12 @@
   align-items: center;
 
   height: 100vh;
+
+  background-image: url('./images/bridge_background.png');
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .LoginOrSignUpScreen-title-and-subtitle {
@@ -32,7 +38,7 @@
 }
 
 .LoginOrSignUpScreen-buttons {
-  margin-top: 20vh;
+  margin-top: 5vh;
 
   display: flex;
   flex-direction: column;
@@ -64,7 +70,7 @@
 
   padding: 6px;
 
-  margin: 10px;
+  margin: 8px;
 
   line-height : 24px;
 }

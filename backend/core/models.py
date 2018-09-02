@@ -191,7 +191,7 @@ class Host(models.Model):
     website = models.URLField(max_length=200, blank=True)
 
     image = models.ImageField(upload_to='images/hosts/pictures/%Y/%m/%d/', default=os.path.join(settings.MEDIA_ROOT,
-                'placeholders/host.jpeg'))
+                'placeholders/host.png'))
 
     logo = models.ImageField(upload_to='images/hosts/logos/%Y/%m/%d/', blank=True)
 
@@ -236,6 +236,16 @@ class EventCategory(MPTTModel):
         return self.name
 
 
+def get_default_image(hosts):
+    """Gets a default image if one is not uploaded."""
+    try:
+        first_host = hosts.all()[0]
+        image_path = first_host.image.name
+    except:
+        image_path = os.path.join(settings.MEDIA_ROOT, 'placeholders/event.png')
+    return image_path
+
+
 class Event(models.Model):
     """Event model. Stores all information pertinent to an event."""
 
@@ -257,9 +267,7 @@ class Event(models.Model):
 
     location = models.CharField(max_length=250, blank=True)
 
-    image = models.ImageField(upload_to='images/events/%Y/%m/%d/', default=os.path.join(settings.MEDIA_ROOT,
-                'placeholders/event.jpeg'))
-
+    image = models.ImageField(upload_to='images/events/%Y/%m/%d/', default=get_default_image(hosts))
 
     def duration(self):
         """"Returns the duration of the event"""

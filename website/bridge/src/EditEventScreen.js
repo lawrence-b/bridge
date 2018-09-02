@@ -89,7 +89,7 @@ class EditEventScreen extends Component {
                  : <img src={this.getImageData()}
                       width={100}
                       height={100}
-                      style={{marginRight: 20}} />}
+                      style={{marginRight: 20, objectFit: 'cover'}} />}
              </div>
              <input type="file"
                accept="image/png, image/jpeg"
@@ -121,7 +121,7 @@ class EditEventScreen extends Component {
       return this.state.event.image;
     }
     else if (this.props.host.image !== null && this.props.host.image !== null) {
-      return this.props.host.host.image;
+      return this.props.host.image;
     }
 
     return null;

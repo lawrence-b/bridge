@@ -15,11 +15,15 @@ class EditSocietyPanel extends Component {
     this.imageFilePreview = null;
 
     if (this.props.creating) {
-      this.state = {newHost: {name: '', category_id: 1, open_to_id: 1, description: ''}};
+      this.state = {newHost: {name: '', category_id: 1, open_to_id: 1, description: ''}, message: ''};
     }
     else {
       this.state = {newHost: {name: this.props.host.name, category_id: this.props.host.category.id, open_to_id: this.props.host.open_to.id, description: this.props.host.description}};
     }
+  }
+
+  componentWillMount() {
+    this.setState({...this.state, message: ''});
   }
 
   render() {
@@ -63,6 +67,8 @@ class EditSocietyPanel extends Component {
               <textarea type="text" onChange={(e) => {this.state.newHost.description = e.target.value; this.setState(this.state);}}
                         className="EditSocietyPanel-text-field" value={this.state.newHost.description} style={{maxWidth: 330}} />
             </div>
+
+            <label style={{marginTop: 6, color: '#888'}}>{this.state.message}</label>
 
             <Button positive={true} text={this.props.creating ? "Create" : "Submit"} onClick={() => this.props.creating ? this.createHost() : this.editHost()}
               style={{marginTop: 30, marginLeft: 0}} />
@@ -112,6 +118,8 @@ class EditSocietyPanel extends Component {
   }
 
   createHost() {
+    this.setState({...this.state, message: 'We are processing your request'});
+
     sendRequest({
       address: "users/me/",
       method: "GET",
@@ -133,8 +141,20 @@ class EditSocietyPanel extends Component {
           authorizationToken: this.props.user.token,
           body: form,
           responseHandlerNoJson: (response) => {
-            this.setState({newHost: {name: '', category_id: 1, open_to_id: 1, description: ''}});
-            this.props.onCreate();
+            if (response.status < 400) {
+              this.setState({newHost: {
+                name: '',
+                category_id: this.state.newHost.category_id,
+                open_to_id: this.state.newHost.open_to_id,
+                description: ''
+              },
+                message: 'Host created successfully'
+              });
+              this.props.onCreate();
+            }
+            else {
+              this.setState({...this.state, message: 'Oops! Something went wrong.'});
+            }
           },
         });
       }
@@ -142,6 +162,8 @@ class EditSocietyPanel extends Component {
   }
 
   editHost() {
+    this.setState({...this.state, message: 'We are processing your request'});
+
     var form = new FormData();
     form.append('name', this.state.newHost.name);
     form.append('category_id', this.state.newHost.category_id);
@@ -156,7 +178,15 @@ class EditSocietyPanel extends Component {
       method: "PATCH",
       authorizationToken: this.props.user.token,
       body: form,
-      responseHandlerNoJson: (response) => {this.props.onEdit();},
+      responseHandlerNoJson: (response) => {
+        if (response.status < 300) {
+          this.setState({...this.state, message: 'Host edited successfully.'});
+          this.props.onEdit();
+        }
+        else {
+          this.setState({...this.state, message: 'Oops! Something went wrong.'});
+        }
+      },
     });
   }
 }

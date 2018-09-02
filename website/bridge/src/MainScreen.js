@@ -19,8 +19,6 @@ class MainScreen extends Component {
     this.hostIndex = 0;
     this.hosts = [];
 
-    //this.state = {currentScreen: <EventsPane host={this.currentHost()} onEdit={(event) => this.editEvent(event)} onCreate={() => this.createEvent()} onDelete={(event) => this.deleteEvent(event)} />};
-
     this.state = {currentScreen: <HomePane user={this.user} hosts={this.hosts} refreshHosts={() => this.getHosts()} />};
 
     this.getHosts();
@@ -48,18 +46,27 @@ class MainScreen extends Component {
     return this.hosts[this.hostIndex];
   }
 
+  generateSelectedLinkStyle(componentType) {
+    if (this.state.currentScreen.type === componentType) {
+      return {borderBottom: '1px solid #ccc'};
+    }
+    else {
+      return {};
+    }
+  }
+
   render() {
     return (
       <div className="MainScreen">
         <div className="MainScreen-menu-bar">
           <label className="MainScreen-menu-header">MENU</label>
-          <label className="MainScreen-menu-item" onClick={() => this.displayHomePage()}>Home</label>
+          <label className="MainScreen-menu-item" style={this.generateSelectedLinkStyle(HomePane)} onClick={() => this.displayHomePage()}>Home</label>
           {this.hosts.length <= 0
             ? null
-            : <label className="MainScreen-menu-item" onClick={() => this.displayEvents()}>Events</label>}
+            : <label className="MainScreen-menu-item" style={this.generateSelectedLinkStyle(EventsPane)} onClick={() => this.displayEvents()}>Events</label>}
           {this.hosts.length <= 0
             ? null
-            : <label className="MainScreen-menu-item" onClick={() => this.displayHostManagementPage()}>Manage</label>}
+            : <label className="MainScreen-menu-item" style={this.generateSelectedLinkStyle(ManageHostPane)} onClick={() => this.displayHostManagementPage()}>Manage</label>}
         </div>
 
         <div style={{display: 'flex', flex: 1, flexDirection: 'column', alignItems: 'stretch'}}>

@@ -15,7 +15,7 @@ class SignUpScreen extends Component {
       currentScreenNumber: 1,
       firstName: '',
       lastName: '',
-      currentUserCategory: null,
+      currentUserCategory: {id: 1, name: 'Public', children: []},
       currentStudentCategory: defaultStudentCategory,
       currentMatriculationYear: defaultMatriculationYear,
       currentSubject: defaultSubject,

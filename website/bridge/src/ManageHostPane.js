@@ -10,8 +10,33 @@ class ManageHostPane extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {host: this.props.host, user: this.props.user, newAdmin: ''};
-    console.log(this.state.host);
+    this.state = {
+      host: this.props.host,
+      user: this.props.user,
+      newAdmin: '',
+      warningPopUp: null
+    };
+  }
+
+  generateWarningPopUp() {
+    return (
+      <div className="ManageHostPane-warning-pop-up">
+        <div className="ManageHostPane-warning-pop-up-contents">
+          <label style={{fontSize: 26, fontFamily: 'avenir', marginBottom: 40}}>Confirm Delete</label>
+
+          <label style={{marginBottom: 6}}>{'Are you sure you want to delete "' + this.props.host.name + '"?'}</label>
+          <label>You cannot undo this operation</label>
+
+          <div style={{display: 'flex', flexDirection: 'row', marginTop: 40}}>
+            <Button positive={false} text="Cancel" onClick={() => this.cancelDeleteHost()}
+              style={{marginTop: 0, marginBottom: 10, marginRight: 4}} />
+
+            <Button positive={true} text="Delete" onClick={() => this.deleteHost()}
+              style={{marginTop: 0, marginBottom: 10, marginRight: 4, backgroundColor: '#d44', borderColor: '#b22'}} />
+          </div>
+        </div>
+      </div>
+    );
   }
 
   generateAdminRows() {
@@ -52,8 +77,12 @@ class ManageHostPane extends Component {
 
     return (
       <div className="ManageHostPane">
+        {this.state.warningPopUp}
+
         <div className="ManageHostPane-top-bar">
           <label className="ManageHostPane-header">Manage</label>
+          <Button positive={true} text="Delete" onClick={() => this.tryDeleteHost()}
+            style={{marginTop: 0, marginBottom: 10, marginRight: 4, backgroundColor: '#d44', borderColor: '#b22'}} />
         </div>
 
         <div className="ManageHostPane-main">
@@ -130,12 +159,32 @@ class ManageHostPane extends Component {
       method: "GET",
       authorizationToken: this.state.user.token,
       successHandler: (result) =>
-        {this.setState({host: result, user: this.state.user, newAdmin: ''}); this.props.onHostUpdated();},
+        {this.setState({...this.state, host: result, user: this.state.user, newAdmin: ''}); this.props.onHostUpdated();},
     });
   }
 
   leaveHost(userAdminId) {
     this.deleteAdmin(userAdminId, true);
+  }
+
+  tryDeleteHost() {
+    this.setState({...this.state, warningPopUp: this.generateWarningPopUp()});
+  }
+
+  cancelDeleteHost() {
+    this.setState({...this.state, warningPopUp: null});
+  }
+
+  deleteHost() {
+    sendRequest({
+      address: 'hosts/' + this.state.host.id + '/',
+      method: 'DELETE',
+      authorizationToken: this.state.user.token,
+      responseHandlerNoJson: () => {
+        this.setState({...this.state, warningPopUp: null});
+        this.props.onLeftHost();
+      }
+    });
   }
 
 }

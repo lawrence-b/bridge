@@ -12,10 +12,11 @@ export default function sendRequest({
 }) {
   var headers = authorizationToken !== null && authorizationToken !== undefined
                 ? {
-                    "Authorization": ("Token " + authorizationToken)
+                    "Authorization": ("Token " + authorizationToken),
+                    "Content-Type": (body instanceof FormData ? "multipart/form-data" : "application/json")
                   }
                 : {
-                    "Content-Type": "application/json"
+                    "Content-Type": (body instanceof FormData ? "multipart/form-data" : "application/json")
                   };
 
   var params = body !== null && body !== undefined

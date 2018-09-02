@@ -7,6 +7,7 @@ import './App.css';
 import MainScreen from './MainScreen.js';
 import LoginOrSignUpScreen from './LoginOrSignUpScreen.js';
 import ForgottenPasswordScreen from './ForgottenPasswordScreen.js';
+import ConfirmSignUpScreen from './ConfirmSignUpScreen.js';
 
 class App extends Component {
 
@@ -39,7 +40,8 @@ class App extends Component {
           <div>
             {this.generateMainRoute()}
             <Route path="/login" exact render={({ history }) => this.generateLoginOrSignupScreen(history)} />
-            <Route path="/password/reset/confirm/:uid/:token" component={ForgottenPasswordScreen} />
+            <Route path="/password/reset/confirm/:uid/:token" exact component={ForgottenPasswordScreen} />
+            <Route path="/activate/:uid/:token" exact component={ConfirmSignUpScreen} />
           </div>
         </Router>
 

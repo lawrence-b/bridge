@@ -55,7 +55,7 @@ class EditSocietyPanel extends Component {
                    : <img src={this.getImageData()}
                         width={100}
                         height={100}
-                        style={{marginTop: 4, marginBottom: 10}} />}
+                        style={{marginTop: 4, marginBottom: 10, objectFit: 'cover'}} />}
                </div>
                <input type="file"
                  accept="image/png, image/jpeg"

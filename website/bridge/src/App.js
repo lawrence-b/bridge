@@ -33,6 +33,10 @@ class App extends Component {
     }
   }
 
+  componentDidMount() {
+    document.title = "Bridge";
+  }
+
   render() {
     return (
       <div>

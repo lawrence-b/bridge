@@ -42,7 +42,7 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 # NOTE: The default Django LOGGER is set up, see
 # https://docs.djangoproject.com/en/2.0/topics/logging/#django-s-default-logging-configuration
 # Logging emails are sent for levels ERROR or CRITICAL to the following site admins:
-ADMINS = [('Current admin', 'bridgeapp18@gmail.com')]
+ADMINS = [('Current admins', 'logs@bridge-uni.com')]
 
 
 # Application definition

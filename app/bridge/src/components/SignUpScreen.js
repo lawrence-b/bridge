@@ -8,9 +8,6 @@ class SignUpScreen extends Component {
   constructor(props) {
     super(props);
 
-    this.nameTextInput = null;
-
-    this.name     = '';
     this.username = '';
     this.password = '';
     this.confirmPassword = '';
@@ -19,35 +16,34 @@ class SignUpScreen extends Component {
   render() {
     return(
       <KeyboardAvoidingView style={styles.viewStyle} behavior="padding" enabled>
-        <Text style={styles.titleStyle}>Sign Up</Text>
+        <View style={styles.panelViewStyle}>
+          <Text style={styles.titleStyle}>Sign Up</Text>
 
-        <TextInput style={styles.textFieldStyle} placeholder='Full Name' autoCapitalize='words'
-        onChangeText={(text) => this.name = text}
-        ref={textInput => this.focusOnName(textInput)} />
-        <TextInput style={styles.textFieldStyle} placeholder='Email' autoCapitalize='none'
-        onChangeText={(text) => this.username = text} />
-        <TextInput style={styles.textFieldStyle} placeholder='Password' autoCapitalize='none' secureTextEntry={true}
-        onChangeText={(text) => this.password = text} />
-        <TextInput style={styles.textFieldStyle} placeholder='Confirm password' autoCapitalize='none' secureTextEntry={true}
-        onChangeText={(text) => this.confirmPassword = text} />
+          <TextInput style={styles.textFieldStyle} placeholder='Email' autoCapitalize='none'
+          onChangeText={(text) => this.username = text}
+          ref={textInput => this.focusOnEmail(textInput)} />
+          <TextInput style={styles.textFieldStyle} placeholder='Password' autoCapitalize='none' secureTextEntry={true}
+          onChangeText={(text) => this.password = text} />
+          <TextInput style={styles.textFieldStyle} placeholder='Confirm password' autoCapitalize='none' secureTextEntry={true}
+          onChangeText={(text) => this.confirmPassword = text} />
 
-        <View style={styles.buttonsViewStyle}>
-          <TouchableOpacity style={styles.cancelButtonStyle}  onPress={() => this.props.navigation.goBack()}>
-            <Text style={styles.buttonTextStyle}>Back</Text>
-          </TouchableOpacity>
+          <View style={styles.buttonsViewStyle}>
+            <TouchableOpacity style={styles.cancelButtonStyle}  onPress={() => this.props.navigation.goBack()}>
+              <Text style={styles.buttonTextStyle}>Back</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity style={styles.loginButtonStyle} onPress={() => this.done()}>
-            <Text style={styles.buttonTextStyle}>Submit</Text>
-          </TouchableOpacity>
+            <TouchableOpacity style={styles.loginButtonStyle} onPress={() => this.done()}>
+              <Text style={styles.buttonTextStyle}>Submit</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </KeyboardAvoidingView>
     );
   }
 
-  focusOnName(textInput) {
-    this.nameTextInput = textInput;
-    if (this.nameTextInput != null) {
-      this.nameTextInput.focus();
+  focusOnEmail(textInput) {
+    if (textInput !== null) {
+      textInput.focus();
     }
   }
 
@@ -75,8 +71,16 @@ const styles={
     justifyContent: 'center',
     alignItems: 'center'
   },
+  panelViewStyle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 20
+  },
   titleStyle: {
-    color: '#fff',
+    color: '#666',
     fontSize: 26,
     fontWeight: '300',
 
@@ -91,6 +95,8 @@ const styles={
     paddingRight: 13,
     margin: 10,
     borderRadius: 18,
+    borderColor: '#ccc',
+    borderWidth: 1,
 
     width: 200
   },

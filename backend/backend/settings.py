@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+import requests
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,7 +26,17 @@ else:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['www.api.bridge-uni.com']
+ALLOWED_HOSTS = ['www.api.bridge-uni.com','.elasticbeanstalk.com']
+
+# Now append the internal instance IP which AWS uses for health checks
+try:
+    internal_ip = requests.get('http://169.254.169.254/latest/meta-data/public-ipv4').text
+except requests.exceptions.ConnectionError:
+    pass
+else:
+    ALLOWED_HOSTS.append(internal_ip)
+del requests
+
 
 # Extra security measures
 CORS_ORIGIN_ALLOW_ALL = True

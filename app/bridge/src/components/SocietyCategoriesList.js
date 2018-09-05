@@ -11,11 +11,11 @@ class SocietyCategoriesList extends Component {
             style={[styles.tileViewStyle, {width: size, height: size, marginHorizontal: margin}]}
             onPress={() => this.props.onCategorySelected(category)}
             key={index} >
-        {category.thumbnail === undefined
+        {category.thumbnail === undefined || category.thumbnail === null
         ? null
         : <Image
             style={{flex: 1, width: size-12, borderRadius: 6}}
-            source={{uri: category.thumbnail.full_size}}
+            source={{uri: category.thumbnail}}
           />}
 
         <Text style={styles.nameTextStyle} numberOfLines={1}>{category.name}</Text>

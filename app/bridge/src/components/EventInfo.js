@@ -7,11 +7,11 @@ import Icon from 'react-native-vector-icons/EvilIcons';
 const EventInfo = (props) => {
   return (
     <View style={styles.viewStyle}>
-      {props.event.image === undefined
+      {props.event.image === undefined || props.event.image === null
       ? null
       : <Image
           style={{flex: 1, height: 200, borderRadius: 6}}
-          source={{uri: props.event.image.full_size}}
+          source={{uri: props.event.image}}
         />}
 
       <View style={styles.textViewStyle}>

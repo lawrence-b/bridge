@@ -34,11 +34,11 @@ export default function sendRequest({
 
 
   if (responseHandlerNoJson !== null && responseHandlerNoJson !== undefined) {
-    fetch("http://localhost:8000/" + address, params)
+    fetch("https://www.api.bridge-uni.com/" + address, params)
       .then(res => responseHandlerNoJson(res))
   }
   else {
-    fetch("http://localhost:8000/" + address, params)
+    fetch("https://www.api.bridge-uni.com/" + address, params)
       .then(res => res.status < 400 ? res.json() : null)
       .then(
         (result) => {

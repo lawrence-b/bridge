@@ -32,7 +32,7 @@ class SignUpScreen extends Component {
               <Text style={styles.buttonTextStyle}>Back</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.loginButtonStyle} onPress={() => this.done()}>
+            <TouchableOpacity style={styles.loginButtonStyle} onPress={() => this.showSecondSignupScreen()}>
               <Text style={styles.buttonTextStyle}>Submit</Text>
             </TouchableOpacity>
           </View>
@@ -47,8 +47,8 @@ class SignUpScreen extends Component {
     }
   }
 
-  done() {
-    this.enterApp({name: "Matteo Pozzi", email: "mpozzi@hotmail.co.uk", token: "12345"});
+  showSecondSignupScreen() {
+
   }
 
   enterApp(user) {

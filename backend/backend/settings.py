@@ -42,7 +42,7 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 # NOTE: The default Django LOGGER is set up, see
 # https://docs.djangoproject.com/en/2.0/topics/logging/#django-s-default-logging-configuration
 # Logging emails are sent for levels ERROR or CRITICAL to the following site admins:
-ADMINS = [('Current admin', 'bridgeapp18@gmail.com')]
+ADMINS = [('Current admins', 'logs@bridge-uni.com')]
 
 
 # Application definition
@@ -258,10 +258,12 @@ REST_FRAMEWORK = {
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'bridgeapp18@gmail.com'
-EMAIL_HOST_PASSWORD = 'henrythe5th'
+EMAIL_HOST = 'email-smtp.eu-west-1.amazonaws.com'
+EMAIL_HOST_USER = 'AKIAITO4J7KRCUFH4TIA'
+EMAIL_HOST_PASSWORD = 'AjsbYbZGYwvw1gCSQy4OIu8wfRvW1RwqIn5g/84MUDLC'
 EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = 'team@bridge-uni.com'
+SERVER_EMAIL = 'team@bridge-uni.com'
 
 # Email template settings
 SITE_NAME = 'Bridge'

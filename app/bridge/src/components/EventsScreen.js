@@ -22,57 +22,78 @@ class EventsScreen extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {events: [], currentSecondaryBar: null};
+    this.state = {events: []};
+    this.currentDate = new Date();
     this.currentCategory = null;
+    this.currentSubCategory = null;
     this.userData = this.props.screenProps.userData;
   }
 
   componentWillMount() {
-    this.showDatePicker();
-    this.getEventsForDate(new Date());
+    this.getEventsForDate();
+
+    this.props.navigation.addListener('willFocus', () => this.refreshEvents());
   }
 
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: '#F18B35' }}>
-        {this.state.currentSecondaryBar.type === DatePicker ? this.state.currentSecondaryBar : null}
-        <CategoriesTray categoryType='event' user={this.userData} onCategorySelected={(category) => this.onCategorySelected(category)} />
-        {this.state.currentSecondaryBar.type === CategoriesTray ? this.state.currentSecondaryBar : null}
-        <EventsList events={this.state.events} navigation={this.props.navigation} user={this.userData} />
+        {this.currentDate === null ? null : <DatePicker currentDate={this.currentDate} dateUpdated={(newDate) => this.onDateUpdated(newDate)} />}
+        <CategoriesTray user={this.userData} onCategorySelected={(category) => this.onCategorySelected(category)} />
+        {this.currentCategory === null ? null : <CategoriesTray currentCategory={this.currentSubCategory} categories={this.currentCategory.children} parentCategoryName={this.currentCategory.name} onCategorySelected={(subcategory) => this.onSubCategorySelected(subcategory)} />}
+        <EventsList events={this.state.events} navigation={this.props.navigation} />
       </View>
     );
   }
 
-  showDatePicker() {
-    this.setState({...this.state,
-      currentSecondaryBar: <DatePicker dateUpdated={(newDate) => this.getEventsForDate(newDate)} />
-    });
+  refreshEvents() {
+    if (this.currentCategory === null) {
+      this.getEventsForDate();
+    }
+    else {
+      if (this.currentSubCategory !== null) {
+        this.getEventsForCategory(this.currentSubCategory);
+      }
+      else {
+        this.getEventsForCategory(this.currentCategory);
+      }
+    }
   }
 
-  showSubCategoryBar(category) {
-    this.setState({...this.state,
-      currentSecondaryBar: <CategoriesTray categories={category.children} parentCategoryName={category.name} user={this.userData} onCategorySelected={(subcategory) => this.onSubCategorySelected(subcategory)} />
-    });
+  onDateUpdated(newDate) {
+    this.currentDate = newDate;
+    this.currentCategory = null;
+    this.currentSubCategory = null;
+    this.setState(this.state);
+    this.getEventsForDate();
   }
 
   onCategorySelected(category) {
     if (category.id === 0) {
       this.currentCategory = null;
-      this.showDatePicker();
-      this.getEventsForDate(new Date());
+      this.currentSubCategory = null;
+      this.currentDate = new Date();
+      this.setState(this.state);
+      this.getEventsForDate();
     }
     else {
       this.currentCategory = category;
-      this.showSubCategoryBar(category);
+      this.currentSubCategory = null;
+      this.currentDate = null;
+      this.setState(this.state);
       this.getEventsForCategory(category);
     }
   }
 
   onSubCategorySelected(subcategory) {
     if (subcategory.id === 0) {
+      this.currentSubCategory = null;
+      this.setState(this.state);
       this.getEventsForCategory(this.currentCategory);
     }
     else {
+      this.currentSubCategory = subcategory;
+      this.setState(this.state);
       this.getEventsForCategory(subcategory);
     }
   }
@@ -91,7 +112,8 @@ class EventsScreen extends React.Component {
     });
   }
 
-  getEventsForDate(date) {
+  getEventsForDate() {
+    var date = this.currentDate;
 
     var day   = date.getDate();
     var month = date.getMonth()+1;

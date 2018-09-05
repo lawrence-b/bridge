@@ -5,8 +5,7 @@ import Icon from 'react-native-vector-icons/EvilIcons';
 class DatePicker extends React.Component {
 
   componentWillMount() {
-    var newDate = new Date();
-    this.setState({ date: newDate });
+    this.setState({ date: this.props.currentDate });
   }
 
   render() {
@@ -56,7 +55,7 @@ class DatePicker extends React.Component {
 
 }
 
-const shiftDate = (date, offset) => {console.log(date); date.setDate(date.getDate() + offset);}
+const shiftDate = (date, offset) => {date.setDate(date.getDate() + offset);}
 
 const getDayString = date => {
   var dayNumber = date.getDay();

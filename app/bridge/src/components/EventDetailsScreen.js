@@ -24,13 +24,6 @@ class EventDetailsScreen extends Component {
     this.setState({event: this.props.navigation.getParam('event')});
   }
 
-  componentWillUnmount() {
-    var onGoBack = this.props.navigation.getParam('onGoBack');
-    if (onGoBack !== null && onGoBack !== undefined) {
-      onGoBack();
-    }
-  }
-
   render() {
     var user = this.props.navigation.getParam('user');
 

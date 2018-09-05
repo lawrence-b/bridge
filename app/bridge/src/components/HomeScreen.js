@@ -26,7 +26,7 @@ class HomeScreen extends React.Component {
   componentWillMount() {
     this.userData = this.props.screenProps.userData;
 
-    this.getEvents();
+    this.props.navigation.addListener('willFocus', () => this.getEvents());
   }
 
   renderTiles(events) {
@@ -40,7 +40,7 @@ class HomeScreen extends React.Component {
           event={event}
           size={150}
           margin={15}
-          onPress={() => this.props.navigation.navigate('SelectedEvent', {event: event, user: this.userData, onGoBack: () => this.getEvents()})} />
+          onPress={() => this.props.navigation.navigate('SelectedEvent', {event: event, user: this.userData})} />
       );
     }
   }

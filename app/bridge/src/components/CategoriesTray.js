@@ -19,15 +19,15 @@ class CategoriesTray extends React.Component {
                   ? 'All ' + this.props.parentCategoryName
                   : 'All');
       categories.unshift({id: 0, name: name});
-      this.setState({categories: categories});
+      this.setState({categories: categories, selectedIndex: 0});
     }
     else {
       sendRequest({
-        address: this.props.categoryType + '-categories/',
+        address: 'event-categories/',
         method: 'GET',
         authorizationToken: this.props.user.token,
         successHandler: (result) => {
-          var categories = (this.props.categoryType === 'host' ? result[1].children : result);
+          var categories = result;
           categories.unshift({id: 0, name: 'All'});
           this.setState({categories: categories});
         }
@@ -35,7 +35,20 @@ class CategoriesTray extends React.Component {
     }
   }
 
+  regenerateCategories() {
+    var categories = this.props.categories.slice(0);
+    var name = (this.props.parentCategoryName !== null && this.props.parentCategoryName !== undefined
+                ? 'All ' + this.props.parentCategoryName
+                : 'All');
+    categories.unshift({id: 0, name: name});
+    this.state.categories = categories;
+  }
+
   generateCategoryTiles() {
+    if (this.props.parentCategoryName !== null && this.props.parentCategoryName !== undefined) {
+      this.regenerateCategories();
+    }
+
     return (
       this.state.categories.map((category, index) => (
         <TouchableOpacity key={index} style={{...styles.categoryTileStyle,
@@ -54,6 +67,15 @@ class CategoriesTray extends React.Component {
   }
 
   render() {
+    if (this.props.currentCategory !== null && this.props.currentCategory !== undefined) {
+      for (var i = 0; i < this.state.categories.length; ++i) {
+        if (this.props.currentCategory.id === this.state.categories[i].id) {
+          this.state.selectedIndex = i;
+          break;
+        }
+      }
+    }
+
     return (
       <View style={{height: 35, marginTop: 6, marginBottom: 6, alignSelf: 'stretch'}}>
         <ScrollView contentContainerStyle={styles.scrollViewStyle} horizontal={true} showsHorizontalScrollIndicator={false}>

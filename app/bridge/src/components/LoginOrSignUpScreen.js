@@ -16,7 +16,7 @@ class LoginOrSignUpScreen extends Component {
           <Text style={styles.subtitleStyle}>Events made simple</Text>
         </View>
 
-        <View style={{alignItems: 'center', alignSelf: 'stretch'}}>
+        <View style={{alignItems: 'center', alignSelf: 'stretch', marginBottom: 60}}>
           <TouchableOpacity style={styles.button1Style} onPress={() => this.props.navigation.navigate('LogIn')}>
             <Text style={styles.text1Style}>Log In</Text>
           </TouchableOpacity>
@@ -91,23 +91,5 @@ const styles = {
     marginBottom: 20,
   }
 }
-
-/*
-const LoginStack = createStackNavigator(
-  {
-    Home: LoginOrSignUpScreen,
-    LogIn: LoginScreen,
-    SignUp: SignUpScreen
-  },
-  {
-    initialRouteName: 'Home',
-    headerMode: 'none',
-
-    navigationOptions: {
-        headerVisible: false,
-    }
-  }
-);
-*/
 
 export default LoginOrSignUpScreen;

@@ -3,15 +3,15 @@ import { Text, View, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/EvilIcons';
 
 const EventTile = (props) => {
-  
+
   return (
     <TouchableOpacity style={[styles.viewStyle, {width: props.size, height: props.size, marginHorizontal: props.margin}]}
           onPress={props.onPress} >
-      {props.event.image === undefined
+      {props.event.image === undefined || props.event.image === null
       ? null
       : <Image
           style={{flex: 1, width: props.size-20, borderRadius: 6}}
-          source={{uri: props.event.image.medium_square_crop}}
+          source={{uri: props.event.image}}
         />}
 
       <Text style={styles.titleTextStyle} numberOfLines={1}>{props.event.title}</Text>

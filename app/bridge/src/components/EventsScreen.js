@@ -41,7 +41,7 @@ class EventsScreen extends React.Component {
         {this.currentDate === null ? null : <DatePicker currentDate={this.currentDate} dateUpdated={(newDate) => this.onDateUpdated(newDate)} />}
         <CategoriesTray user={this.userData} onCategorySelected={(category) => this.onCategorySelected(category)} />
         {this.currentCategory === null ? null : <CategoriesTray currentCategory={this.currentSubCategory} categories={this.currentCategory.children} parentCategoryName={this.currentCategory.name} onCategorySelected={(subcategory) => this.onSubCategorySelected(subcategory)} />}
-        <EventsList events={this.state.events} navigation={this.props.navigation} />
+        <EventsList events={this.state.events} navigation={this.props.navigation} user={this.userData} />
       </View>
     );
   }

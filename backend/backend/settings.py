@@ -26,7 +26,7 @@ else:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['www.api.bridge-uni.com','.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['www.api.bridge-uni.com','.elasticbeanstalk.com', '35.178.131.135'] # The last IP is an AWS check
 
 # Now append the internal instance IP which AWS uses for health checks
 try:

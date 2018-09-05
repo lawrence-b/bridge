@@ -15,22 +15,39 @@ class SettingsScreen extends React.Component {
     headerTitleStyle: HeaderStyles.textStyle
   }
 
-  componentWillMount() {
-    this.setState({
+  constructor(props) {
+    super(props);
+
+    this.state = {
       user: this.props.screenProps.userData,
+      extendedUserData: {first_name: '', last_name: '', user_category: null, university_age_category: '', matriculation_year: '', subject: ''},
       password: {oldPassword: "", newPassword: "", confirmPassword: ""},
       warningMessage: "Tap Submit to confirm",
       isWarning: false
-    });
+    };
+  }
 
+  componentWillMount() {
     this.props.navigation.addListener('willFocus', (playload) => {
-      this.setState({
-        user: this.props.screenProps.userData,
+      this.setState({...this.state,
         password: {oldPassword: "", newPassword: "", confirmPassword: ""},
         warningMessage: "Tap Submit to confirm",
         isWarning: false
       });
     });
+
+    sendRequest({
+      address: 'users/me/',
+      method: 'GET',
+      authorizationToken: this.state.user.token,
+      successHandler: (result) => {
+        if (result.matriculation_year !== null && result.matriculation_year !== undefined) {
+          result.matriculation_year = result.matriculation_year.toString();
+        }
+
+        this.setState({...this.state, extendedUserData: result})
+      }
+    })
   }
 
   render() {
@@ -47,6 +64,8 @@ class SettingsScreen extends React.Component {
               <Text style={{fontSize: 14, fontWeight: 'bold'}}>Email: </Text>
               <Text style={{fontSize: 14}}>{this.state.user.email}</Text>
             </View>
+
+            {this.generateExtendedUserDataComponents()}
 
             <View style={{...styles.titleViewStyle, marginTop: 20}}>
               <Text style={{fontSize: 16, fontWeight: 'bold'}}>Password</Text>
@@ -111,6 +130,53 @@ class SettingsScreen extends React.Component {
     );
   }
 
+  generateExtendedUserDataComponents() {
+    return (
+      <View>
+        <View style={styles.textViewStyle}>
+          <Text style={{fontSize: 14, fontWeight: 'bold'}}>Name: </Text>
+          <Text style={{fontSize: 14}}>
+            {this.state.extendedUserData.first_name + ' ' + this.state.extendedUserData.last_name}
+          </Text>
+        </View>
+
+        <View style={styles.textViewStyle}>
+          <Text style={{fontSize: 14, fontWeight: 'bold'}}>User category: </Text>
+          <Text style={{fontSize: 14}}>
+            {this.state.extendedUserData.user_category !== null ? this.state.extendedUserData.user_category.name : null}
+          </Text>
+        </View>
+
+        {this.state.extendedUserData.university_age_category !== null && this.state.extendedUserData.university_age_category !== undefined
+         ?  <View style={styles.textViewStyle}>
+              <Text style={{fontSize: 14, fontWeight: 'bold'}}>Uni age category: </Text>
+              <Text style={{fontSize: 14}}>
+                {this.state.extendedUserData.university_age_category}
+              </Text>
+            </View>
+         : null}
+
+        {this.state.extendedUserData.matriculation_year !== null && this.state.extendedUserData.matriculation_year !== undefined
+         ?  <View style={styles.textViewStyle}>
+              <Text style={{fontSize: 14, fontWeight: 'bold'}}>Matriculation year: </Text>
+              <Text style={{fontSize: 14}}>
+                {this.state.extendedUserData.matriculation_year}
+              </Text>
+            </View>
+         : null}
+
+        {this.state.extendedUserData.subject !== null && this.state.extendedUserData.subject !== undefined
+         ?  <View style={styles.textViewStyle}>
+              <Text style={{fontSize: 14, fontWeight: 'bold'}}>Subject: </Text>
+              <Text style={{fontSize: 14}}>
+                {this.state.extendedUserData.subject}
+              </Text>
+            </View>
+         : null}
+      </View>
+    );
+  }
+
   submitNewAccountInfo() {
     if (this.state.password.oldPassword.length <= 0) {
       this.setState({...this.state, warningMessage: "Must enter your old password", isWarning: true});
@@ -168,7 +234,8 @@ const styles = {
     paddingTop: 12,
     paddingBottom: 12,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'space-between'
   },
   titleViewStyle: {
     borderColor: '#ddd',

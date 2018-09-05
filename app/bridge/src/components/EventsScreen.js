@@ -15,9 +15,6 @@ import sendRequest from '../sendRequest'
 class EventsScreen extends React.Component {
   static navigationOptions = {
     headerTitle: 'Events',
-    headerRight: (
-      <Icon name='search' size={26} color='#fff' style={{marginRight: 14}} />
-    ),
     headerStyle: HeaderStyles.viewStyle,
     headerTitleStyle: HeaderStyles.textStyle
   }

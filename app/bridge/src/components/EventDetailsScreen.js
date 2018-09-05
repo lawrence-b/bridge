@@ -11,9 +11,6 @@ import sendRequest from '../sendRequest';
 
 class EventDetailsScreen extends Component {
   static navigationOptions = {
-    headerRight: (
-      <Icon name='share' size={26} color='#fff' style={{marginRight: 14}} />
-    ),
     headerStyle: {...HeaderStyles.viewStyle, shadowOpacity: 0},
     headerTintColor: '#fff'
   };

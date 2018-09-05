@@ -21,7 +21,8 @@ class LoginScreen extends Component {
 
             <TextInput style={styles.textFieldStyle} placeholder='Email' autoCapitalize='none'
             onChangeText={(text) => this.email = text}
-            ref={textInput => this.focusOnEmail(textInput)} />
+            ref={textInput => this.focusOnEmail(textInput)}
+            autoCorrect={false} />
             <TextInput style={styles.textFieldStyle} placeholder='Password' autoCapitalize='none' secureTextEntry={true}
             onChangeText={(text) => this.password = text} />
 

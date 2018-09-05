@@ -1,38 +1,126 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, TextInput, KeyboardAvoidingView, AsyncStorage } from 'react-native';
+import { Text, View, TouchableOpacity, TextInput, KeyboardAvoidingView } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
+import ModalDropdown from 'react-native-modal-dropdown';
 
+import sendRequest from '../sendRequest.js';
 
 class SignUpScreen extends Component {
 
   constructor(props) {
     super(props);
 
-    this.username = '';
-    this.password = '';
-    this.confirmPassword = '';
+    this.state = {
+      currentScreenNumber: 1,
+      firstName: '',
+      lastName: '',
+      currentUserCategory: null,
+      currentStudentCategory: '',
+      currentMatriculationYear: '',
+      currentSubject: '',
+      emailAddress: '',
+      password: '',
+      confirmPassword: '',
+      errorMessage: '',
+      userCategories: []
+    };
+
+    sendRequest({
+      address: 'user-categories/',
+      method: 'GET',
+      successHandler: (result) => {
+        this.setState({...this.state, userCategories: result});
+      }
+    });
   }
 
   render() {
-    return(
+    if (this.state.currentScreenNumber === 1) {
+      return this.generateSignupScreen1();
+    }
+    else if (this.state.currentScreenNumber === 2) {
+      return this.generateSignupScreen2();
+    }
+    else if (this.state.currentScreenNumber === 3) {
+      return this.generateAfterSignupScreen();
+    }
+
+    return null;
+  }
+
+  generateSignupScreen1() {
+    return (
       <KeyboardAvoidingView style={styles.viewStyle} behavior="padding" enabled>
         <View style={styles.panelViewStyle}>
           <Text style={styles.titleStyle}>Sign Up</Text>
 
           <TextInput style={styles.textFieldStyle} placeholder='Email' autoCapitalize='none'
-          onChangeText={(text) => this.username = text}
-          ref={textInput => this.focusOnEmail(textInput)} />
+          onChangeText={(text) => this.setState({...this.state, emailAddress: text})}
+          autoCorrect={false}
+          value={this.state.emailAddress} />
+
           <TextInput style={styles.textFieldStyle} placeholder='Password' autoCapitalize='none' secureTextEntry={true}
-          onChangeText={(text) => this.password = text} />
-          <TextInput style={styles.textFieldStyle} placeholder='Confirm password' autoCapitalize='none' secureTextEntry={true}
-          onChangeText={(text) => this.confirmPassword = text} />
+          onChangeText={(text) => this.setState({...this.state, password: text})}
+          value={this.state.password} />
+          <TextInput style={{...styles.textFieldStyle, marginTop: 0}} placeholder='Confirm password' autoCapitalize='none' secureTextEntry={true}
+          onChangeText={(text) => this.setState({...this.state, confirmPassword: text})}
+          value={this.state.confirmPassword} />
+
+          <Text style={{color: '#E00'}}>{this.state.errorMessage}</Text>
 
           <View style={styles.buttonsViewStyle}>
             <TouchableOpacity style={styles.cancelButtonStyle}  onPress={() => this.props.navigation.goBack()}>
               <Text style={styles.buttonTextStyle}>Back</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.loginButtonStyle} onPress={() => this.showSecondSignupScreen()}>
+            <TouchableOpacity style={styles.nextButtonStyle} onPress={() => this.goToPersonalDetailsScreen()}>
+              <Text style={styles.buttonTextStyle}>Next</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </KeyboardAvoidingView>
+    );
+  }
+
+  generateSignupScreen2() {
+    return (
+      <KeyboardAvoidingView style={styles.viewStyle} behavior="padding" enabled>
+        <View style={styles.panelViewStyle}>
+          <Text style={styles.titleStyle}>Sign Up</Text>
+
+          <TextInput style={styles.textFieldStyle} placeholder='First Name'
+          onChangeText={(text) => this.setState({...this.state, firstName: text})}
+          autoCorrect={false}
+          value={this.state.firstName} />
+
+          <TextInput style={{...styles.textFieldStyle, marginTop: 0, marginBottom: 20}} placeholder='Last Name'
+          onChangeText={(text) => this.setState({...this.state, lastName: text})}
+          autoCorrect={false}
+          value={this.state.lastName} />
+
+          <UserCategoryPicker categories={this.state.userCategories}
+            onUserCategoryChanged={(category) => this.setState({...this.state, currentUserCategory: category, currentStudentCategory: '', currentMatriculationYear: '', currentSubject: ''})} />
+
+          {this.state.currentUserCategory !== null && this.state.currentUserCategory.id !== 1
+           ? <StudentTypeDropdown onStudentTypeChanged={(category) => this.setState({...this.state, currentStudentCategory: category, currentMatriculationYear: '', currentSubject: ''})} />
+           : null}
+
+          {this.state.currentStudentCategory === 'Undergraduate'
+           ? <SubjectDropdown onSubjectChanged={(subject) => this.setState({...this.state, currentSubject: subject})} />
+           : null}
+
+          {this.state.currentStudentCategory === 'Undergraduate'
+           ? <MatriculationYearDropdown onMatriculationYearChanged={(year) => this.setState({...this.state, currentMatriculationYear: year})} />
+           : null}
+
+          <Text style={{color: '#E00'}}>{this.state.errorMessage}</Text>
+
+          <View style={styles.buttonsViewStyle}>
+            <TouchableOpacity style={styles.cancelButtonStyle}  onPress={() => this.goToStartScreen('')}>
+              <Text style={styles.buttonTextStyle}>Back</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.nextButtonStyle} onPress={() => this.signUp()}>
               <Text style={styles.buttonTextStyle}>Submit</Text>
             </TouchableOpacity>
           </View>
@@ -41,30 +129,224 @@ class SignUpScreen extends Component {
     );
   }
 
-  focusOnEmail(textInput) {
-    if (textInput !== null) {
-      textInput.focus();
+  generateAfterSignupScreen() {
+    return (
+      <View style={styles.viewStyle}>
+        <View style={{...styles.panelViewStyle, alignSelf: 'stretch', marginLeft: 40, marginRight: 40}}>
+          <Text style={styles.titleStyle}>All done!</Text>
+
+          <Text style={{marginBottom:  8, textAlign: 'center'}}>We have sent an email to:</Text>
+          <Text style={{marginBottom: 30, textAlign: 'center', fontWeight: 'bold'}}>{this.state.emailAddress}</Text>
+          <Text style={{marginBottom: 40, textAlign: 'center'}}>Follow the instructions to activate your account.</Text>
+
+          <TouchableOpacity style={styles.nextButtonStyle} onPress={() => this.props.navigation.goBack()}>
+            <Text style={styles.buttonTextStyle}>Done</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
+
+  goToStartScreen(errorMessage) {
+    this.setState({...this.state,
+      currentScreenNumber: 1,
+      errorMessage: errorMessage,
+      currentUserCategory: null,
+      currentStudentCategory: '',
+      currentSubject: '',
+      currentMatriculationYear: ''
+    });
+  }
+
+  goToPersonalDetailsScreen() {
+    if (this.state.emailAddress.length <= 0 || this.state.password.length <= 0 || this.state.confirmPassword.length <= 0) {
+      this.setState({...this.state, errorMessage: 'Details not entered'});
+      return;
     }
+    else if (this.state.password !== this.state.confirmPassword) {
+      this.setState({...this.state, errorMessage: 'Passwords must match'});
+      return;
+    }
+
+    this.setState({...this.state, currentScreenNumber: 2, errorMessage: ''});
   }
 
-  showSecondSignupScreen() {
+  signUp() {
+    if (this.state.firstName.length <= 0 || this.state.lastName.length <= 0) {
+      this.setState({...this.state, errorMessage: 'Details not entered'});
+      return;
+    }
 
-  }
+    var body = {
+      email: this.state.emailAddress,
+      password: this.state.password,
+      user_category: this.state.currentUserCategory.id,
+      first_name: this.state.firstName,
+      last_name: this.state.lastName,
+    };
 
-  enterApp(user) {
-    const saveUser = async (user) => {
-      try {
-        await AsyncStorage.setItem('@Bridge:user_data', JSON.stringify(user));
-      } catch (error) {
-        console.log("Error saving user token. " + error);
+    if (this.state.currentUserCategory.id !== 1) {
+      body.university_age_category = this.state.currentStudentCategory;
+
+      if (this.state.currentStudentCategory === 'Undergraduate') {
+        body.matriculation_year = parseInt(this.state.currentMatriculationYear, 10);
+        body.subject = this.state.currentSubject;
       }
     }
-    saveUser(user);
-    this.props.screenProps.onLogin(user);
+
+    sendRequest({
+      address: 'users/',
+      method: 'POST',
+      body: body,
+      responseHandlerNoJson: (response) => {
+        if (response.status < 400) {
+          this.setState({...this.state, currentScreenNumber: 3});
+        }
+        else {
+          this.goToStartScreen('Password too weak');
+        }
+      }
+    });
+
+    this.setState({...this.state, currentScreenNumber: 3});
   }
+
 }
 
-const styles={
+const universityOfCambridgeUserCategoryId = 2;
+
+const flattenCategories = (inputCategories) => {
+  var categories = [];
+
+  inputCategories.forEach((category) => {
+    categories.push({...category, displayName: category.name});
+    category.children.forEach((subCategory) => {
+      categories.push({...subCategory, displayName: '   ' + subCategory.name});
+      subCategory.children.forEach((subSubCategory) => {
+        categories.push({...subSubCategory, displayName: '      ' + subSubCategory.name});
+      });
+    });
+  });
+
+  return categories;
+}
+
+const UserCategoryPicker = (props) => {
+  var categories = flattenCategories(props.categories);
+
+  return (
+    <ModalDropdown
+      style={styles.pickerStyle}
+      textStyle={styles.pickerTextStyle}
+      disabled={props.categories.length <= 0}
+      options={categories}
+      onSelect={(index, category) => props.onUserCategoryChanged(category)}
+      renderRow={(option) => {
+        return (
+          <View style={{padding: 3, paddingLeft: 0}}>
+            <Text>{option.displayName}</Text>
+          </View>
+        );
+      }}
+      renderButtonText={(option) => {
+        return option.name;
+      }} />
+  );
+}
+
+const StudentTypeDropdown = (props) => {
+  return (
+    <ModalDropdown
+      style={styles.pickerStyle}
+      textStyle={styles.pickerTextStyle}
+      options={['Undergraduate', 'Postgraduate', 'Faculty and staff']}
+      onSelect={(index, type) => props.onStudentTypeChanged(type)}
+      renderRow={(option) => {
+        return (
+          <View style={{padding: 3, paddingLeft: 0}}>
+            <Text>{option}</Text>
+          </View>
+        );
+      }}
+      renderButtonText={(option) => {
+        return option;
+      }} />
+  );
+}
+
+const MatriculationYearDropdown = (props) => {
+  return (
+    <ModalDropdown
+      style={styles.pickerStyle}
+      textStyle={styles.pickerTextStyle}
+      options={["2015", "2016", "2017", "2018", "2019", "2020"]}
+      onSelect={(index, year) => props.onMatriculationYearChanged(year)}
+      renderRow={(option) => {
+        return (
+          <View style={{padding: 3, paddingLeft: 0}}>
+            <Text>{option}</Text>
+          </View>
+        );
+      }}
+      renderButtonText={(option) => {
+        return option;
+      }} />
+  );
+}
+
+const SubjectDropdown = (props) => {
+  return (
+    <ModalDropdown
+      style={styles.pickerStyle}
+      textStyle={styles.pickerTextStyle}
+      options={[
+        "Anglo-Saxon, Norse, and Celtic",
+        "Archaeology",
+        "Architecture",
+        "Asian and Middle Eastern Studies",
+        "Chemical Engineering",
+        "Classics",
+        "Computer Science",
+        "Economics",
+        "Education",
+        "Engineering",
+        "English",
+        "Geography",
+        "History",
+        "History and Modern Languages",
+        "History and Politics",
+        "History of Art",
+        "Human, Social, and Political Sciences",
+        "Land Economy",
+        "Law",
+        "Linguistics",
+        "Management Studies",
+        "Manufacturing Engineering",
+        "Mathematics",
+        "Medicine",
+        "Modern and Medieval Languages",
+        "Music",
+        "Natural Sciences",
+        "Philosophy",
+        "Psychological and Behavioural Sciences",
+        "Theology",
+        "Veterinary Medicine",
+    ]}
+      onSelect={(index, subject) => props.onSubjectChanged(subject)}
+      renderRow={(option) => {
+        return (
+          <View style={{padding: 3, paddingLeft: 0}}>
+            <Text>{option}</Text>
+          </View>
+        );
+      }}
+      renderButtonText={(option) => {
+        return option;
+      }} />
+  );
+}
+
+const styles = {
   viewStyle: {
     backgroundColor: '#F18B35',
     flex: 1,
@@ -104,8 +386,8 @@ const styles={
     flexDirection: 'row',
     marginTop: 20
   },
-  loginButtonStyle: {
-    backgroundColor: '#f66',
+  nextButtonStyle: {
+    backgroundColor: '#66f',
     alignItems: 'center',
     paddingTop: 8,
     paddingBottom: 8,
@@ -127,6 +409,24 @@ const styles={
   buttonTextStyle: {
     color: '#fff',
     fontSize: 16,
+  },
+  pickerStyle: {
+    backgroundColor: '#fff',
+    paddingTop: 8,
+    paddingBottom: 8,
+    paddingLeft: 13,
+    paddingRight: 13,
+    margin: 10,
+    marginBottom: 0,
+    borderRadius: 18,
+    borderColor: '#ccc',
+    borderWidth: 1,
+
+    width: 200,
+    justifyContent: 'flex-start',
+  },
+  pickerTextStyle: {
+    color: '#333',
   }
 }
 

@@ -67,11 +67,16 @@ class CategoriesTray extends React.Component {
   }
 
   render() {
-    if (this.props.currentCategory !== null && this.props.currentCategory !== undefined) {
-      for (var i = 0; i < this.state.categories.length; ++i) {
-        if (this.props.currentCategory.id === this.state.categories[i].id) {
-          this.state.selectedIndex = i;
-          break;
+    if (this.props.currentCategory !== undefined) {
+      if (this.props.currentCategory === null) {
+        this.state.selectedIndex = 0;
+      }
+      else {
+        for (var i = 0; i < this.state.categories.length; ++i) {
+          if (this.props.currentCategory.id === this.state.categories[i].id) {
+            this.state.selectedIndex = i;
+            break;
+          }
         }
       }
     }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, TextInput, KeyboardAvoidingView } from 'react-native';
+import { Text, View, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import ModalDropdown from 'react-native-modal-dropdown';
 
@@ -50,7 +50,7 @@ class SignUpScreen extends Component {
 
   generateSignupScreen1() {
     return (
-      <KeyboardAvoidingView style={styles.viewStyle} behavior="padding" enabled>
+      <KeyboardAvoidingView style={styles.viewStyle} behavior={Platform.OS === "ios" ? "padding" : undefined} enabled>
         <View style={styles.panelViewStyle}>
           <Text style={styles.titleStyle}>Sign Up</Text>
 
@@ -84,7 +84,7 @@ class SignUpScreen extends Component {
 
   generateSignupScreen2() {
     return (
-      <KeyboardAvoidingView style={styles.viewStyle} behavior="padding" enabled>
+      <KeyboardAvoidingView style={styles.viewStyle} behavior={Platform.OS === "ios" ? "padding" : undefined} enabled>
         <View style={styles.panelViewStyle}>
           <Text style={styles.titleStyle}>Sign Up</Text>
 

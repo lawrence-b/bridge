@@ -14,12 +14,12 @@
       <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/backend/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="301">
-              <caret line="36" column="37" lean-forward="true" selection-start-line="36" selection-start-column="37" selection-end-line="36" selection-end-column="37" />
+            <state relative-caret-position="1162">
+              <caret line="266" column="30" lean-forward="true" selection-start-line="266" selection-start-column="30" selection-end-line="266" selection-end-column="30" />
               <folding>
                 <element signature="e#246#255#0" expanded="true" />
-                <marker date="1536177627116" expanded="true" signature="1829:2149" ph="..." />
-                <marker date="1536177627116" expanded="true" signature="9837:9838" ph="..." />
+                <marker date="1536354107906" expanded="true" signature="1829:2149" ph="..." />
+                <marker date="1536354107906" expanded="true" signature="9952:9953" ph="..." />
               </folding>
             </state>
           </provider>
@@ -40,7 +40,7 @@
       <file leaf-file-name="activation.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/templates/email/activation.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3015">
+            <state relative-caret-position="425">
               <caret line="201" column="130" lean-forward="false" selection-start-line="201" selection-start-column="130" selection-end-line="201" selection-end-column="130" />
               <folding>
                 <element signature="n#style#0;n#header#0;n#body#0;n#!!top" expanded="true" />
@@ -54,7 +54,7 @@
       <file leaf-file-name="admin_confirmation.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/templates/email/admin_confirmation.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3045">
+            <state relative-caret-position="534">
               <caret line="203" column="32" lean-forward="false" selection-start-line="203" selection-start-column="32" selection-end-line="203" selection-end-column="32" />
               <folding>
                 <element signature="n#style#0;n#img#0;n#header#0;n#body#0;n#!!top" expanded="true" />
@@ -79,7 +79,7 @@
       <file leaf-file-name="confirmation.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/templates/email/confirmation.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3045">
+            <state relative-caret-position="533">
               <caret line="203" column="0" lean-forward="false" selection-start-line="203" selection-start-column="0" selection-end-line="203" selection-end-column="0" />
               <folding>
                 <element signature="n#style#0;n#img#0;n#header#0;n#body#0;n#!!top" expanded="true" />
@@ -92,8 +92,8 @@
       <file leaf-file-name="password_reset.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/templates/email/password_reset.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3045">
-              <caret line="203" column="0" lean-forward="false" selection-start-line="203" selection-start-column="0" selection-end-line="203" selection-end-column="0" />
+            <state relative-caret-position="428">
+              <caret line="202" column="177" lean-forward="false" selection-start-line="202" selection-start-column="177" selection-end-line="202" selection-end-column="177" />
               <folding>
                 <element signature="n#style#0;n#img#0;n#header#0;n#body#0;n#!!top" expanded="true" />
                 <element signature="n#src#0;n#img#0;n#header#0;n#body#0;n#!!top" expanded="true" />
@@ -184,9 +184,9 @@
         <option value="$PROJECT_DIR$/core/models.py" />
         <option value="$PROJECT_DIR$/core/templates/email/activation.html" />
         <option value="$PROJECT_DIR$/core/templates/email/confirmation.html" />
-        <option value="$PROJECT_DIR$/core/templates/email/password_reset.html" />
         <option value="$PROJECT_DIR$/core/templates/email/admin_confirmation.html" />
         <option value="$PROJECT_DIR$/core/serializers.py" />
+        <option value="$PROJECT_DIR$/core/templates/email/password_reset.html" />
         <option value="$PROJECT_DIR$/backend/settings.py" />
       </list>
     </option>
@@ -279,8 +279,8 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -395,8 +395,8 @@
           <caret line="34" column="26" lean-forward="true" selection-start-line="34" selection-start-column="26" selection-end-line="34" selection-end-column="26" />
           <folding>
             <element signature="e#246#255#0" expanded="true" />
-            <marker date="1536177627116" expanded="true" signature="1829:2149" ph="..." />
-            <marker date="1536177627116" expanded="true" signature="9837:9838" ph="..." />
+            <marker date="1536354107906" expanded="true" signature="1829:2149" ph="..." />
+            <marker date="1536354107906" expanded="true" signature="9952:9953" ph="..." />
           </folding>
         </state>
       </provider>
@@ -533,17 +533,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/templates/email/password_reset.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3045">
-          <caret line="203" column="0" lean-forward="false" selection-start-line="203" selection-start-column="0" selection-end-line="203" selection-end-column="0" />
-          <folding>
-            <element signature="n#style#0;n#img#0;n#header#0;n#body#0;n#!!top" expanded="true" />
-            <element signature="n#src#0;n#img#0;n#header#0;n#body#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1350">
@@ -554,46 +543,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/templates/email/confirmation.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3045">
-          <caret line="203" column="0" lean-forward="false" selection-start-line="203" selection-start-column="0" selection-end-line="203" selection-end-column="0" />
-          <folding>
-            <element signature="n#style#0;n#img#0;n#header#0;n#body#0;n#!!top" expanded="true" />
-            <element signature="n#src#0;n#img#0;n#header#0;n#body#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/templates/email/admin_confirmation.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3045">
-          <caret line="203" column="32" lean-forward="false" selection-start-line="203" selection-start-column="32" selection-end-line="203" selection-end-column="32" />
-          <folding>
-            <element signature="n#style#0;n#img#0;n#header#0;n#body#0;n#!!top" expanded="true" />
-            <element signature="n#src#0;n#img#0;n#header#0;n#body#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/serializers.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3615">
           <caret line="251" column="24" lean-forward="false" selection-start-line="251" selection-start-column="24" selection-end-line="251" selection-end-column="24" />
           <folding>
             <element signature="e#19#99#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/templates/email/activation.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3015">
-          <caret line="201" column="130" lean-forward="false" selection-start-line="201" selection-start-column="130" selection-end-line="201" selection-end-column="130" />
-          <folding>
-            <element signature="n#style#0;n#header#0;n#body#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#header#0;n#body#0;n#!!top" expanded="true" />
-            <element signature="n#src#0;n#img#0;n#header#0;n#body#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -616,14 +571,59 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/core/templates/email/activation.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="201" column="130" lean-forward="false" selection-start-line="201" selection-start-column="130" selection-end-line="201" selection-end-column="130" />
+          <folding>
+            <element signature="n#style#0;n#header#0;n#body#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#header#0;n#body#0;n#!!top" expanded="true" />
+            <element signature="n#src#0;n#img#0;n#header#0;n#body#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/templates/email/admin_confirmation.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="534">
+          <caret line="203" column="32" lean-forward="false" selection-start-line="203" selection-start-column="32" selection-end-line="203" selection-end-column="32" />
+          <folding>
+            <element signature="n#style#0;n#img#0;n#header#0;n#body#0;n#!!top" expanded="true" />
+            <element signature="n#src#0;n#img#0;n#header#0;n#body#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/templates/email/confirmation.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="533">
+          <caret line="203" column="0" lean-forward="false" selection-start-line="203" selection-start-column="0" selection-end-line="203" selection-end-column="0" />
+          <folding>
+            <element signature="n#style#0;n#img#0;n#header#0;n#body#0;n#!!top" expanded="true" />
+            <element signature="n#src#0;n#img#0;n#header#0;n#body#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/templates/email/password_reset.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="428">
+          <caret line="202" column="177" lean-forward="false" selection-start-line="202" selection-start-column="177" selection-end-line="202" selection-end-column="177" />
+          <folding>
+            <element signature="n#style#0;n#img#0;n#header#0;n#body#0;n#!!top" expanded="true" />
+            <element signature="n#src#0;n#img#0;n#header#0;n#body#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/backend/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="36" column="37" lean-forward="true" selection-start-line="36" selection-start-column="37" selection-end-line="36" selection-end-column="37" />
+        <state relative-caret-position="1162">
+          <caret line="266" column="30" lean-forward="true" selection-start-line="266" selection-start-column="30" selection-end-line="266" selection-end-column="30" />
           <folding>
             <element signature="e#246#255#0" expanded="true" />
-            <marker date="1536177627116" expanded="true" signature="1829:2149" ph="..." />
-            <marker date="1536177627116" expanded="true" signature="9837:9838" ph="..." />
+            <marker date="1536354107906" expanded="true" signature="1829:2149" ph="..." />
+            <marker date="1536354107906" expanded="true" signature="9952:9953" ph="..." />
           </folding>
         </state>
       </provider>

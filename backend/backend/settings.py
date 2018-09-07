@@ -262,7 +262,8 @@ REST_FRAMEWORK = {
         'anon': '100/minute',
         'user': '10000/minute',
         # add_admin scope sets the throttle rate for the add_admin view, which exposes user emails. This ensures user
-        # email addresses cannot be collected in bulk
+        # email addresses cannot be collected in bulk. If the user has added too many admins for the day they receive
+        # a HTTP 429 Too Many Requests status code
         'add_admin': '20/day',
     }
 }

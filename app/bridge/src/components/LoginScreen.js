@@ -19,11 +19,11 @@ class LoginScreen extends Component {
           <View style={styles.panelViewStyle}>
             <Text style={styles.titleStyle}>Log In</Text>
 
-            <TextInput style={styles.textFieldStyle} placeholder='Email' autoCapitalize='none'
+            <TextInput style={styles.textFieldStyle} placeholder='Email' autoCapitalize='none' underlineColorAndroid="transparent"
             onChangeText={(text) => this.email = text}
             ref={textInput => this.focusOnEmail(textInput)}
             autoCorrect={false} />
-            <TextInput style={styles.textFieldStyle} placeholder='Password' autoCapitalize='none' secureTextEntry={true}
+            <TextInput style={styles.textFieldStyle} placeholder='Password' autoCapitalize='none' secureTextEntry={true} underlineColorAndroid="transparent"
             onChangeText={(text) => this.password = text} />
 
             <View style={styles.buttonsViewStyle}>

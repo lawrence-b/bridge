@@ -4,27 +4,34 @@ import { createStackNavigator } from 'react-navigation';
 
 import sendRequest from '../sendRequest'
 
-class LoginScreen extends Component {
+class ForgottenPasswordScreen extends Component {
 
   constructor(props) {
     super(props);
 
     this.email = '';
-    this.password = '';
+    this.state = {errorMessage: '', hasReset: false};
   }
 
   render() {
+    return this.state.hasReset ? this.generateScreen2() : this.generateScreen1();
+  }
+
+  generateScreen1() {
     return(
       <KeyboardAvoidingView style={styles.viewStyle} behavior={Platform.OS === "ios" ? "padding" : undefined} enabled>
           <View style={styles.panelViewStyle}>
-            <Text style={styles.titleStyle}>Log In</Text>
+            <Text style={styles.titleStyle}>Forgot your password?</Text>
+            <Text style={styles.labelStyle}>Enter the email address you used to sign up</Text>
 
             <TextInput style={styles.textFieldStyle} placeholder='Email' autoCapitalize='none' underlineColorAndroid="transparent"
             onChangeText={(text) => this.email = text}
             ref={textInput => this.focusOnEmail(textInput)}
             autoCorrect={false} />
-            <TextInput style={styles.textFieldStyle} placeholder='Password' autoCapitalize='none' secureTextEntry={true} underlineColorAndroid="transparent"
-            onChangeText={(text) => this.password = text} />
+
+            {this.state.errorMessage !== ''
+              ? <Text style={{fontSize: 14, textAlign: 'center', color: '#d33'}}>{this.state.errorMessage}</Text>
+              : null}
 
             <View style={styles.buttonsViewStyle}>
               <TouchableOpacity style={styles.cancelButtonStyle}  onPress={() => this.props.navigation.goBack()}>
@@ -32,15 +39,33 @@ class LoginScreen extends Component {
               </TouchableOpacity>
 
               <TouchableOpacity style={styles.loginButtonStyle} onPress={() => this.done()}>
-                <Text style={styles.buttonTextStyle}>Log In</Text>
+                <Text style={styles.buttonTextStyle}>Submit</Text>
               </TouchableOpacity>
             </View>
 
             <TouchableOpacity onPress={() => this.forgotPassword()}>
-              <Text style={{fontSize: 12, color: '#333', marginTop: 22, marginBottom: 20}}>Forgot your password?</Text>
+              <Text style={{fontSize: 12, color: '#fff', marginTop: 22}}>Forgot your password?</Text>
             </TouchableOpacity>
           </View>
       </KeyboardAvoidingView>
+    );
+  }
+
+  generateScreen2() {
+    return(
+      <View style={styles.viewStyle}>
+          <View style={styles.panelViewStyle}>
+            <Text style={styles.titleStyle}>Reset email sent</Text>
+            <Text style={styles.labelStyle}>We have sent you an email.</Text>
+            <Text style={styles.labelStyle}>Follow the instructions in it to reset your password.</Text>
+
+            <Text style={styles.labelStyle}>Then go back and try logging in again.</Text>
+
+            <TouchableOpacity style={{...styles.cancelButtonStyle, marginBottom: 20, marginRight: 0, marginTop: 12}}  onPress={() => this.props.navigation.goBack()}>
+              <Text style={styles.buttonTextStyle}>Back</Text>
+            </TouchableOpacity>
+          </View>
+      </View>
     );
   }
 
@@ -50,29 +75,25 @@ class LoginScreen extends Component {
     }
   }
 
-  forgotPassword() {
-    this.props.navigation.navigate('ForgottenPassword');
-  }
-
   done() {
-    sendRequest({
-      address: "auth/token/login/",
-      method: "POST",
-      body: {email: this.email, password: this.password},
-      successHandler: (result) => this.enterApp({email: this.email, token: result.auth_token})
-    });
-  }
-
-  enterApp(user) {
-    const saveUser = async (user) => {
-      try {
-        await AsyncStorage.setItem('@Bridge:user_data', JSON.stringify(user));
-      } catch (error) {
-        console.log("Error saving user token. " + error);
-      }
+    if (this.email.length <= 0) {
+      this.setState({...this.state, errorMessage: 'No email address entered'});
+      return;
     }
-    saveUser(user);
-    this.props.screenProps.onLogin(user);
+
+    sendRequest({
+      address: 'password/reset/',
+      method: 'POST',
+      body: {email: this.email},
+      responseHandlerNoJson: (response) => {
+        if (response.status < 400) {
+          this.setState({...this.state, errorMessage: '', hasReset: true});
+        }
+        else {
+          this.setState({...this.state, errorMessage: 'Please enter a valid email address'});
+        }
+      }
+    });
   }
 }
 
@@ -90,7 +111,10 @@ const styles={
     backgroundColor: '#fff',
     borderRadius: 10,
     padding: 20,
-    paddingBottom: 0
+    paddingBottom: 0,
+
+    marginLeft: 46,
+    marginRight: 46
   },
   titleStyle: {
     color: '#666',
@@ -112,6 +136,15 @@ const styles={
     borderWidth: 1,
 
     width: 200
+  },
+  labelStyle: {
+    color: '#666',
+    fontSize: 14,
+
+    marginBottom: 20,
+    marginLeft: 20,
+    marginRight: 20,
+    textAlign: 'center'
   },
   buttonsViewStyle: {
     flexDirection: 'row',
@@ -143,4 +176,4 @@ const styles={
   }
 }
 
-export default LoginScreen;
+export default ForgottenPasswordScreen;

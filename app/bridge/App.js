@@ -11,6 +11,7 @@ import SettingsScreen from './src/components/SettingsScreen';
 import LoginOrSignUpScreen from './src/components/LoginOrSignUpScreen';
 import LoginScreen from './src/components/LoginScreen';
 import SignUpScreen from './src/components/SignUpScreen';
+import ForgottenPasswordScreen from './src/components/ForgottenPasswordScreen';
 
 const AppWrapper =  createBottomTabNavigator(
   {
@@ -58,7 +59,8 @@ const LoginStack = createStackNavigator(
   {
     Home: LoginOrSignUpScreen,
     LogIn: LoginScreen,
-    SignUp: SignUpScreen
+    SignUp: SignUpScreen,
+    ForgottenPassword: ForgottenPasswordScreen
   },
   {
     initialRouteName: 'Home',

@@ -3,9 +3,6 @@ import { Text, View, TouchableOpacity, Image } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/EvilIcons';
 
-import LoginScreen from './LoginScreen';
-import SignUpScreen from './SignUpScreen';
-
 class LoginOrSignUpScreen extends Component {
 
   render() {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, Image } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/EvilIcons';
 
@@ -12,8 +12,8 @@ class LoginOrSignUpScreen extends Component {
     return (
       <View style={styles.viewStyle}>
         <View style={{alignItems: 'center', alignSelf: 'stretch'}}>
+          <Image source={require('../../assets/bridge_logo.png')} style={{width: 200, height: 100, marginTop: 133}} />
           <Text style={styles.titleStyle}>Bridge</Text>
-          <Text style={styles.subtitleStyle}>Events made simple</Text>
         </View>
 
         <View style={{alignItems: 'center', alignSelf: 'stretch', marginBottom: 60}}>
@@ -45,13 +45,7 @@ const styles = {
     color: '#fff',
     fontSize: 32,
     fontWeight: '300',
-    marginTop: 140
-  },
-  subtitleStyle: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '300',
-    marginTop: 10
+    marginTop: 22
   },
   button1Style: {
     backgroundColor: '#f66',

@@ -120,9 +120,6 @@ class EditEventScreen extends Component {
     else if (this.state.event.image !== null && this.state.event.image !== undefined) {
       return this.state.event.image;
     }
-    else if (this.props.host.image !== null && this.props.host.image !== null) {
-      return this.props.host.image;
-    }
 
     return null;
   }

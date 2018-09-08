@@ -170,9 +170,10 @@ class EventViewSet(viewsets.ModelViewSet):
         college."""
         user_category = self.request.user.user_category
         queryset = events_filter(user_category=user_category)
-        events_hosting = Event.objects.filter(hosts__admins=self.request.user)
 
-        queryset = events_hosting | queryset
+        events_hosting = Event.objects.filter(hosts__admins=self.request.user)
+        queryset = queryset | events_hosting
+
         return queryset
 
     serializer_class = EventSerializer

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, TextInput, KeyboardAvoidingView, AsyncStorage } from 'react-native';
+import { Text, View, TouchableOpacity, TextInput, KeyboardAvoidingView, AsyncStorage, Platform } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 
 import sendRequest from '../sendRequest'
@@ -15,15 +15,15 @@ class LoginScreen extends Component {
 
   render() {
     return(
-      <KeyboardAvoidingView style={styles.viewStyle} behavior="padding" enabled>
+      <KeyboardAvoidingView style={styles.viewStyle} behavior={Platform.OS === "ios" ? "padding" : undefined} enabled>
           <View style={styles.panelViewStyle}>
             <Text style={styles.titleStyle}>Log In</Text>
 
-            <TextInput style={styles.textFieldStyle} placeholder='Email' autoCapitalize='none'
+            <TextInput style={styles.textFieldStyle} placeholder='Email' autoCapitalize='none' underlineColorAndroid="transparent"
             onChangeText={(text) => this.email = text}
             ref={textInput => this.focusOnEmail(textInput)}
             autoCorrect={false} />
-            <TextInput style={styles.textFieldStyle} placeholder='Password' autoCapitalize='none' secureTextEntry={true}
+            <TextInput style={styles.textFieldStyle} placeholder='Password' autoCapitalize='none' secureTextEntry={true} underlineColorAndroid="transparent"
             onChangeText={(text) => this.password = text} />
 
             <View style={styles.buttonsViewStyle}>

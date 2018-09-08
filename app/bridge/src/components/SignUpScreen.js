@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, TextInput, KeyboardAvoidingView } from 'react-native';
+import { Text, View, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import ModalDropdown from 'react-native-modal-dropdown';
 
@@ -50,19 +50,19 @@ class SignUpScreen extends Component {
 
   generateSignupScreen1() {
     return (
-      <KeyboardAvoidingView style={styles.viewStyle} behavior="padding" enabled>
+      <KeyboardAvoidingView style={styles.viewStyle} behavior={Platform.OS === "ios" ? "padding" : undefined} enabled>
         <View style={styles.panelViewStyle}>
           <Text style={styles.titleStyle}>Sign Up</Text>
 
-          <TextInput style={styles.textFieldStyle} placeholder='Email' autoCapitalize='none'
+          <TextInput style={styles.textFieldStyle} placeholder='Email' autoCapitalize='none' underlineColorAndroid="transparent"
           onChangeText={(text) => this.setState({...this.state, emailAddress: text})}
           autoCorrect={false}
           value={this.state.emailAddress} />
 
-          <TextInput style={styles.textFieldStyle} placeholder='Password' autoCapitalize='none' secureTextEntry={true}
+          <TextInput style={styles.textFieldStyle} placeholder='Password' autoCapitalize='none' secureTextEntry={true} underlineColorAndroid="transparent"
           onChangeText={(text) => this.setState({...this.state, password: text})}
           value={this.state.password} />
-          <TextInput style={{...styles.textFieldStyle, marginTop: 0}} placeholder='Confirm password' autoCapitalize='none' secureTextEntry={true}
+          <TextInput style={{...styles.textFieldStyle, marginTop: 0}} placeholder='Confirm password' autoCapitalize='none' secureTextEntry={true} underlineColorAndroid="transparent"
           onChangeText={(text) => this.setState({...this.state, confirmPassword: text})}
           value={this.state.confirmPassword} />
 
@@ -84,16 +84,16 @@ class SignUpScreen extends Component {
 
   generateSignupScreen2() {
     return (
-      <KeyboardAvoidingView style={styles.viewStyle} behavior="padding" enabled>
+      <KeyboardAvoidingView style={styles.viewStyle} behavior={Platform.OS === "ios" ? "padding" : undefined} enabled>
         <View style={styles.panelViewStyle}>
           <Text style={styles.titleStyle}>Sign Up</Text>
 
-          <TextInput style={styles.textFieldStyle} placeholder='First Name'
+          <TextInput style={styles.textFieldStyle} placeholder='First Name' underlineColorAndroid="transparent"
           onChangeText={(text) => this.setState({...this.state, firstName: text})}
           autoCorrect={false}
           value={this.state.firstName} />
 
-          <TextInput style={{...styles.textFieldStyle, marginTop: 0, marginBottom: 20}} placeholder='Last Name'
+          <TextInput style={{...styles.textFieldStyle, marginTop: 0, marginBottom: 20}} placeholder='Last Name' underlineColorAndroid="transparent"
           onChangeText={(text) => this.setState({...this.state, lastName: text})}
           autoCorrect={false}
           value={this.state.lastName} />

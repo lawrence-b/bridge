@@ -61,18 +61,15 @@ class OptionalHostsFilters(filters.FilterSet):
         return queryset.filter(name__icontains=value)
 
 
-def events_filter(user_category, user):
+def events_filter(user_category):
     """An automatic filter applied to the EventViewSet that removes all events the user is not permitted to see, based
-    on the user's user category and the event's open_to field. Additionally allows a user to see all events they are
-    hosting as well e.g. in the case that they go to one college, but a are hosting an event for a different college."""
+    on the user's user category and the event's open_to field."""
 
     user_category_queryset = user_category.events.all()
     ancestors = user_category.get_ancestors()
     for ancestor in ancestors:
         new_user_category_queryset = ancestor.events.all()
         user_category_queryset = user_category_queryset | new_user_category_queryset
-    #events_hosting = Event.objects.filter(hosts__admins=user)
-    #user_category_queryset.union(events_hosting)
 
     return user_category_queryset.order_by('start_time')
 

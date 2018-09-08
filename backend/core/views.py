@@ -13,7 +13,7 @@ from rest_framework import viewsets, status, permissions
 from rest_framework.generics import CreateAPIView
 
 # Import from core
-from .models import User, UserCategory, HostCategory, EventCategory
+from .models import User, UserCategory, HostCategory, EventCategory, Event, Host
 from .serializers import UserCategoryChildrenSerializer, HostSerializer,\
     HostSerializerWithAdmins, HostCategoryChildrenSerializer, EventSerializer, EventCategoryChildrenSerializer,\
     EmailSerializer, FacebookLoginSerializer
@@ -69,8 +69,16 @@ class HostViewSet(viewsets.ModelViewSet):
     permission_classes = (HostPermission,)
 
     def get_queryset(self):
+        """Gets the user category queryset, and additionally allows a user to see all hosts they are
+        an admin of as well e.g. in the case that they go to one college, but are an admin for a society at a different
+        college."""
         user_category = self.request.user.user_category
-        return hosts_filter(user_category=user_category)
+        queryset = hosts_filter(user_category=user_category)
+        hosts_admin_of = Host.objects.filter(admins=self.request.user)
+
+        queryset = hosts_admin_of | queryset
+
+        return queryset
 
     filterset_class = OptionalHostsFilters
 
@@ -157,8 +165,16 @@ class EventViewSet(viewsets.ModelViewSet):
     permission_classes = (EventPermission,)
 
     def get_queryset(self):
+        """Gets the user category queryset, and additionally allows a user to see all events they are
+        hosting as well e.g. in the case that they go to one college, but are hosting an event for a different
+        college."""
         user_category = self.request.user.user_category
-        return events_filter(user_category=user_category, user=self.request.user)
+        queryset = events_filter(user_category=user_category)
+
+        events_hosting = Event.objects.filter(hosts__admins=self.request.user)
+        queryset = queryset | events_hosting
+
+        return queryset
 
     serializer_class = EventSerializer
 

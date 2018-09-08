@@ -55,10 +55,10 @@ class OptionalHostsFilters(filters.FilterSet):
             host_category_queryset = host_category_queryset | new_host_category_queryset
         return queryset & host_category_queryset
 
-def search_filter(self, queryset, name, value):
-    """A filter that returns only hosts whose name contains a particular string. Case-insensitive."""
+    def search_filter(self, queryset, name, value):
+        """A filter that returns only hosts whose name contains a particular string. Case-insensitive."""
 
-    return queryset.filter(name__icontains=value)
+        return queryset.filter(name__icontains=value)
 
 
 def events_filter(user_category, user):
@@ -71,8 +71,8 @@ def events_filter(user_category, user):
     for ancestor in ancestors:
         new_user_category_queryset = ancestor.events.all()
         user_category_queryset = user_category_queryset | new_user_category_queryset
-    events_hosting = Event.objects.filter(hosts__admins=user)
-    user_category_queryset = user_category_queryset | events_hosting
+    #events_hosting = Event.objects.filter(hosts__admins=user)
+    #user_category_queryset.union(events_hosting)
 
     return user_category_queryset.order_by('start_time')
 

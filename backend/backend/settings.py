@@ -26,17 +26,7 @@ else:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['www.api.bridge-uni.com','.elasticbeanstalk.com', '35.178.131.135'] # The last IP is an AWS check
-
-# Now append the internal instance IP which AWS uses for health checks
-try:
-    internal_ip = requests.get('http://169.254.169.254/latest/meta-data/public-ipv4').text
-except requests.exceptions.ConnectionError:
-    pass
-else:
-    ALLOWED_HOSTS.append(internal_ip)
-del requests
-
+ALLOWED_HOSTS = ['www.api.bridge-uni.com','.elasticbeanstalk.com',]
 
 # Extra security measures
 CORS_ORIGIN_ALLOW_ALL = True
@@ -108,6 +98,22 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'null': {
+            'level': 'DEBUG',
+            'class': 'logging.NullHandler',
+        },
+    },
+    'loggers': {
+        'django.security.DisallowedHost': {
+            'handlers': ['null'],
+            'propagate': False,
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases

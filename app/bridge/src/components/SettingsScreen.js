@@ -125,6 +125,13 @@ class SettingsScreen extends React.Component {
               <Text style={{fontSize: 14, color: '#fff'}}>Logout</Text>
             </TouchableOpacity>
           </View>
+
+          <Text style={{color: '#fff', textAlign: 'center'}}>
+            Society category icons
+          </Text>
+          <Text style={{color: '#fff', textAlign: 'center', marginBottom: 12}}>
+            designed by Freepik from Flaticon
+          </Text>
         </ScrollView>
       </View>
     );

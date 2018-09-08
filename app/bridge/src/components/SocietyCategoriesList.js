@@ -14,8 +14,9 @@ class SocietyCategoriesList extends Component {
         {category.thumbnail === undefined || category.thumbnail === null
         ? null
         : <Image
-            style={{flex: 1, width: size-12, borderRadius: 6}}
+            style={{flex: 1, width: size-14, borderRadius: 6}}
             source={{uri: category.thumbnail}}
+            resizeMode='contain'
           />}
 
         <Text style={styles.nameTextStyle} numberOfLines={1}>{category.name}</Text>
@@ -53,7 +54,7 @@ const styles = {
     marginBottom: 20,
     elevation: 2,
 
-    padding: 6,
+    padding: 7,
 
     borderRadius: 6,
 

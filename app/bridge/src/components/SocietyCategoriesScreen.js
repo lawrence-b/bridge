@@ -36,9 +36,13 @@ class SocietyCategoriesScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: '#F18B35' }}>
-        <SocietyCategoriesList
-          categories={this.state.categories}
-          onCategorySelected={(category) => this.onCategorySelected(category)} />
+        {this.state.categories.length <= 0
+         ? <Text style={{fontSize: 18, color: '#fff', alignSelf: 'center', marginTop: 30}}>
+             Loading categories...
+           </Text>
+         : <SocietyCategoriesList
+           categories={this.state.categories}
+           onCategorySelected={(category) => this.onCategorySelected(category)} />}
       </View>
     );
   }

@@ -66,7 +66,7 @@ class SignUpScreen extends Component {
           onChangeText={(text) => this.setState({...this.state, confirmPassword: text})}
           value={this.state.confirmPassword} />
 
-          <Text style={{color: '#E00'}}>{this.state.errorMessage}</Text>
+          <Text style={{color: '#E00', marginTop: 20}}>{this.state.errorMessage}</Text>
 
           <View style={styles.buttonsViewStyle}>
             <TouchableOpacity style={styles.cancelButtonStyle}  onPress={() => this.props.navigation.goBack()}>
@@ -88,12 +88,12 @@ class SignUpScreen extends Component {
         <View style={styles.panelViewStyle}>
           <Text style={styles.titleStyle}>Sign Up</Text>
 
-          <TextInput style={styles.textFieldStyle} placeholder='First Name' underlineColorAndroid="transparent"
+          <TextInput style={styles.textFieldStyle} placeholder='First Name' secureTextEntry={false} underlineColorAndroid="transparent"
           onChangeText={(text) => this.setState({...this.state, firstName: text})}
           autoCorrect={false}
           value={this.state.firstName} />
 
-          <TextInput style={{...styles.textFieldStyle, marginTop: 0, marginBottom: 20}} placeholder='Last Name' underlineColorAndroid="transparent"
+          <TextInput style={{...styles.textFieldStyle, marginTop: 0, marginBottom: 20}} placeholder='Last Name' secureTextEntry={false} underlineColorAndroid="transparent"
           onChangeText={(text) => this.setState({...this.state, lastName: text})}
           autoCorrect={false}
           value={this.state.lastName} />
@@ -113,7 +113,7 @@ class SignUpScreen extends Component {
            ? <MatriculationYearDropdown onMatriculationYearChanged={(year) => this.setState({...this.state, currentMatriculationYear: year})} />
            : null}
 
-          <Text style={{color: '#E00'}}>{this.state.errorMessage}</Text>
+          <Text style={{color: '#E00', marginTop: 20}}>{this.state.errorMessage}</Text>
 
           <View style={styles.buttonsViewStyle}>
             <TouchableOpacity style={styles.cancelButtonStyle}  onPress={() => this.goToStartScreen('')}>
@@ -174,6 +174,14 @@ class SignUpScreen extends Component {
   signUp() {
     if (this.state.firstName.length <= 0 || this.state.lastName.length <= 0) {
       this.setState({...this.state, errorMessage: 'Details not entered'});
+      return;
+    }
+    else if (this.state.userCategories.length <= 0) {
+      this.setState({...this.state, errorMessage: 'Check your internet connection'});
+      return;
+    }
+    else if (this.state.currentUserCategory === null) {
+      this.setState({...this.state, errorMessage: 'Please select a user category'});
       return;
     }
 

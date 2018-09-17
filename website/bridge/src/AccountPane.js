@@ -68,17 +68,17 @@ class AccountPane extends Component {
 
             <div className="AccountPane-row" style={{borderBottom: 'none'}}>
               <label className="AccountPane-label">Old password: </label>
-              <input type="text" onChange={(e) => {this.state.oldPassword = e.target.value; this.setState(this.state);}} className="AccountPane-text-field" value={this.state.oldPassword} />
+              <input type="password" onChange={(e) => {this.state.oldPassword = e.target.value; this.setState(this.state);}} className="AccountPane-text-field" value={this.state.oldPassword} />
             </div>
 
             <div className="AccountPane-row" style={{borderBottom: 'none'}}>
               <label className="AccountPane-label">New password: </label>
-              <input type="text" onChange={(e) => {this.state.newPassword1 = e.target.value; this.setState(this.state);}} className="AccountPane-text-field" value={this.state.newPassword1} />
+              <input type="password" onChange={(e) => {this.state.newPassword1 = e.target.value; this.setState(this.state);}} className="AccountPane-text-field" value={this.state.newPassword1} />
             </div>
 
             <div className="AccountPane-row" style={{borderBottom: 'none'}}>
               <label className="AccountPane-label">Confirm new password: </label>
-              <input type="text" onChange={(e) => {this.state.newPassword2 = e.target.value; this.setState(this.state);}} className="AccountPane-text-field" value={this.state.newPassword2} />
+              <input type="password" onChange={(e) => {this.state.newPassword2 = e.target.value; this.setState(this.state);}} className="AccountPane-text-field" value={this.state.newPassword2} />
             </div>
 
             <label style={{color: '#d55', marginBottom: 12, fontSize: 14}}>

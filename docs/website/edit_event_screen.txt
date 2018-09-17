@@ -1,0 +1,62 @@
+EditEventScreen
+---------------
+
+This is a component that is used for creating events as well as editing existing ones. The prop "creating" determines whether the component is set up for creating or editing.
+
+
+constructor
+-----------
+
+If creating an event, the state field "event" contains "category_id" and "open_to_id" - these correspond to the ID of the event category and user category that the event is open to.
+
+If editing an event, the state field "event" contains the actual event data - BE CAREFUL because this actually contains "category" and "open_to", which are the ACTUAL categories (not just the IDs). When editing an event, we also send a request to get the extended event data (including start time and end time), and fill this in when we receive the result (the server gives us ISO strings, which we convert to Date objects).
+
+
+render()
+--------
+
+Nothing special here. One thing to note is that we display an image preview if possible - see method "getImageData()" for more details.
+
+
+getImageData()
+--------------
+
+This component has an "imageFile" field - this corresponds to the actual image FILE, which we need when uploading the image to the server (see the "fileChanged()" method). This component also has an "imageFilePreview" field, which corresponds to the actual image url itself (again, see the "fileChanged()" method).
+
+If we have an imageFilePreview (i.e. the user has selected a file from their computer), we show the preview of this file. Otherwise, if we are editing an event and it has an image, we show that image. Otherwise, we don't show any image (the event will have a placeholder image, but we don't show this).
+
+
+fileChanged(files)
+------------------
+
+This method is called when the user selects a file using the file input tag in our "render()" method. (Only JPEG and PNG images are accepted).
+
+The user can only select one file using our file input, so we simply take the first one and store this in the "imageFile" field. This will later be used when uploading an image to the server.
+
+We also want to show a preview to the user, so we need to extract the image from the file - we use a FileReader to do this, and store the resulting image URL in the "imageFilePreview" field. We then update the state to encourage a re-render, to show the preview of the newly selected image.
+
+
+onEventCategoryChanged(category)
+--------------------------------
+
+As mentioned above for the constructor, we handle creating and editing differently.
+
+
+onUserCategoryChanged(category)
+-------------------------------
+
+Same consideration as "onEventCategoryChanged(category)".
+
+
+checkIfEventValid()
+-------------------
+
+Some simple checks to ensure that all the necessary data has been added, and that it makes sense (e.g. can't have an end time before the start time). We display the appropriate warning message if necessary.
+
+
+newEvent() and updateEvent()
+----------------------------
+
+We use a FormData object to upload event information, since this supports image uploads as well. Remember the difference mentioned in the constructor description above (about category_id vs category, etc). We convert dates to the correct format using "toISOString()". If the user has selected an image file, we add this to the form data as well. POST is used for a new event, and PATCH for editing an existing event.
+
+

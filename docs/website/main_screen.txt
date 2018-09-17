@@ -1,0 +1,58 @@
+MainScreen
+----------
+
+This component represents the main screen of the app (once logged in). It displays the side menu bar and top bar, and handles the logic to display the various panes.
+
+
+constructor
+-----------
+
+"hostIndex" represents the index of the currently selected host. "hosts" represents the list of hosts that the user is an admin of.
+
+The state field "currentScreen" represents the current pane to display.
+
+BE CAREFUL: any changes made to the HomePane tag (e.g. adding a new prop) need to be made in the "displayHomePage()" method as well.
+
+
+getHosts()
+----------
+
+Sends a request to get the list of hosts that the user is an admin of. This resets the host index to 0, empties the list of hosts and displays the home pane - we then call "getHostWithId(id)" on very host in the list.
+
+
+getHostWithId(id)
+-----------------
+
+Sends a request to get the data for a specific host. We add this data to the list of hosts, and display the home page again (we need to re-render with an up-to-date home pane component to reflect the new list).
+
+
+generateSelectedLinkStyle(componentType)
+----------------------------------------
+
+Generates the style to represent the underline in the side menu bar. For example, if the current screen is "Events", we want to display an underline under the "Events" link on the left.
+
+
+render()
+--------
+
+We only show "Events" and "Manage" on the left (and the dropdown menu in the top bar) if the user is the admin of at least one host. The title also depends on what pane we're viewing.
+
+
+hostChanged(e)
+--------------
+
+Changing the current host displays the events for that host. There is no specific reason for this, but it works quite well.
+
+
+refreshCurrentHost()
+--------------------
+
+Fetches up-to-date information about the current host and only updates its info (not the info of any other host). We then call "setState()" to trigger a re-render.
+
+
+refreshEvents()
+---------------
+
+Does the same thing as "refreshCurrentHost()" actually, but displays the event pane when done instead.
+
+

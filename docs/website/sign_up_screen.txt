@@ -1,0 +1,59 @@
+SignUpScreen
+------------
+
+This component represents the sign up screen. It automatically manages which panel to show depending on what stage of sign up process the user is at. It also contains state with all of the required fields for creating a new user.
+
+
+generateSignupScreen1()
+-----------------------
+
+The generated screen allows the user to input their email address and choose a password. Clicking "Next" or pressing "Enter" takes you to the next screen - see "goToPersonalDetailsScreen()".
+
+
+generateSignupScreen2()
+-----------------------
+
+This screen allows the user to enter their full name and choose their user category, as well as student category and even matriculation year and subject (as necessary).
+
+IMPORTANT: we assume here that the category "Public" has ID 1, and therefore we do not show other dropdown menus if this is the case. Update this number in future if the ID of the "Public" category changes.
+
+
+generateAfterSignupScreen()
+---------------------------
+
+This screen simply tells the user to check their emails.
+
+
+onUserCategoryChanged(category)
+-------------------------------
+
+If the new user category has ID 1 (i.e. "Public"), we reset all the irrelevant information to their default values. This is because if we show the other dropdown menus again later, they will display their default (i.e. first) values, and we therefore need to do this resetting to maintain a consistent internal state.
+
+
+onStudentCategoryChanged(category)
+----------------------------------
+
+We reset the matriculation year and subject in ALL cases. This is because if we are switching into the category "Undergraduate", then it doesn't matter, because the year/subject were already at their default values (and the year/subject menus will appear again, and show their default values). If we are switching out of the category "Undergraduate", then we should certainly reset the year/subject to their default values.
+
+Basically, the thing to notice is that there is only one option ("Undergraduate") that will allow the year/subject menus to appear, so it's ok to reset those every time we change the student category. (This is NOT the case with user category - see above).
+
+
+signUp()
+--------
+
+The way we handle optional fields (student category/year/subject) means that e.g. a "Public" user will end up with default values for all of them. So when e.g. a "Public" user signs up, we need to make sure that we don't include incorrect fields.
+
+If the user has user category with ID 1 (i.e. "Public"), we don't submit student category/subject/year.
+
+Otherwise, we submit student category ("university_age_category" in the request body). And if the student category is "Undergraduate", we include year/subject as well - otherwise, we don't.
+
+We then send a request to create the user. If we succeed, we move to the final screen. Otherwise, we go back to the first screen and tell the user that their password is too weak.
+
+
+Dropdown menus
+--------------
+
+The rest of the file includes some simple dropdown menu components. We check the user category ID in each to fix some alignment issues - this should probably be changed in future with a more robust method.
+
+In each we call the appropriate callback to notify of a category change. The parent component must be aware of default values.
+

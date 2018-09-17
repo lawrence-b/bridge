@@ -1,0 +1,49 @@
+App
+---
+
+Two cookies are stored:
+- One cookie checks if the user has closed the cookie info banner ("bridge_user_data")
+- One cookie checks if the user is already logged in ("bridge_cookie_permissions")
+
+We try to read these when the app will mount. If bridge_cookie_permissions doesn't exist, we show the cookie info banner. If bridge_user_data doesn't exist, we show the login screen.
+
+
+"history"
+---------
+
+This is required by some methods so we can allow components we display to modify the routes shown.
+
+
+Here is documentation for some methods. The others are quite simple.
+
+
+render()
+--------
+
+We use React Router to handle routes. The main route is generated and depends on whether we have user data or not (either we show the main app, or redirect to the login screen). The "/login" route shows the login screen. The "/password/reset/confirm/:uid/:token" route displays the screen when you click on a password reset link from an email - "uid" and "token" are required when interacting with the server. The "/activate/:uid/:token" route displays the screen when you click on an account activation link from an email - "uid" and "token" are required like with password reset.
+
+
+cookiesExplicitPermission()
+---------------------------
+
+We simply set the write to the bridge_cookie_permissions cookie and hide the cookie banner. This method gets called when you click the cross in the cookie banner.
+
+
+generateLoginOrSignupScreen()
+-----------------------------
+
+We remove any stored user login data and display the login/signup screen.
+
+
+onLogin()
+---------
+
+We store the user data and navigate back to the main route - because this data is now stored in the correct place, when we re-render the App component, "generateMainRoute()" will return the correct component (so we enter the app and display the main screen).
+
+
+onLogout()
+----------
+
+Similar to "onLogin()", but instead we remove the user data cookie, remove the user data from our component, and navigate back to the main route (and re-render, which will now show the login/signup screen instead).
+
+

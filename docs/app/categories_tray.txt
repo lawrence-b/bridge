@@ -1,0 +1,43 @@
+CategoriesTray
+--------------
+
+This component displays a "tray" of categories, that scroll horizontally.
+
+It is used to display event categories and sub-categories - depending on the type, it works slightly differently.
+
+
+componentWillMount()
+--------------------
+
+If the props "categories" is defined, this means that we are in sub-category mode, so we should use the categories that are passed in from the parent. Otherwise, we need to send a request to get the event categories.
+
+In both cases, we add a special "All" option with ID 0.
+
+
+regenerateCategories()
+----------------------
+
+This method refreshes the categories stored in "state" by copying the categories passed in from "props" (and adding a special "All" category).
+
+
+generateCategoryTiles()
+-----------------------
+
+If we have a "parentCategoryName", this means we are in sub-category mode. When switching parent category, the sub-category tray re-renders with a new "categories" prop - we therefore need to call "regenerateCategories()" to ensure consistency (i.e. to ensure that we show the correct sub-categories).
+
+In either case, we then map the "state" categories to buttons - if a given category is the current one (i.e. index is the same as selectedIndex), we highlight it by setting its background colour to white and setting the text colour to orange.
+
+
+render()
+--------
+
+If we are in sub-category mode, the parent component will pass in the current category to display as a prop (or "null" if it corresponds to "All") - in this case, we need to update "selectedIndex" accordingly.
+
+We then render a simple ScrollView with the category buttons ("tiles").
+
+
+onCategorySelected(category, index)
+-----------------------------------
+
+We tell the parent that the category has changed, and update the selected index.
+

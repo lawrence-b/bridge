@@ -1,0 +1,31 @@
+App
+---
+
+The root component for the app.
+
+
+AppWrapper
+----------
+
+This is a tab navigator that represents the app once the user has logged in. It also defines icons for the various tabs, and styling for the tab bar.
+
+
+ActualApp
+---------
+
+This class simply wraps the AppWrapper component, and instantiates it with the appropriate "screenProps", so that the user data (including the token required for requests) can be accessed by all tabs, and the Settings tab can log out of the app.
+
+
+LoginStack
+----------
+
+This is a stack navigator that represents the login/signup process. We don't show the default header for this navigator.
+
+
+App
+---
+
+This component's state contains the field "mainComponent", which determines which component we show (either the login/signup stack or the main tab navigator). Initially, we show an empty view. We then try to read the user data from AsyncStorage - if we succeed, we show the actual app (tab navigator), otherwise we show the login screen.
+
+The "showLoginScreen()" and "showActualApp()" methods set the "mainComponent" field of the state to their respective components.
+

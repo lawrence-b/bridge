@@ -1,0 +1,131 @@
+index
+-----
+
+Simply loads the App component. Some warnings are ignored for simplicity, but consider re-activating these.
+
+
+EventDetailsScreen
+------------------
+
+Contains an EventInfo component and an EventInterestedBar component. It also contains a simple mechanism for obtaining the extended event data ("refreshEvent") and toggling whether the user is interested in that specific event ("toggleInterested").
+
+
+EventInfo
+---------
+
+A stateless component to display all of the information regarding a specific event. The file also includes functions to format its start time and duration.
+
+
+EventInterestedBar
+------------------
+
+A stateless component to represent the bar that allows users to choose whether they're interested in an event or not.
+
+
+EventsList
+----------
+
+A component to display a list of events - it is responsible for calculating the event tile dimensions, and populating them with the correct data.
+
+
+EventTile
+---------
+
+A tile for displaying an event summary. It receives some input parameters to determine its size and margin, as well as some event data to display. The file also includes a function for correctly converting an ISO string into a properly formatted string (which is correct for the given time zone - the Date class handles this automatically).
+
+
+ForgottenPasswordScreen
+-----------------------
+
+Similar to the equivalent screen on the website. This component contains a mechanism for displaying two different screens, depending on whether the user has successfully triggered a password reset email or not.
+
+
+HeaderWrapper
+-------------
+
+The component itself is no longer in use and can probably be deleted. However, we export the HeaderStyles, which are used to applying styling to headers across the app consistently.
+
+
+HomeScreen
+----------
+
+A home screen that contains different lists of events - featured events, events from hosts the user follows, and events the user is interested in. A listener is also added so that these events are refreshed when the home screen becomes visible.
+
+Each of these three lists is handled in the same way - we display a list of EventTile components to represent each event in the list. The "getEvents()" method refreshes all three lists.
+
+
+LoginOrSignUpScreen
+-------------------
+
+A component to represent the initial screen that is shown when you open the app (and are not logged in). It contains buttons to navigate to the login and signup screens.
+
+
+LoginScreen
+-----------
+
+Similar to the login screen on the website. If the user logs in successfully, the user data is stored in the AsyncStorage, and the user enters the app.
+
+TODO: inform the user if they don't enter an email address or a password, or if the password is incorrect.
+
+
+SignUpScreen
+------------
+
+VERY similar to the signup screen on the website, so check the docs for that. However, one thing to note here is that we use the ModalDropdown module to implement the dropdown menus, and they work slightly differently to those on the website. Check the docs for that module for further clarifications. One thing to note is that there is no default value with this type of dropdown menu - instead it invites the user to select a category ("Please pick...").
+
+
+SocietiesList
+-------------
+
+Very similar to EventsList - see above.
+
+
+SocietiesScreen
+---------------
+
+Similar to EventsScreen, but without all of the filtering logic. Instead, the society category is passed in as a navigation parameter - this category is then used as a filter parameter in the request.
+
+
+SocietyCategoriesList
+---------------------
+
+A component to render the list of society categories. It takes care of calculating the tile dimensions, and generating the tiles for each society category.
+
+
+SocietyCategoriesScreen
+-----------------------
+
+The screen that displays society categories. This component makes a request to get the society categories, and displays a SocietyCategoriesList component with those categories. It also contains logic to navigate to the appropriate screen when selecting one of the categories.
+
+IMPORTANT: we assume that the second category (i.e. at index "1") in the list of host category will always be the category "Student Societies", and that its children will therefore be the society categories. Be sure to update this code if that fact changes.
+
+
+SocietyDetailsScreen
+--------------------
+
+A component to display the info of a given society, as well as a few tiles representing its upcoming events. The "toggleSignUp()" method is a bit different to that for Events - this time, we need to make a request to obtain the list of societies that the user is subscribed to, and then add/remove the ID of the current society, and then submit a PATCH request to update this information.
+
+
+SocietyInfo
+-----------
+
+A stateless component to display the information of a given society. When displaying the host category, we also display the category's parent if it exists. There is also some commented out code here that can be deleted - previously, we tried to print all of the parent hierarchy, but this would take up too much space.
+
+
+SocietyInterestedBar
+--------------------
+
+Very similar to EventInterestedBar - only some minor cosmetic differences.
+
+
+SocietyTile
+-----------
+
+A simple stateless component to display a tile for a given society.
+
+
+sendRequest
+-----------
+
+VERY similar to the equivalent function in the website's code. However, this time, we don't have to worry about FormData because the app doesn't use this class when making requests. In fact, the content type is always JSON.
+

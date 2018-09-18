@@ -1,0 +1,47 @@
+SettingsScreen
+--------------
+
+This component takes care of many functions, but none of the logic is particularly complex.
+
+
+constructor
+-----------
+
+We start with empty extended user data, and later make a request to populate these fields. There is a "warningMessage" field that represents the message to present to the user, relating to the password reset mechanism.
+
+
+componentWillMount()
+--------------------
+
+We add a listener to check when this tab is displayed - in this case, we need to reset the text in the text fields and the warning message, etc.
+
+We also make a request to obtain the extended user data, and update the state accordingly.
+
+
+render()
+--------
+
+We display a lot of information, as well as text fields to update your password, a button to submit the new password, and a button to log out as well.
+
+NOTE: the notice regarding Freepik icons MUST be displayed in order to comply with usage rights for the icons used on the society categories screen.
+
+
+generateExtendedUserDataComponents()
+------------------------------------
+
+This method generates the components for displaying the extended user data. Note that this data is only displayed - it cannot be modified. Perhaps in future you should allow users to modify this data.
+
+Some components shouldn't be shown if it doesn't make sense (e.g. a "Public" user doesn't have a "Subject"). The rules to follow here are similar to those used on in a similar place on the website.
+
+
+submitNewAccountInfo()
+----------------------
+
+Implements some simple checks to ensure that the new password data has been filled in, etc. A request is then sent to the server to update the user's password, and an appropriate message is shown to the user depending on the response.
+
+
+logout()
+--------
+
+The user data is deleted from the AsyncStorage, and the main app is exited (i.e. we return to the login or signup screen).
+

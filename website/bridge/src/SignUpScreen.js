@@ -230,7 +230,19 @@ class SignUpScreen extends Component {
           this.setState({...this.state, currentScreenNumber: 3});
         }
         else {
-          this.setState({...this.state, currentScreenNumber: 1, errorMessage: 'Password too weak'});
+          response.json().then(
+            (result) => {
+              if (result.password !== undefined && result.password !== null && result.password.length > 0) {
+                this.setState({...this.state, currentScreenNumber: 1, errorMessage: 'Password too weak: ' + result.password[0]});
+              }
+              else {
+                this.setState({...this.state, currentScreenNumber: 1, errorMessage: 'Password too weak'});
+              }
+            },
+            (error) => {
+              this.setState({...this.state, currentScreenNumber: 1, errorMessage: 'Password too weak'});
+            }
+          );
         }
       }
     });
@@ -251,8 +263,8 @@ const StudentTypeDropdown = (props) => {
         onChange={(e) => props.categoryChanged(e.target.value)}>
         {['Undergraduate', 'Postgraduate', 'Faculty and staff'].map((category, index) => (
           (props.userCategory.id === universityOfCambridgeUserCategoryId
-            ? <option key={index} value={category}>&nbsp;&nbsp;{category}</option>
-            : <option key={index} value={category}>&nbsp;&nbsp;&nbsp;&nbsp;{category}</option>)
+            ? <option key={index} value={category}>{category}</option>
+            : <option key={index} value={category}>&nbsp;&nbsp;{category}</option>)
         ))}
       </select>
       <Ionicon icon="md-arrow-dropdown" fontSize="22px" color="#aaa" style={{marginRight: 5}} />
@@ -267,8 +279,8 @@ const MatriculationYearDropdown = (props) => {
         onChange={(e) => props.yearChanged(e.target.value)}>
         {["2015", "2016", "2017", "2018", "2019", "2020"].map((category, index) => (
           (props.userCategory.id === universityOfCambridgeUserCategoryId
-            ? <option key={index} value={category}>&nbsp;&nbsp;{category}</option>
-            : <option key={index} value={category}>&nbsp;&nbsp;&nbsp;&nbsp;{category}</option>)
+            ? <option key={index} value={category}>{category}</option>
+            : <option key={index} value={category}>&nbsp;&nbsp;{category}</option>)
         ))}
       </select>
       <Ionicon icon="md-arrow-dropdown" fontSize="22px" color="#aaa" style={{marginRight: 5}} />
@@ -315,8 +327,8 @@ const SubjectDropdown = (props) => {
           "Veterinary Medicine",
       ].map((category, index) => (
           (props.userCategory.id === universityOfCambridgeUserCategoryId
-            ? <option key={index} value={category}>&nbsp;&nbsp;{category}</option>
-            : <option key={index} value={category}>&nbsp;&nbsp;&nbsp;&nbsp;{category}</option>)
+            ? <option key={index} value={category}>{category}</option>
+            : <option key={index} value={category}>&nbsp;&nbsp;{category}</option>)
         ))}
       </select>
       <Ionicon icon="md-arrow-dropdown" fontSize="22px" color="#aaa" style={{marginRight: 5}} />

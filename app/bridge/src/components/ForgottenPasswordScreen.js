@@ -151,7 +151,7 @@ const styles={
     marginTop: 20
   },
   loginButtonStyle: {
-    backgroundColor: '#f66',
+    backgroundColor: '#6c6',
     alignItems: 'center',
     paddingTop: 8,
     paddingBottom: 8,
@@ -161,7 +161,7 @@ const styles={
     marginLeft: 10
   },
   cancelButtonStyle: {
-    backgroundColor: '#888',
+    backgroundColor: '#f66',
     alignItems: 'center',
     paddingTop: 8,
     paddingBottom: 8,

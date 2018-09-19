@@ -108,7 +108,7 @@ class AccountPane extends Component {
         </div>
 
         <div className="AccountPane-row" style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-          <label className="AccountPane-label">User category: </label>
+          <label className="AccountPane-label">College: </label>
           <label className="AccountPane-text-field" style={{border: 'none'}}>
             {this.state.extendedUserData.user_category !== null ? this.state.extendedUserData.user_category.name : null}
           </label>
@@ -116,7 +116,7 @@ class AccountPane extends Component {
 
         {this.state.extendedUserData.university_age_category !== null && this.state.extendedUserData.university_age_category !== undefined
          ?  <div className="AccountPane-row" style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-              <label className="AccountPane-label">University age category: </label>
+              <label className="AccountPane-label">Academic level: </label>
               <label className="AccountPane-text-field" style={{border: 'none'}}>
                 {this.state.extendedUserData.university_age_category}
               </label>

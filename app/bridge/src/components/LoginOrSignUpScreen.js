@@ -8,12 +8,12 @@ class LoginOrSignUpScreen extends Component {
   render() {
     return (
       <View style={styles.viewStyle}>
-        <View style={{alignItems: 'center', alignSelf: 'stretch'}}>
-          <Image source={require('../../assets/bridge_logo.png')} style={{width: 200, height: 100, marginTop: 133}} />
+        <View style={{alignItems: 'center', alignSelf: 'stretch', marginBottom: 80}}>
+          <Image source={require('../../assets/bridge_logo.png')} style={{width: 120, height: 60}} />
           <Text style={styles.titleStyle}>Bridge</Text>
         </View>
 
-        <View style={{alignItems: 'center', alignSelf: 'stretch', marginBottom: 60}}>
+        <View style={{alignItems: 'center', alignSelf: 'stretch'}}>
           <TouchableOpacity style={styles.button1Style} onPress={() => this.props.navigation.navigate('LogIn')}>
             <Text style={styles.text1Style}>Log In</Text>
           </TouchableOpacity>
@@ -35,7 +35,7 @@ const styles = {
   viewStyle: {
     backgroundColor: '#F18B35',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     flex: 1
   },
   titleStyle: {

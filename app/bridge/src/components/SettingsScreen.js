@@ -148,7 +148,7 @@ class SettingsScreen extends React.Component {
         </View>
 
         <View style={styles.textViewStyle}>
-          <Text style={{fontSize: 14, fontWeight: 'bold'}}>User category: </Text>
+          <Text style={{fontSize: 14, fontWeight: 'bold'}}>College: </Text>
           <Text style={{fontSize: 14}}>
             {this.state.extendedUserData.user_category !== null ? this.state.extendedUserData.user_category.name : null}
           </Text>
@@ -156,7 +156,7 @@ class SettingsScreen extends React.Component {
 
         {this.state.extendedUserData.university_age_category !== null && this.state.extendedUserData.university_age_category !== undefined
          ?  <View style={styles.textViewStyle}>
-              <Text style={{fontSize: 14, fontWeight: 'bold'}}>Uni age category: </Text>
+              <Text style={{fontSize: 14, fontWeight: 'bold'}}>Academic level: </Text>
               <Text style={{fontSize: 14}}>
                 {this.state.extendedUserData.university_age_category}
               </Text>

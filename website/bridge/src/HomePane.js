@@ -41,6 +41,16 @@ class HomePane extends Component {
                 <label>{host.name}</label>
               </div>
             )}
+
+            <div style={{display: 'flex', flexDirection: 'column', marginTop: 46, width: '60%'}}>
+              <label style={{fontWeight: 'bold'}}>
+                Making a College Society?
+              </label>
+
+              <label style={{whiteSpace: 'pre-wrap', marginTop: 20}}>
+                Select 'College' as the category, and then choose your college under 'Open To'.
+              </label>
+            </div>
           </div>
 
           <EditSocietyPanel creating={true} onCreate={() => this.createdSociety()} user={this.props.user} />

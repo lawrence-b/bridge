@@ -16,7 +16,12 @@ const EventTile = (props) => {
 
       <Text style={styles.titleTextStyle} numberOfLines={1}>{props.event.title}</Text>
 
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 6 }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 3 }}>
+        <Icon name='user' size={22} color='#000' style={{ marginLeft: -3, marginRight: 5, marginTop: 2 }} />
+        <Text style={styles.timeTextStyle} numberOfLines={1}>{props.event.hosts[0].name}</Text>
+      </View>
+
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Icon name='clock' size={22} color='#000' style={{ marginLeft: -3, marginRight: 5, marginTop: 2 }} />
         <Text style={styles.timeTextStyle} numberOfLines={1}>{formatTime(props.event.start_time)}</Text>
       </View>
@@ -58,7 +63,7 @@ const styles = {
     shadowRadius: 2,
   },
   titleTextStyle: {
-    marginTop: 10,
+    marginTop: 6,
     fontSize: 14,
     fontWeight: 'bold',
     color: '#000000'

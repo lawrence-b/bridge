@@ -18,7 +18,8 @@ const EventTile = (props) => {
 
       <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 3 }}>
         <Icon name='user' size={22} color='#000' style={{ marginLeft: -3, marginRight: 5, marginTop: 2 }} />
-        <Text style={styles.timeTextStyle} numberOfLines={1}>{props.event.hosts[0].name}</Text>
+        <Text style={{...styles.timeTextStyle, maxWidth: props.size - 42}}
+              numberOfLines={1}>{props.event.hosts[0].name}</Text>
       </View>
 
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>

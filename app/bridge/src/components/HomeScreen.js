@@ -93,7 +93,7 @@ class HomeScreen extends React.Component {
       successHandler: (result) => this.setState({...this.state, interestedInEvents: result.results})
     });
 
-    var date = this.currentDate;
+    var date = new Date();
 
     var day   = date.getDate();
     var month = date.getMonth()+1;

@@ -181,7 +181,7 @@ class SignUpScreen extends Component {
       return;
     }
     else if (this.state.currentUserCategory === null) {
-      this.setState({...this.state, errorMessage: 'Please select a user category'});
+      this.setState({...this.state, errorMessage: 'Please select a college'});
       return;
     }
 
@@ -194,9 +194,23 @@ class SignUpScreen extends Component {
     };
 
     if (this.state.currentUserCategory.id !== 1) {
+      if (this.state.currentStudentCategory === '') {
+        this.setState({...this.state, errorMessage: 'Please select an academic level'});
+        return;
+      }
+
       body.university_age_category = this.state.currentStudentCategory;
 
       if (this.state.currentStudentCategory === 'Undergraduate') {
+        if (this.state.currentMatriculationYear === '') {
+          this.setState({...this.state, errorMessage: 'Please select a matriculation year'});
+          return;
+        }
+        if (this.state.currentSubject === '') {
+          this.setState({...this.state, errorMessage: 'Please select a subject'});
+          return;
+        }
+
         body.matriculation_year = parseInt(this.state.currentMatriculationYear, 10);
         body.subject = this.state.currentSubject;
       }
@@ -256,6 +270,7 @@ const UserCategoryPicker = (props) => {
     <ModalDropdown
       style={styles.pickerStyle}
       textStyle={styles.pickerTextStyle}
+      defaultValue={'College...'}
       disabled={props.categories.length <= 0}
       options={categories}
       onSelect={(index, category) => props.onUserCategoryChanged(category)}
@@ -277,6 +292,7 @@ const StudentTypeDropdown = (props) => {
     <ModalDropdown
       style={styles.pickerStyle}
       textStyle={styles.pickerTextStyle}
+      defaultValue={'Academic level...'}
       options={['Undergraduate', 'Postgraduate', 'Faculty and staff']}
       onSelect={(index, type) => props.onStudentTypeChanged(type)}
       renderRow={(option) => {
@@ -297,6 +313,7 @@ const MatriculationYearDropdown = (props) => {
     <ModalDropdown
       style={styles.pickerStyle}
       textStyle={styles.pickerTextStyle}
+      defaultValue={'Matriculation year...'}
       options={["2015", "2016", "2017", "2018", "2019", "2020"]}
       onSelect={(index, year) => props.onMatriculationYearChanged(year)}
       renderRow={(option) => {
@@ -317,6 +334,7 @@ const SubjectDropdown = (props) => {
     <ModalDropdown
       style={styles.pickerStyle}
       textStyle={styles.pickerTextStyle}
+      defaultValue={'Subject...'}
       options={[
         "Anglo-Saxon, Norse, and Celtic",
         "Archaeology",
@@ -436,7 +454,7 @@ const styles = {
     paddingRight: 13,
     margin: 10,
     marginBottom: 0,
-    borderRadius: 18,
+    borderRadius: 26,
     borderColor: '#ccc',
     borderWidth: 1,
 
@@ -445,6 +463,7 @@ const styles = {
   },
   pickerTextStyle: {
     color: '#333',
+    fontSize: 14
   }
 }
 

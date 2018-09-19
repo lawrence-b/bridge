@@ -101,7 +101,7 @@ class SignUpScreen extends Component {
           <UserCategoryPicker categories={this.state.userCategories}
             onUserCategoryChanged={(category) => this.setState({...this.state, currentUserCategory: category, currentStudentCategory: '', currentMatriculationYear: '', currentSubject: ''})} />
 
-          {this.state.currentUserCategory !== null && this.state.currentUserCategory.id !== 1
+          {this.state.currentUserCategory !== null
            ? <StudentTypeDropdown onStudentTypeChanged={(category) => this.setState({...this.state, currentStudentCategory: category, currentMatriculationYear: '', currentSubject: ''})} />
            : null}
 
@@ -193,27 +193,25 @@ class SignUpScreen extends Component {
       last_name: this.state.lastName,
     };
 
-    if (this.state.currentUserCategory.id !== 1) {
-      if (this.state.currentStudentCategory === '') {
-        this.setState({...this.state, errorMessage: 'Please select an academic level'});
+    if (this.state.currentStudentCategory === '') {
+      this.setState({...this.state, errorMessage: 'Please select an academic level'});
+      return;
+    }
+
+    body.university_age_category = this.state.currentStudentCategory;
+
+    if (this.state.currentStudentCategory === 'Undergraduate') {
+      if (this.state.currentMatriculationYear === '') {
+        this.setState({...this.state, errorMessage: 'Please select a matriculation year'});
+        return;
+      }
+      if (this.state.currentSubject === '') {
+        this.setState({...this.state, errorMessage: 'Please select a subject'});
         return;
       }
 
-      body.university_age_category = this.state.currentStudentCategory;
-
-      if (this.state.currentStudentCategory === 'Undergraduate') {
-        if (this.state.currentMatriculationYear === '') {
-          this.setState({...this.state, errorMessage: 'Please select a matriculation year'});
-          return;
-        }
-        if (this.state.currentSubject === '') {
-          this.setState({...this.state, errorMessage: 'Please select a subject'});
-          return;
-        }
-
-        body.matriculation_year = parseInt(this.state.currentMatriculationYear, 10);
-        body.subject = this.state.currentSubject;
-      }
+      body.matriculation_year = parseInt(this.state.currentMatriculationYear, 10);
+      body.subject = this.state.currentSubject;
     }
 
     sendRequest({

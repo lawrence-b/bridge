@@ -75,7 +75,7 @@ const LoginStack = createStackNavigator(
 class App extends Component {
 
   componentWillMount() {
-    this.setState({mainComponent: <View style={{flex: 1, backgroundColor: '#F18B35'}} />});
+    this.setState({mainComponent: <View style={{flex: 1, backgroundColor: '#FFF'}} />});
 
     try {
       const promise = AsyncStorage.getItem('@Bridge:user_data');

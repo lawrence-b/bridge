@@ -211,12 +211,22 @@ class SignUpScreen extends Component {
           this.setState({...this.state, currentScreenNumber: 3});
         }
         else {
-          this.goToStartScreen('Password too weak');
+          response.json().then(
+            (result) => {
+              if (result.password !== undefined && result.password !== null && result.password.length > 0) {
+                this.goToStartScreen('Password too weak: ' + result.password[0]);
+              }
+              else {
+                this.goToStartScreen('Password too weak.');
+              }
+            },
+            (error) => {
+              this.goToStartScreen('Password too weak');
+            }
+          );
         }
       }
     });
-
-    this.setState({...this.state, currentScreenNumber: 3});
   }
 
 }

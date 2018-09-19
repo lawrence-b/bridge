@@ -32,8 +32,6 @@ class SocietyDetailsScreen extends Component {
   }
 
   render() {
-    console.log(this.state.host);
-
     return (
       <View style={{ flex: 1, backgroundColor: '#F18B35' }}>
         <ScrollView>
@@ -48,7 +46,6 @@ class SocietyDetailsScreen extends Component {
             {this.renderTiles()}
           </ScrollView>
         </ScrollView>
-        <SocietyInterestedBar onPress={() => this.toggleSignUp()} isInterested={this.state.host.subscribed_to_check} />
       </View>
     );
   }

@@ -24,7 +24,7 @@ class SocietyDetailsScreen extends Component {
     return this.state.host.events_hosting_in_future.map(event =>
       <EventTile
         key={event.id}
-        event={event}
+        event={{...event, hosts: [this.state.host]}}
         size={150}
         margin={15}
         onPress={() => this.props.navigation.navigate('SelectedEvent', {event: {...event, hosts: [this.state.host]}, user: this.props.navigation.getParam('user')})} />

@@ -32,7 +32,7 @@ class EditSocietyPanel extends Component {
         <label className="EditSocietyPanel-title-text">{this.props.creating ? "Create a host" : "Edit your host"}</label>
           <div style={{display: 'flex', flexDirection: 'column'}}>
             <div className="EditSocietyPanel-new-host-row">
-              <label className="EditSocietyPanel-new-host-label">Name: </label>
+              <label className="EditSocietyPanel-new-host-label">Host Name: </label>
               <input type="text" onChange={(e) => {this.state.newHost.name = e.target.value; this.setState(this.state);}}
                      className="EditSocietyPanel-text-field" value={this.state.newHost.name} />
             </div>

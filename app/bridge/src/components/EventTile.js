@@ -30,10 +30,13 @@ const formatTime = (timeString) => {
   var paddingZero1 = time.getHours()   < 10 ? "0" : "";
   var paddingZero2 = time.getMinutes() < 10 ? "0" : "";
   var paddingZero3 = time.getDate() < 10 ? "0" : "";
-  var paddingZero4 = (time.getMonth()+1) < 10 ? "0" : "";
 
-  return paddingZero1 + time.getHours() + ":" + paddingZero2 + time.getMinutes()
-    + " " + paddingZero3 + time.getDate() + "/" + paddingZero4 + (time.getMonth()+1) + "/" + time.getFullYear();
+  var monthStrings = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  var month = monthStrings[time.getMonth()];
+
+  return paddingZero3 + time.getDate() + " " + month + ", "
+    + paddingZero1 + time.getHours() + ":" + paddingZero2 + time.getMinutes();
 }
 
 const styles = {

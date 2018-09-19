@@ -20,7 +20,7 @@ class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {featuredEvents: [], fromFollowedHostsEvents: [], interestedInEvents: []};
+    this.state = {featuredEvents: [], happeningTodayEvents: [], interestedInEvents: []};
   }
 
   componentWillMount() {
@@ -57,16 +57,6 @@ class HomeScreen extends React.Component {
             {this.renderTiles(this.state.featuredEvents)}
           </ScrollView>
 
-
-          <View style={styles.textViewStyle}>
-            <Text style={styles.textStyle}>From hosts you follow: </Text>
-          </View>
-
-          <ScrollView contentContainerStyle={styles.eventsViewStyle} horizontal={true}>
-            {this.renderTiles(this.state.fromFollowedHostsEvents)}
-          </ScrollView>
-
-
           <View style={styles.textViewStyle}>
             <Text style={styles.textStyle}>{"Events you're interested in: "}</Text>
           </View>
@@ -74,6 +64,15 @@ class HomeScreen extends React.Component {
           <ScrollView contentContainerStyle={styles.eventsViewStyle} horizontal={true}>
             {this.renderTiles(this.state.interestedInEvents)}
           </ScrollView>
+
+          <View style={styles.textViewStyle}>
+            <Text style={styles.textStyle}>Happening today: </Text>
+          </View>
+
+          <ScrollView contentContainerStyle={styles.eventsViewStyle} horizontal={true}>
+            {this.renderTiles(this.state.happeningTodayEvents)}
+          </ScrollView>
+
         </ScrollView>
       </View>
     );
@@ -88,17 +87,29 @@ class HomeScreen extends React.Component {
     });
 
     sendRequest({
-      address: "events/?ordering=start_time&show_past=false&subscribed_to=true",
-      method: "GET",
-      authorizationToken: this.userData.token,
-      successHandler: (result) => this.setState({...this.state, fromFollowedHostsEvents: result.results})
-    });
-
-    sendRequest({
       address: "events/?ordering=start_time&show_past=false&interested_in=true",
       method: "GET",
       authorizationToken: this.userData.token,
       successHandler: (result) => this.setState({...this.state, interestedInEvents: result.results})
+    });
+
+    var date = this.currentDate;
+
+    var day   = date.getDate();
+    var month = date.getMonth()+1;
+    var year  = date.getFullYear();
+
+    var happeningTodayUrl = 'events/\?ordering=start_time'
+                + '&year='  + encodeURIComponent(year)
+                + '&month=' + encodeURIComponent(month)
+                + '&day='   + encodeURIComponent(day)
+                + '&show_past=true';
+
+    sendRequest({
+      address: happeningTodayUrl,
+      method: "GET",
+      authorizationToken: this.userData.token,
+      successHandler: (result) => this.setState({...this.state, happeningTodayEvents: result.results})
     });
   }
 

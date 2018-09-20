@@ -10,6 +10,7 @@ generateTitleScreen()
 ---------------------
 
 TODO: add actual Terms and Conditions page
+TODO: apparently the "Avenir" font doesn't work on Windows. Something else needs to be chosen for Windows.
 
 
 displaySignupScreen() and forgottenPassword()

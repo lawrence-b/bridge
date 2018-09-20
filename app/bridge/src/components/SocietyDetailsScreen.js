@@ -47,7 +47,7 @@ class SocietyDetailsScreen extends Component {
           </ScrollView>
         </ScrollView>
 
-        <SocietyInterestedBar onPress={() => this.toggleSignUp()} isInterested={this.state.event.subscribed_to_check} />
+        <SocietyInterestedBar onPress={() => this.toggleSignUp()} isInterested={this.state.host.subscribed_to_check} />
       </View>
     );
   }

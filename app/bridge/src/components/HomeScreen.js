@@ -58,7 +58,7 @@ class HomeScreen extends React.Component {
           </ScrollView>
 
           <View style={styles.textViewStyle}>
-            <Text style={styles.textStyle}>{"Events you're interested in: "}</Text>
+            <Text style={styles.textStyle}>Your Events: </Text>
           </View>
 
           <ScrollView contentContainerStyle={styles.eventsViewStyle} horizontal={true}>

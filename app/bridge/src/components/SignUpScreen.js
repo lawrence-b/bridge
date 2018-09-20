@@ -275,7 +275,7 @@ const UserCategoryPicker = (props) => {
       renderRow={(option) => {
         return (
           <View style={{padding: 3, paddingLeft: 0}}>
-            <Text>{option.displayName}</Text>
+            <Text style={styles.dropdownOptionTextStyle}>{option.displayName}</Text>
           </View>
         );
       }}
@@ -296,7 +296,7 @@ const StudentTypeDropdown = (props) => {
       renderRow={(option) => {
         return (
           <View style={{padding: 3, paddingLeft: 0}}>
-            <Text>{option}</Text>
+            <Text style={styles.dropdownOptionTextStyle}>{option}</Text>
           </View>
         );
       }}
@@ -317,7 +317,7 @@ const MatriculationYearDropdown = (props) => {
       renderRow={(option) => {
         return (
           <View style={{padding: 3, paddingLeft: 0}}>
-            <Text>{option}</Text>
+            <Text style={styles.dropdownOptionTextStyle}>{option}</Text>
           </View>
         );
       }}
@@ -370,7 +370,7 @@ const SubjectDropdown = (props) => {
       renderRow={(option) => {
         return (
           <View style={{padding: 3, paddingLeft: 0}}>
-            <Text>{option}</Text>
+            <Text style={styles.dropdownOptionTextStyle}>{option}</Text>
           </View>
         );
       }}
@@ -393,7 +393,9 @@ const styles = {
 
     backgroundColor: '#fff',
     borderRadius: 10,
-    padding: 20
+    padding: 20,
+
+    marginHorizontal: 40
   },
   titleStyle: {
     color: '#666',
@@ -462,6 +464,9 @@ const styles = {
   pickerTextStyle: {
     color: '#333',
     fontSize: 14
+  },
+  dropdownOptionTextStyle: {
+    fontSize: 16
   }
 }
 

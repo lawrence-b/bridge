@@ -79,6 +79,7 @@ class HomeScreen extends React.Component {
   }
 
   getEvents() {
+    // Gets featured events
     sendRequest({
       address: "events/?ordering=start_time&show_past=false&featured=true",
       method: "GET",
@@ -86,11 +87,45 @@ class HomeScreen extends React.Component {
       successHandler: (result) => this.setState({...this.state, featuredEvents: result.results})
     });
 
+    // Gets events you're interested in, or from societies you've followed
+    // It does this by first getting events you're interested in,
+    // and then adding events from societies you've followed,
+    // excluding duplicates
+    // TODO: be careful of page sizes. If the user subscribes to many societies,
+    // we could end up with lots of events here...
     sendRequest({
       address: "events/?ordering=start_time&show_past=false&interested_in=true",
       method: "GET",
       authorizationToken: this.userData.token,
-      successHandler: (result) => this.setState({...this.state, interestedInEvents: result.results})
+      successHandler: (result) => {
+        this.setState({...this.state, interestedInEvents: result.results})
+
+        sendRequest({
+          address: "events/?ordering=start_time&show_past=false&subscribed_to=true",
+          method: "GET",
+          authorizationToken: this.userData.token,
+          successHandler: (result) => {
+            var eventsFromSubscribedSocieties = result.results;
+
+            for (var i = 0; i < eventsFromSubscribedSocieties.length; ++i) {
+              var found = false;
+
+              for (var j = 0; j < this.state.interestedInEvents.length; ++j) {
+                if (eventsFromSubscribedSocieties[i].id === this.state.interestedInEvents[j].id) {
+                  found = true;
+                  break;
+                }
+              }
+
+              if (!found) {
+                this.state.interestedInEvents.push(eventsFromSubscribedSocieties[i]);
+              }
+            }
+
+            this.setState(this.state);
+          }
+        });
+      }
     });
 
     var date = new Date();

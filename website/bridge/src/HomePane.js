@@ -48,7 +48,7 @@ class HomePane extends Component {
               </label>
 
               <label style={{whiteSpace: 'pre-wrap', marginTop: 20}}>
-                Select 'College' as the category, and then choose your college under 'Open To'.
+                Select 'College' as the category, and then choose your college under 'Visible To'.
               </label>
             </div>
           </div>

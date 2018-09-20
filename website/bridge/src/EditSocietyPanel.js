@@ -43,7 +43,7 @@ class EditSocietyPanel extends Component {
             </div>
 
             <div className="EditSocietyPanel-new-host-row">
-              <label className="EditSocietyPanel-new-host-label">Open to: </label>
+              <label className="EditSocietyPanel-new-host-label">Visible to: </label>
               <CategoryDropdownMenu categoryTypeString="user-categories" user={this.props.user} initialCategory={this.props.creating ? null : this.props.host.open_to} onCategoryChanged={(category) => this.onUserCategoryChanged(category)} />
             </div>
 

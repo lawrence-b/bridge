@@ -49,9 +49,11 @@ The component itself is no longer in use and can probably be deleted. However, w
 HomeScreen
 ----------
 
-A home screen that contains different lists of events - featured events, events from hosts the user follows, and events the user is interested in. A listener is also added so that these events are refreshed when the home screen becomes visible.
+A home screen that contains different lists of events - featured events, events the user is interested in, and events on today. A listener is also added so that these events are refreshed when the home screen becomes visible.
 
-Each of these three lists is handled in the same way - we display a list of EventTile components to represent each event in the list. The "getEvents()" method refreshes all three lists.
+Each of these three lists is handled in the same way - we display a list of EventTile components to represent each event in the list. The "getEvents()" method refreshes all three lists - each refresh is done slightly differently.
+
+TODO: the "Your Events" requests should probably be aggregated and implemented on the backend, sorted by date and with a limit on the length of the list. The current implementation will start to become a problem if the user follows lots of societies, which each have lots of events.
 
 
 LoginOrSignUpScreen

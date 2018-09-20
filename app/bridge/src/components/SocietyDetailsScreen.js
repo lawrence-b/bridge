@@ -46,6 +46,8 @@ class SocietyDetailsScreen extends Component {
             {this.renderTiles()}
           </ScrollView>
         </ScrollView>
+
+        <SocietyInterestedBar onPress={() => this.toggleSignUp()} isInterested={this.state.event.subscribed_to_check} />
       </View>
     );
   }

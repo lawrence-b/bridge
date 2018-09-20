@@ -7,6 +7,12 @@ class HomePane extends Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {infoBox: null};
+  }
+
+  componentWillMount(){
+    this.setState({...this.state, infoBox: null});
   }
 
   render() {
@@ -42,21 +48,32 @@ class HomePane extends Component {
               </div>
             )}
 
-            <div style={{display: 'flex', flexDirection: 'column', marginTop: 46, width: '60%'}}>
-              <label style={{fontWeight: 'bold'}}>
-                Making a College Society?
-              </label>
-
-              <label style={{whiteSpace: 'pre-wrap', marginTop: 20}}>
-                Select 'College' as the category, and then choose your college under 'Visible To'.
-              </label>
-            </div>
+            {this.state.infoBox}
           </div>
 
-          <EditSocietyPanel creating={true} onCreate={() => this.createdSociety()} user={this.props.user} />
+          <EditSocietyPanel creating={true} onClickName={() => this.showInfoBox()} onCreate={() => this.createdSociety()} user={this.props.user} />
         </div>
       </div>
     );
+  }
+
+  showInfoBox() {
+    this.setState({...this.state, infoBox:
+      <div style={{display: 'flex', flexDirection: 'column', marginTop: 46}}>
+        <label style={{fontWeight: 'bold', paddingBottom: 3, borderBottom: '1px solid orange'}}>
+          Making a College Society?
+        </label>
+
+        <label style={{whiteSpace: 'pre-wrap', marginTop: 20}}>
+          Select 'College' as the category, and then choose your college under 'Visible To'.
+        </label>
+
+        <label style={{whiteSpace: 'pre-wrap', marginTop: 20}}>
+          If you need to make some events open to all members of the university,
+          you can do this later when you create those events.
+        </label>
+      </div>
+    });
   }
 
   createdSociety() {

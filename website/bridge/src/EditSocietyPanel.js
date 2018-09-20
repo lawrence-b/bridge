@@ -34,6 +34,7 @@ class EditSocietyPanel extends Component {
             <div className="EditSocietyPanel-new-host-row">
               <label className="EditSocietyPanel-new-host-label">Host Name: </label>
               <input type="text" onChange={(e) => {this.state.newHost.name = e.target.value; this.setState(this.state);}}
+                     onClick={(e) => {this.props.onClickName !== undefined ? this.props.onClickName() : null}}
                      className="EditSocietyPanel-text-field" value={this.state.newHost.name} />
             </div>
 

@@ -88,6 +88,8 @@ class OptionalEventsFilters(filters.FilterSet):
 
     subscribed_to = filters.BooleanFilter(method='subscribed_to_filter', label='Subscribed')
     interested_in = filters.BooleanFilter(method='interested_in_filter', label='Interested')
+    subscribed_or_interested_in = filters.BooleanFilter(method='subscribed_or_interested_in_filter',
+                                                        label='Subscribed or interested')
 
     show_past = filters.BooleanFilter(method='show_past_filter', label='Show Past?')
 
@@ -138,6 +140,17 @@ class OptionalEventsFilters(filters.FilterSet):
         if value:
             interested_in_queryset = Event.objects.filter(users_interested=self.request.user)
             return queryset & interested_in_queryset
+        else:
+            return queryset
+
+    def subscribed_or_interested_in_filter(self, queryset, name, value):
+        """A filter that returns events the user is interested_in or events from hosts the user is subscribed to."""
+
+        if value:
+            interested_in_queryset = Event.objects.filter(users_interested=self.request.user)
+            subscribed_to_queryset = Event.objects.filter(hosts__users_subscribed=self.request.user)
+            combined_queryset = interested_in_queryset | subscribed_to_queryset
+            return queryset & combined_queryset
         else:
             return queryset
 

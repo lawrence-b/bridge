@@ -1,6 +1,9 @@
 # Import from Python
 from datetime import datetime
 
+# Import from Django
+from django.db.models import Q
+
 # Import from core
 from .models import Host, HostCategory, Event, EventCategory
 
@@ -147,10 +150,10 @@ class OptionalEventsFilters(filters.FilterSet):
         """A filter that returns events the user is interested_in or events from hosts the user is subscribed to."""
 
         if value:
-            interested_in_queryset = Event.objects.filter(users_interested=self.request.user)
-            subscribed_to_queryset = Event.objects.filter(hosts__users_subscribed=self.request.user)
-            combined_queryset = interested_in_queryset | subscribed_to_queryset
-            return queryset & combined_queryset
+            combined_queryset = Event.objects.filter(
+                Q(users_interested=self.request.user) | Q(hosts__users_subscribed=self.request.user)
+            ).distinct()
+            return queryset.distinct() & combined_queryset
         else:
             return queryset
 

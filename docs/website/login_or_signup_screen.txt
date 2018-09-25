@@ -1,0 +1,25 @@
+LoginOrSignUpScreen
+-------------------
+
+This is a component for displaying the login and signup screens, as well as the main screen when you first navigate to the site (but you are not logged in).
+
+The state field "currentScreen" holds the component for the current screen to show.
+
+
+generateTitleScreen()
+---------------------
+
+TODO: add actual Terms and Conditions page
+TODO: apparently the "Avenir" font doesn't work on Windows. Something else needs to be chosen for Windows.
+
+
+displaySignupScreen() and forgottenPassword()
+---------------------------------------------
+
+We need to reset the input text when navigating away from the login screen.
+
+
+canEnterApp(userData)
+---------------------
+
+We write to the required cookie, and notify the parent that we have logged in.

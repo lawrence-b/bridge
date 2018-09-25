@@ -42,7 +42,7 @@ class ManageHostPane extends Component {
         <label>{admin.email}</label>
         {admin.email !== this.state.user.email
           ? <Button positive={true} text="Remove" onClick={() => this.deleteAdmin(admin.id, false)} style={bonusButtonStyle} />
-          : <Button positive={true} text="Leave" onClick={() => this.leaveHost(admin.id)} style={{...bonusButtonStyle, backgroundColor: '#db6', borderColor: '#ca5'}} />}
+          : <Button positive={true} text="Leave" onClick={() => this.tryLeaveHost(admin.id)} style={{...bonusButtonStyle, backgroundColor: '#db6', borderColor: '#ca5'}} />}
       </div>
     );
   }
@@ -96,7 +96,7 @@ class ManageHostPane extends Component {
     );
   }
 
-  generateWarningPopUp() {
+  generateDeleteHostWarningPopUp() {
     return (
       <div className="ManageHostPane-warning-pop-up">
         <div className="ManageHostPane-warning-pop-up-contents">
@@ -106,11 +106,33 @@ class ManageHostPane extends Component {
           <label>You cannot undo this operation.</label>
 
           <div style={{display: 'flex', flexDirection: 'row', marginTop: 40}}>
-            <Button positive={false} text="Cancel" onClick={() => this.cancelDeleteHost()}
+            <Button positive={false} text="Cancel" onClick={() => this.cancelOperation()}
               style={{marginTop: 0, marginBottom: 10, marginRight: 20}} />
 
             <Button positive={true} text="Delete" onClick={() => this.deleteHost()}
               style={{marginTop: 0, marginBottom: 10, backgroundColor: '#d44', borderColor: '#b22'}} />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  generateLeaveHostWarningPopUp(userAdminId) {
+    return (
+      <div className="ManageHostPane-warning-pop-up">
+        <div className="ManageHostPane-warning-pop-up-contents">
+          <label style={{fontSize: 26, marginBottom: 40}}>Confirm Leave</label>
+
+          <label style={{marginBottom: 16}}>{'Are you sure you want to leave "' + this.props.host.name + '"?'}</label>
+          <label>If you are the last admin, your host will be deleted.</label>
+          <label>If you are handing over, add the other admins before you leave.</label>
+
+          <div style={{display: 'flex', flexDirection: 'row', marginTop: 40}}>
+            <Button positive={false} text="Cancel" onClick={() => this.cancelOperation()}
+              style={{marginTop: 0, marginBottom: 10, marginRight: 20}} />
+
+            <Button positive={true} text="Leave" onClick={() => this.deleteAdmin(userAdminId, true)}
+              style={{marginTop: 0, marginBottom: 10, backgroundColor: '#db6', borderColor: '#ca5'}} />
           </div>
         </div>
       </div>
@@ -177,15 +199,15 @@ class ManageHostPane extends Component {
     });
   }
 
-  leaveHost(userAdminId) {
-    this.deleteAdmin(userAdminId, true);
+  tryLeaveHost(userAdminId) {
+    this.setState({...this.state, warningPopUp: this.generateLeaveHostWarningPopUp(userAdminId)});
   }
 
   tryDeleteHost() {
-    this.setState({...this.state, warningPopUp: this.generateWarningPopUp()});
+    this.setState({...this.state, warningPopUp: this.generateDeleteHostWarningPopUp()});
   }
 
-  cancelDeleteHost() {
+  cancelOperation() {
     this.setState({...this.state, warningPopUp: null});
   }
 

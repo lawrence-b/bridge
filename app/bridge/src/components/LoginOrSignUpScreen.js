@@ -1,22 +1,19 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, Image, ImageBackground } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/EvilIcons';
-
-import LoginScreen from './LoginScreen';
-import SignUpScreen from './SignUpScreen';
 
 class LoginOrSignUpScreen extends Component {
 
   render() {
     return (
-      <View style={styles.viewStyle}>
-        <View style={{alignItems: 'center', alignSelf: 'stretch'}}>
+      <ImageBackground source={require('../../assets/bridge_login_background.png')} style={styles.viewStyle}>
+        <View style={{alignItems: 'center', alignSelf: 'stretch', marginBottom: 80}}>
+          <Image source={require('../../assets/bridge_logo.png')} style={{width: 120, height: 60}} />
           <Text style={styles.titleStyle}>Bridge</Text>
-          <Text style={styles.subtitleStyle}>Events made simple</Text>
         </View>
 
-        <View style={{alignItems: 'center', alignSelf: 'stretch', marginBottom: 60}}>
+        <View style={{alignItems: 'center', alignSelf: 'stretch'}}>
           <TouchableOpacity style={styles.button1Style} onPress={() => this.props.navigation.navigate('LogIn')}>
             <Text style={styles.text1Style}>Log In</Text>
           </TouchableOpacity>
@@ -25,11 +22,11 @@ class LoginOrSignUpScreen extends Component {
             <Text style={styles.text2Style}>Sign Up</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity>
+          <TouchableOpacity style={styles.termsTextViewStyle}>
             <Text style={styles.termsTextStyle}>Read Terms & Conditions</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </ImageBackground>
     );
   }
 }
@@ -38,28 +35,22 @@ const styles = {
   viewStyle: {
     backgroundColor: '#F18B35',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     flex: 1
   },
   titleStyle: {
     color: '#fff',
     fontSize: 32,
     fontWeight: '300',
-    marginTop: 140
-  },
-  subtitleStyle: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '300',
-    marginTop: 10
+    marginTop: 22
   },
   button1Style: {
-    backgroundColor: '#f66',
+    backgroundColor: '#f85c5e',
     alignItems: 'center',
     alignSelf:  'stretch',
     marginLeft:  40,
     marginRight: 40,
-    marginBottom: 10,
+    marginBottom: 8,
     padding: 8,
     borderRadius: 20,
     justifyContent: 'flex-end'
@@ -69,12 +60,12 @@ const styles = {
     fontSize: 16,
   },
   button2Style: {
-    backgroundColor: '#66f',
+    backgroundColor: '#77bdc9',
     alignItems: 'center',
     alignSelf:  'stretch',
     marginLeft:  40,
     marginRight: 40,
-    marginTop: 10,
+    marginTop: 8,
     marginBottom: 10,
     padding: 8,
     borderRadius: 20,
@@ -87,7 +78,12 @@ const styles = {
   termsTextStyle: {
     color: '#fff',
     fontSize: 15,
-    marginTop: 10,
+  },
+  termsTextViewStyle: {
+    backgroundColor: '#555c',
+    borderRadius: 30,
+    padding: 12,
+    marginTop: 20,
     marginBottom: 20,
   }
 }

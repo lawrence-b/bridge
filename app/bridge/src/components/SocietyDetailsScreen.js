@@ -24,7 +24,7 @@ class SocietyDetailsScreen extends Component {
     return this.state.host.events_hosting_in_future.map(event =>
       <EventTile
         key={event.id}
-        event={event}
+        event={{...event, hosts: [this.state.host]}}
         size={150}
         margin={15}
         onPress={() => this.props.navigation.navigate('SelectedEvent', {event: {...event, hosts: [this.state.host]}, user: this.props.navigation.getParam('user')})} />
@@ -32,8 +32,6 @@ class SocietyDetailsScreen extends Component {
   }
 
   render() {
-    console.log(this.state.host);
-
     return (
       <View style={{ flex: 1, backgroundColor: '#F18B35' }}>
         <ScrollView>
@@ -48,6 +46,7 @@ class SocietyDetailsScreen extends Component {
             {this.renderTiles()}
           </ScrollView>
         </ScrollView>
+
         <SocietyInterestedBar onPress={() => this.toggleSignUp()} isInterested={this.state.host.subscribed_to_check} />
       </View>
     );

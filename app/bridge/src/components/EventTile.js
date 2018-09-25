@@ -16,7 +16,13 @@ const EventTile = (props) => {
 
       <Text style={styles.titleTextStyle} numberOfLines={1}>{props.event.title}</Text>
 
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 6 }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 3 }}>
+        <Icon name='user' size={22} color='#000' style={{ marginLeft: -3, marginRight: 5, marginTop: 2 }} />
+        <Text style={{...styles.timeTextStyle, maxWidth: props.size - 42}}
+              numberOfLines={1}>{props.event.hosts[0].name}</Text>
+      </View>
+
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Icon name='clock' size={22} color='#000' style={{ marginLeft: -3, marginRight: 5, marginTop: 2 }} />
         <Text style={styles.timeTextStyle} numberOfLines={1}>{formatTime(props.event.start_time)}</Text>
       </View>
@@ -30,10 +36,13 @@ const formatTime = (timeString) => {
   var paddingZero1 = time.getHours()   < 10 ? "0" : "";
   var paddingZero2 = time.getMinutes() < 10 ? "0" : "";
   var paddingZero3 = time.getDate() < 10 ? "0" : "";
-  var paddingZero4 = (time.getMonth()+1) < 10 ? "0" : "";
 
-  return paddingZero1 + time.getHours() + ":" + paddingZero2 + time.getMinutes()
-    + " " + paddingZero3 + time.getDate() + "/" + paddingZero4 + (time.getMonth()+1) + "/" + time.getFullYear();
+  var monthStrings = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  var month = monthStrings[time.getMonth()];
+
+  return paddingZero3 + time.getDate() + " " + month + ", "
+    + paddingZero1 + time.getHours() + ":" + paddingZero2 + time.getMinutes();
 }
 
 const styles = {
@@ -55,7 +64,7 @@ const styles = {
     shadowRadius: 2,
   },
   titleTextStyle: {
-    marginTop: 10,
+    marginTop: 6,
     fontSize: 14,
     fontWeight: 'bold',
     color: '#000000'

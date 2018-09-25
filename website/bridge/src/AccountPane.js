@@ -68,17 +68,17 @@ class AccountPane extends Component {
 
             <div className="AccountPane-row" style={{borderBottom: 'none'}}>
               <label className="AccountPane-label">Old password: </label>
-              <input type="text" onChange={(e) => {this.state.oldPassword = e.target.value; this.setState(this.state);}} className="AccountPane-text-field" value={this.state.oldPassword} />
+              <input type="password" onChange={(e) => {this.state.oldPassword = e.target.value; this.setState(this.state);}} className="AccountPane-text-field" value={this.state.oldPassword} />
             </div>
 
             <div className="AccountPane-row" style={{borderBottom: 'none'}}>
               <label className="AccountPane-label">New password: </label>
-              <input type="text" onChange={(e) => {this.state.newPassword1 = e.target.value; this.setState(this.state);}} className="AccountPane-text-field" value={this.state.newPassword1} />
+              <input type="password" onChange={(e) => {this.state.newPassword1 = e.target.value; this.setState(this.state);}} className="AccountPane-text-field" value={this.state.newPassword1} />
             </div>
 
             <div className="AccountPane-row" style={{borderBottom: 'none'}}>
               <label className="AccountPane-label">Confirm new password: </label>
-              <input type="text" onChange={(e) => {this.state.newPassword2 = e.target.value; this.setState(this.state);}} className="AccountPane-text-field" value={this.state.newPassword2} />
+              <input type="password" onChange={(e) => {this.state.newPassword2 = e.target.value; this.setState(this.state);}} className="AccountPane-text-field" value={this.state.newPassword2} />
             </div>
 
             <label style={{color: '#d55', marginBottom: 12, fontSize: 14}}>
@@ -108,7 +108,7 @@ class AccountPane extends Component {
         </div>
 
         <div className="AccountPane-row" style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-          <label className="AccountPane-label">User category: </label>
+          <label className="AccountPane-label">College: </label>
           <label className="AccountPane-text-field" style={{border: 'none'}}>
             {this.state.extendedUserData.user_category !== null ? this.state.extendedUserData.user_category.name : null}
           </label>
@@ -116,7 +116,7 @@ class AccountPane extends Component {
 
         {this.state.extendedUserData.university_age_category !== null && this.state.extendedUserData.university_age_category !== undefined
          ?  <div className="AccountPane-row" style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-              <label className="AccountPane-label">University age category: </label>
+              <label className="AccountPane-label">Academic level: </label>
               <label className="AccountPane-text-field" style={{border: 'none'}}>
                 {this.state.extendedUserData.university_age_category}
               </label>

@@ -11,6 +11,8 @@ class LoginScreen extends Component {
 
     this.email = '';
     this.password = '';
+
+    this.state = {errorMessage: null};
   }
 
   render() {
@@ -26,18 +28,20 @@ class LoginScreen extends Component {
             <TextInput style={styles.textFieldStyle} placeholder='Password' autoCapitalize='none' secureTextEntry={true} underlineColorAndroid="transparent"
             onChangeText={(text) => this.password = text} />
 
+            <Text style={{color: '#E00', marginTop: 20}}>{this.state.errorMessage}</Text>
+
             <View style={styles.buttonsViewStyle}>
               <TouchableOpacity style={styles.cancelButtonStyle}  onPress={() => this.props.navigation.goBack()}>
                 <Text style={styles.buttonTextStyle}>Back</Text>
               </TouchableOpacity>
 
               <TouchableOpacity style={styles.loginButtonStyle} onPress={() => this.done()}>
-                <Text style={styles.buttonTextStyle}>Submit</Text>
+                <Text style={styles.buttonTextStyle}>Log In</Text>
               </TouchableOpacity>
             </View>
 
             <TouchableOpacity onPress={() => this.forgotPassword()}>
-              <Text style={{fontSize: 12, color: '#fff', marginTop: 22}}>Forgot your password?</Text>
+              <Text style={{fontSize: 12, color: '#333', marginTop: 22, marginBottom: 20}}>Forgot your password?</Text>
             </TouchableOpacity>
           </View>
       </KeyboardAvoidingView>
@@ -51,7 +55,8 @@ class LoginScreen extends Component {
   }
 
   forgotPassword() {
-
+    this.state.errorMessage = null;
+    this.props.navigation.navigate('ForgottenPassword');
   }
 
   done() {
@@ -59,7 +64,8 @@ class LoginScreen extends Component {
       address: "auth/token/login/",
       method: "POST",
       body: {email: this.email, password: this.password},
-      successHandler: (result) => this.enterApp({email: this.email, token: result.auth_token})
+      successHandler: (result) => this.enterApp({email: this.email, token: result.auth_token}),
+      failureHandler: () => this.setState({...this.state, errorMessage: 'Incorrect email/password'})
     });
   }
 
@@ -118,7 +124,7 @@ const styles={
     marginTop: 20
   },
   loginButtonStyle: {
-    backgroundColor: '#f66',
+    backgroundColor: '#6c6',
     alignItems: 'center',
     paddingTop: 8,
     paddingBottom: 8,
@@ -128,7 +134,7 @@ const styles={
     marginLeft: 10
   },
   cancelButtonStyle: {
-    backgroundColor: '#888',
+    backgroundColor: '#f66',
     alignItems: 'center',
     paddingTop: 8,
     paddingBottom: 8,

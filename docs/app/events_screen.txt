@@ -1,0 +1,55 @@
+EventsScreen
+------------
+
+This component manages all of the filtering involved in viewing the list of events.
+
+TODO: there is a mechanism to support pagination on the backend, but for now there is no way to cycle through pages of events in the app. The app will simply display (up to) a fixed number of events (e.g. 10) for the given filters.
+
+
+constructor
+-----------
+
+Initially, we display events on the current day, without any category or sub-category filters.
+
+
+componentWillMount()
+--------------------
+
+We get events for the current date, and also add a listener to refresh the list of events whenever this tab becomes visible.
+
+
+render()
+--------
+
+If we currently have a date filter active, we display the date picker. If instead we currently have a category filter active, we display the sub-categories tray (for that given category).
+
+
+refreshEvents()
+---------------
+
+We get the events to display, depending on which filter is active.
+
+
+onDateUpdated(newDate)
+----------------------
+
+If the date filter is changed, we erase all other filters, re-render the component, and make a new request to get the events for the current date.
+
+
+onCategorySelected(category)
+----------------------------
+
+If the selected category ID is 0, this corresponds to a category of "All" (i.e. no category filter), so we erase the category filters and create a new date filter with the current date. We then re-render and refresh the event list by creating a new request. Otherwise, we do a similar thing, but with the appropriate category filter active (instead of a date filter).
+
+
+onSubCategorySelected(subcategory)
+----------------------------------
+
+Similar to "onCategorySelected(category)", but we do not erase the category filter because we need to keep track of this parent category (in order to pass the correct sub-categories to the sub-categories tray).
+
+
+getEventsForCategory(category) and getEventsForDate()
+-----------------------------------------------------
+
+These methods make a request to retrieve the list of events, depending on the required filter - "getEventsForCategory" gets the events for a given category, and "getEventsForDate" gets the events for the currently selected date.
+

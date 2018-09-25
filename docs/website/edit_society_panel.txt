@@ -1,0 +1,25 @@
+EditSocietyPanel
+----------------
+
+(Should really be renamed to EditHostPanel)
+
+Similar to EditEventScreen, but there are some differences:
+
+- This is a "panel", not an entire pane - it fits nicely into the Home pane and the Manage Host pane.
+
+- When editing an existing host, we actually use "category_id" and "open_to_id" - this is a better and more consistent way of keeping the state (although it is different to how we do it in EditEventScreen, so BE CAREFUL of this difference).
+
+- The "onHostCategoryChanged(category)" and "onUserCategoryChanged(category)" methods reflect this difference.
+
+
+IMPORTANT POINT: createHost()
+-----------------------------
+
+Two things to consider:
+
+- We need to set the admins of the new host - this will just be an array containing the ID of the current user. But we don't actually have this ID, so we need to do a request to "users/me/" to get it - the result is the user description, which contains a field "id".
+
+- If the host is created successfully, we DON'T reset the "category_id" and "open_to_id" - this is because the category dropdown menu components don't reset their selections, so if we reset these state fields, we would enter an inconsistent state in which the category dropdown menus show different categories to the actual ones. This is something to fix in future - ideally we want to be able to reset the dropdown menus. But for now, this solution avoids a very difficult bug.
+
+
+

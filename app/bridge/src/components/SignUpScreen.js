@@ -66,7 +66,7 @@ class SignUpScreen extends Component {
           onChangeText={(text) => this.setState({...this.state, confirmPassword: text})}
           value={this.state.confirmPassword} />
 
-          <Text style={{color: '#E00'}}>{this.state.errorMessage}</Text>
+          <Text style={{color: '#E00', marginTop: 20}}>{this.state.errorMessage}</Text>
 
           <View style={styles.buttonsViewStyle}>
             <TouchableOpacity style={styles.cancelButtonStyle}  onPress={() => this.props.navigation.goBack()}>
@@ -88,12 +88,12 @@ class SignUpScreen extends Component {
         <View style={styles.panelViewStyle}>
           <Text style={styles.titleStyle}>Sign Up</Text>
 
-          <TextInput style={styles.textFieldStyle} placeholder='First Name' underlineColorAndroid="transparent"
+          <TextInput style={styles.textFieldStyle} placeholder='First Name' secureTextEntry={false} underlineColorAndroid="transparent"
           onChangeText={(text) => this.setState({...this.state, firstName: text})}
           autoCorrect={false}
           value={this.state.firstName} />
 
-          <TextInput style={{...styles.textFieldStyle, marginTop: 0, marginBottom: 20}} placeholder='Last Name' underlineColorAndroid="transparent"
+          <TextInput style={{...styles.textFieldStyle, marginTop: 0, marginBottom: 20}} placeholder='Last Name' secureTextEntry={false} underlineColorAndroid="transparent"
           onChangeText={(text) => this.setState({...this.state, lastName: text})}
           autoCorrect={false}
           value={this.state.lastName} />
@@ -101,7 +101,7 @@ class SignUpScreen extends Component {
           <UserCategoryPicker categories={this.state.userCategories}
             onUserCategoryChanged={(category) => this.setState({...this.state, currentUserCategory: category, currentStudentCategory: '', currentMatriculationYear: '', currentSubject: ''})} />
 
-          {this.state.currentUserCategory !== null && this.state.currentUserCategory.id !== 1
+          {this.state.currentUserCategory !== null
            ? <StudentTypeDropdown onStudentTypeChanged={(category) => this.setState({...this.state, currentStudentCategory: category, currentMatriculationYear: '', currentSubject: ''})} />
            : null}
 
@@ -113,7 +113,7 @@ class SignUpScreen extends Component {
            ? <MatriculationYearDropdown onMatriculationYearChanged={(year) => this.setState({...this.state, currentMatriculationYear: year})} />
            : null}
 
-          <Text style={{color: '#E00'}}>{this.state.errorMessage}</Text>
+          <Text style={{color: '#E00', marginTop: 20}}>{this.state.errorMessage}</Text>
 
           <View style={styles.buttonsViewStyle}>
             <TouchableOpacity style={styles.cancelButtonStyle}  onPress={() => this.goToStartScreen('')}>
@@ -176,6 +176,14 @@ class SignUpScreen extends Component {
       this.setState({...this.state, errorMessage: 'Details not entered'});
       return;
     }
+    else if (this.state.userCategories.length <= 0) {
+      this.setState({...this.state, errorMessage: 'Check your internet connection'});
+      return;
+    }
+    else if (this.state.currentUserCategory === null) {
+      this.setState({...this.state, errorMessage: 'Please select a college'});
+      return;
+    }
 
     var body = {
       email: this.state.emailAddress,
@@ -185,13 +193,25 @@ class SignUpScreen extends Component {
       last_name: this.state.lastName,
     };
 
-    if (this.state.currentUserCategory.id !== 1) {
-      body.university_age_category = this.state.currentStudentCategory;
+    if (this.state.currentStudentCategory === '') {
+      this.setState({...this.state, errorMessage: 'Please select an academic level'});
+      return;
+    }
 
-      if (this.state.currentStudentCategory === 'Undergraduate') {
-        body.matriculation_year = parseInt(this.state.currentMatriculationYear, 10);
-        body.subject = this.state.currentSubject;
+    body.university_age_category = this.state.currentStudentCategory;
+
+    if (this.state.currentStudentCategory === 'Undergraduate') {
+      if (this.state.currentMatriculationYear === '') {
+        this.setState({...this.state, errorMessage: 'Please select a matriculation year'});
+        return;
       }
+      if (this.state.currentSubject === '') {
+        this.setState({...this.state, errorMessage: 'Please select a subject'});
+        return;
+      }
+
+      body.matriculation_year = parseInt(this.state.currentMatriculationYear, 10);
+      body.subject = this.state.currentSubject;
     }
 
     sendRequest({
@@ -203,12 +223,22 @@ class SignUpScreen extends Component {
           this.setState({...this.state, currentScreenNumber: 3});
         }
         else {
-          this.goToStartScreen('Password too weak');
+          response.json().then(
+            (result) => {
+              if (result.password !== undefined && result.password !== null && result.password.length > 0) {
+                this.goToStartScreen('Password too weak: ' + result.password[0]);
+              }
+              else {
+                this.goToStartScreen('Password too weak.');
+              }
+            },
+            (error) => {
+              this.goToStartScreen('Password too weak');
+            }
+          );
         }
       }
     });
-
-    this.setState({...this.state, currentScreenNumber: 3});
   }
 
 }
@@ -238,13 +268,14 @@ const UserCategoryPicker = (props) => {
     <ModalDropdown
       style={styles.pickerStyle}
       textStyle={styles.pickerTextStyle}
+      defaultValue={'College...'}
       disabled={props.categories.length <= 0}
       options={categories}
       onSelect={(index, category) => props.onUserCategoryChanged(category)}
       renderRow={(option) => {
         return (
           <View style={{padding: 3, paddingLeft: 0}}>
-            <Text>{option.displayName}</Text>
+            <Text style={styles.dropdownOptionTextStyle}>{option.displayName}</Text>
           </View>
         );
       }}
@@ -259,12 +290,13 @@ const StudentTypeDropdown = (props) => {
     <ModalDropdown
       style={styles.pickerStyle}
       textStyle={styles.pickerTextStyle}
+      defaultValue={'Academic level...'}
       options={['Undergraduate', 'Postgraduate', 'Faculty and staff']}
       onSelect={(index, type) => props.onStudentTypeChanged(type)}
       renderRow={(option) => {
         return (
           <View style={{padding: 3, paddingLeft: 0}}>
-            <Text>{option}</Text>
+            <Text style={styles.dropdownOptionTextStyle}>{option}</Text>
           </View>
         );
       }}
@@ -279,12 +311,13 @@ const MatriculationYearDropdown = (props) => {
     <ModalDropdown
       style={styles.pickerStyle}
       textStyle={styles.pickerTextStyle}
+      defaultValue={'Matriculation year...'}
       options={["2015", "2016", "2017", "2018", "2019", "2020"]}
       onSelect={(index, year) => props.onMatriculationYearChanged(year)}
       renderRow={(option) => {
         return (
           <View style={{padding: 3, paddingLeft: 0}}>
-            <Text>{option}</Text>
+            <Text style={styles.dropdownOptionTextStyle}>{option}</Text>
           </View>
         );
       }}
@@ -299,6 +332,7 @@ const SubjectDropdown = (props) => {
     <ModalDropdown
       style={styles.pickerStyle}
       textStyle={styles.pickerTextStyle}
+      defaultValue={'Subject...'}
       options={[
         "Anglo-Saxon, Norse, and Celtic",
         "Archaeology",
@@ -336,7 +370,7 @@ const SubjectDropdown = (props) => {
       renderRow={(option) => {
         return (
           <View style={{padding: 3, paddingLeft: 0}}>
-            <Text>{option}</Text>
+            <Text style={styles.dropdownOptionTextStyle}>{option}</Text>
           </View>
         );
       }}
@@ -359,7 +393,9 @@ const styles = {
 
     backgroundColor: '#fff',
     borderRadius: 10,
-    padding: 20
+    padding: 20,
+
+    marginHorizontal: 40
   },
   titleStyle: {
     color: '#666',
@@ -387,7 +423,7 @@ const styles = {
     marginTop: 20
   },
   nextButtonStyle: {
-    backgroundColor: '#66f',
+    backgroundColor: '#6c6',
     alignItems: 'center',
     paddingTop: 8,
     paddingBottom: 8,
@@ -397,7 +433,7 @@ const styles = {
     marginLeft: 10
   },
   cancelButtonStyle: {
-    backgroundColor: '#888',
+    backgroundColor: '#f66',
     alignItems: 'center',
     paddingTop: 8,
     paddingBottom: 8,
@@ -418,7 +454,7 @@ const styles = {
     paddingRight: 13,
     margin: 10,
     marginBottom: 0,
-    borderRadius: 18,
+    borderRadius: 26,
     borderColor: '#ccc',
     borderWidth: 1,
 
@@ -427,6 +463,10 @@ const styles = {
   },
   pickerTextStyle: {
     color: '#333',
+    fontSize: 14
+  },
+  dropdownOptionTextStyle: {
+    fontSize: 16
   }
 }
 

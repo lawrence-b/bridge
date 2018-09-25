@@ -26,6 +26,7 @@ class LoginOrSignUpScreen extends Component {
           <img src={require('./images/bridge_logo.png')} style={{width: 160, height: 80, marginBottom: 20}} />
 
           <label className="LoginOrSignUpScreen-title">Bridge</label>
+          <label className="LoginOrSignUpScreen-subtitle">For hosts</label>
         </div>
 
         <div className="LoginOrSignUpScreen-buttons">

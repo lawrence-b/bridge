@@ -8,7 +8,7 @@
 
   height: 100vh;
 
-  background-image: url('./images/bridge_background.png');
+  background-image: url('./images/bridge_background.jpg');
 
   background-position: center;
   background-repeat: no-repeat;
@@ -38,7 +38,7 @@
 }
 
 .LoginOrSignUpScreen-buttons {
-  margin-top: 5vh;
+  margin-top: 6vh;
 
   display: flex;
   flex-direction: column;

@@ -10,13 +10,15 @@
   flex-direction: column;
   min-width: 228px;
 
-  background-color: #222c3b;
+  /*background-color: #222c3b;*/
+  background-color: #E35B00;
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 18px;
 }
 
 .MainScreen-menu-header {
-  color: #5b6879;
+  /*color: #5b6879;*/
+  color: #dcdcdc;
   font-size: 11px;
   margin-left: 28px;
   margin-top: 50px;
@@ -24,7 +26,8 @@
 }
 
 .MainScreen-menu-item {
-  color: #b7c0cd;
+  /*color: #b7c0cd;*/
+  color: #fff;
   font-size: 13px;
   margin-left: 28px;
   margin-top: 20px;

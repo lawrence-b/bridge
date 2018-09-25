@@ -1,0 +1,56 @@
+AccountPane
+-----------
+
+The state's field "extendedUserData" is for displaying the full user data, e.g. name and user category. Some components shouldn't be displayed if the data they display doesn't apply - e.g. if user category is "Public", we should NOT show "Subject".
+
+There is also logic to handle changing your password, but this is quite simple.
+
+
+Button
+------
+
+A simple button component. The style of the span (i.e. colour) depends on whether the prop "positive" is true or false/undefined.
+
+
+ConfirmSignUpScreen
+-------------------
+
+When the component is about to mount, we send a request to activate the account (based on input parameters from the URL), and update the text depending on the response. Once the response is received, we also show a button to return to the main login/signup screen.
+
+TODO: you should consider replacing "this.props.history.push('/')" with "this.props.history.push('/login')". If the user is already logged in (the user data cookie is stored), and you click on an email link to activate an account, when we navigate back to the main route it might show the main screen but with the wrong account. This is something to investigate.
+
+
+EventsPane
+----------
+
+Simple component to show a list of host events. The "host" prop contains all of the necessary details. "renderTiles()" renders a list of EventTile components. "getEvents(shouldRefresh)" contains some commented out code that can probably be deleted. I can't remember why there is a "shouldRefresh" parameter, but there was a reason for it.
+
+
+EventTile
+---------
+
+Simple component to display event information. The "event" prop contains all of the necessary details. "getFormattedTime(timeString)" converts the input (in the server's ISO format) into a nicely formatted string to display to the user (the Date object takes care of time zone differences, etc).
+
+
+ForgottenPasswordScreen
+-----------------------
+
+This component is shown when you click on the password reset link in an email. The state field "hasReset" represents whether the user has successfully reset their password or not, and determines what content to show.
+
+NOTE: "this.newPassword" and "this.confirmPassword" are actually text input components, so we need to use ".value" to access the actual text.
+
+
+HomePane
+--------
+
+This component represents the Home page when you log in. It shows your email and any hosts you manage. It also contains an EditSocietyPanel in "create" mode.
+
+If a society is created, we need to refresh the hosts to reflect this.
+
+
+ResetPasswordScreen
+-------------------
+
+This component represents the screen you navigate to if you forget your password. Similar to the "ForgottenPasswordScreen", but allows you to enter your email address so you can receive an email to reset your password.
+
+

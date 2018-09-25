@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import Ionicon from 'react-ionicons';
-import DocumentTitle from 'react-document-title';
 import './App.css';
 
 import MainScreen from './MainScreen.js';
@@ -36,20 +35,18 @@ class App extends Component {
 
   render() {
     return (
-      <DocumentTitle title='Bridge'>
-        <div>
-            <Router>
-              <div>
-                {this.generateMainRoute()}
-                <Route path="/login" exact render={({ history }) => this.generateLoginOrSignupScreen(history)} />
-                <Route path="/password/reset/confirm/:uid/:token" exact component={ForgottenPasswordScreen} />
-                <Route path="/activate/:uid/:token" exact component={ConfirmSignUpScreen} />
-              </div>
-            </Router>
+      <div>
+          <Router>
+            <div>
+              {this.generateMainRoute()}
+              <Route path="/login" exact render={({ history }) => this.generateLoginOrSignupScreen(history)} />
+              <Route path="/password/reset/confirm/:uid/:token" exact component={ForgottenPasswordScreen} />
+              <Route path="/activate/:uid/:token" exact component={ConfirmSignUpScreen} />
+            </div>
+          </Router>
 
-            {this.state.cookieBanner}
-        </div>
-      </DocumentTitle>
+          {this.state.cookieBanner}
+      </div>
     );
   }
 

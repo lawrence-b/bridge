@@ -1,0 +1,29 @@
+DatePicker
+----------
+
+This component represents the date picker at the top of the Events screen.
+
+
+componentWillMount()
+--------------------
+
+We keep track of the date passed in as a prop.
+
+
+render()
+--------
+
+We generate the necessary date buttons - we create a button for the currently selected date, as well as three days in the past and three days in the future.
+
+
+generateDateTile(offset)
+------------------------
+
+"offset" corresponds to the number of days in the past/future with respect to the date currently stored in "state". We create a "textViewStyle" depending on the offset (the central date should have a white circle around it). We then compute the date that should be displayed for this tile ("newDate").
+
+We then create a button with the appropriate text, which when tapped, will do the following:
+
+- Shifts the date stored in "state" by "offset"
+- Tells the parent that the date has been updated
+- Re-renders the component
+

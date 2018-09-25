@@ -1,0 +1,42 @@
+sendRequest()
+-------------
+
+This function is used everywhere in the web app - it acts as a template for making requests to the server. It takes an object with the following fields:
+
+- [REQUIRED] address: the URL to send the request to, EXCLUDING the prefix "https://www.api.bridge-uni.com/" (this is added automatically)
+
+- [REQUIRED] method: a string "GET", "POST", "PATCH" or "DELETE"
+
+- authorizationToken: the current user's token (required for most, but not all, requests)
+
+- body: the object to submit as the body of the request. Can be a "simple" JavaScript object, or an instance of FormData. This parameter is NOT required (it depends on the request).
+
+
+
+The remaining fields are various types of handler.
+
+
+responseHandlerNoJson
+---------------------
+
+If you supply this field, this handler will get invoked whatever the response is. IMPORTANT: You should use this if you know that the response will NOT have a body, or if you want to have more control over the response (e.g. extract exact status codes). A "response" object will be provided to your handler.
+
+
+failureHandler, successHandler and errorHandler
+-----------------------------------------------
+
+If you don't supply the "responseHandlerNoJson" field, then these handlers will be invoked (if they are defined) in the appropriate situation.
+
+- "failureHandler" is invoked if the response has a status code of 400 or more
+
+- "successHandler" is invoked otherwise, and its input is the response body
+
+- "errorHandler" is invoked if there is some sort of error when handling the above. The most common cause for this is if you try to use "successHandler" with a request whose response body is empty - in this case, use "responseHandlerNoJson" instead.
+
+
+Things to note:
+
+- If the "body" field is of type FormData, we don't specify a content type. This is because there are various bugs that appear if you try to specify one.
+
+- If the "body" field is not of type FormData, we call JSON.stringify(body) - the body parameter should therefore just be a regular object (DO NOT call JSON.stringify yourself)
+

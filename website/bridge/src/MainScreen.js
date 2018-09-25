@@ -29,7 +29,7 @@ class MainScreen extends Component {
       address: "users/me/",
       method: "GET",
       authorizationToken: this.user.token,
-      successHandler: (result) => {this.hosts = []; this.displayHomePage(); result.admin_of.map(soc => this.getHostWithId(soc.id));},
+      successHandler: (result) => {this.hosts = []; this.hostIndex = 0; this.displayHomePage(); result.admin_of.map(soc => this.getHostWithId(soc.id));},
     });
   }
 

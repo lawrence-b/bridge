@@ -3,7 +3,7 @@ import { Text, View, TouchableOpacity } from 'react-native';
 
 
 const EventInterestedBar = (props) => {
-  var bgCol = props.isInterested ? '#888': '#ff5555';
+  var bgCol = props.isInterested ? '#ff5555': '#5555ff';
 
   return (
     <View style={styles.viewStyle} >

@@ -32,8 +32,9 @@ class EditSocietyPanel extends Component {
         <label className="EditSocietyPanel-title-text">{this.props.creating ? "Create a host" : "Edit your host"}</label>
           <div style={{display: 'flex', flexDirection: 'column'}}>
             <div className="EditSocietyPanel-new-host-row">
-              <label className="EditSocietyPanel-new-host-label">Name: </label>
+              <label className="EditSocietyPanel-new-host-label">Host Name: </label>
               <input type="text" onChange={(e) => {this.state.newHost.name = e.target.value; this.setState(this.state);}}
+                     onClick={(e) => {this.props.onClickName !== undefined ? this.props.onClickName() : null}}
                      className="EditSocietyPanel-text-field" value={this.state.newHost.name} />
             </div>
 
@@ -43,7 +44,7 @@ class EditSocietyPanel extends Component {
             </div>
 
             <div className="EditSocietyPanel-new-host-row">
-              <label className="EditSocietyPanel-new-host-label">Open to: </label>
+              <label className="EditSocietyPanel-new-host-label">Visible to: </label>
               <CategoryDropdownMenu categoryTypeString="user-categories" user={this.props.user} initialCategory={this.props.creating ? null : this.props.host.open_to} onCategoryChanged={(category) => this.onUserCategoryChanged(category)} />
             </div>
 

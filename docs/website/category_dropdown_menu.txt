@@ -1,0 +1,55 @@
+CategoryDropdownMenu
+--------------------
+
+This is a component for displaying a dropdown menu for categories (user categories, host categories or event categories). The categories are fetched by a request to a server, and displayed automatically. This component provides support for displaying category "trees".
+
+
+Methods:
+
+
+constructor
+-----------
+
+currentCategoryIndex represents the index of the currently selected category in the list. The state holds the categories.
+
+We send a request to get the categories, depending on the prop "categoryTypeString" (either 'user', 'host' or 'event'). If we pass a 'user' prop, we use the authorisation token as well. When the categories are received, we set our state accordingly, and then match the category index (see below).
+
+The initial category prop allows the parent to set which category should be pre-selected by the category dropdown menu - for example, if we are editing an event, we want the category dropdown menu to initially show the event's current category. If we don't have an initial category (e.g. making a new event/host), we update the parent with the category that has been chosen by default after receiving the list of all of them - this is because without a forced initial category, the parent will have no knowledge of what the default category is, so we must call the "onCategoryChanged()" prop method.
+
+We call setState twice because we first need to set the state for the "matchCategoryIndex()" method to work, but then we need to trigger a re-render (e.g. if the currentCategoryIndex has changed).
+
+
+render()
+--------
+
+This component is used slightly differently in different places. The call to "matchCategoryIndex()" is required to ensure consistency. However, be careful, as this could be a potential source of bugs.
+
+In our "select" component, we ensure that its selectedIndex is the same as our currentCategoryIndex.
+
+
+matchCategoryIndex()
+--------------------
+
+Tries to match the currentCategoryIndex with the index of the initial category (if it exists) by searching through the entire tree structure.
+
+
+flattenCategories()
+-------------------
+
+Flattens the tree of categories into one list of categories.
+
+
+generateCategoryOptions()
+-------------------------
+
+Generates a list of option tags to display - the text is indented depending on the level in the tree.
+
+
+categoryChanged()
+-----------------
+
+When the selected category changes, we update the currentCategoryIndex, and inform the parent component of the change. To obtain the actual category itself, we need to flatten the list and use the index we just updated.
+
+
+
+

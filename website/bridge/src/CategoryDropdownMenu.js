@@ -110,7 +110,7 @@ class CategoryDropdownMenu extends Component {
     for (var i = 0; i < this.state.categories.length; ++i) {
       var category = this.state.categories[i];
 
-      options.push(<option key={index} value={index}>{category.name}</option>);
+      options.push(<option disabled={category.children.length > 0 && this.props.categoryTypeString !== 'user-categories'} key={index} value={index}>{category.name}</option>);
       index++;
 
       for (var j = 0; j < category.children.length; ++j) {

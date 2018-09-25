@@ -1,0 +1,59 @@
+ManageHostPane
+--------------
+
+This component allows the user to update their host's information, as well as adding/deleting admins.
+
+
+constructor
+-----------
+
+The state field "newAdmin" stores the text of the new admin text field. The warning pop up is null by default, but gets set to an actual value when necessary (see "generateWarningPopUp()").
+
+
+generateAdminRows()
+-------------------
+
+Generates one row for each existing admin. If the admin is the current user, the button says "Leave" and has a yellow tint instead.
+
+
+render()
+--------
+
+We generate the admin rows for the admin section on the right, but also add one extra row with a text field and a button to add a new admin.
+
+
+generateWarningPopUp()
+----------------------
+
+When deleting a host, a pop-up is displayed - this method generates the necessary components for that pop-up. It includes a confirmation message, and buttons to cancel the action or to confirm it.
+
+
+deleteAdmin(adminIdToDelete, shouldRefreshAll)
+----------------------------------------------
+
+This method removes the selected admin. This is done by generating a list of all the admin IDs for the given host, removing the ID of the selected admin, and then submitting a PATCH request to the server with the new list of admin IDs. "shouldRefreshAll" is true if the user is leaving the host - in this case, we need to refresh the entire list of hosts (because the current host won't be there anymore since the user is no longer an admin of it). Otherwise, we simply refresh the current host.
+
+
+newAdmin()
+----------
+
+We simply make a request to add a new admin to the current host. We then refresh the current host to update the list of admins to show the new admin.
+
+
+refreshHost()
+-------------
+
+We make a request to get the data for the current host - we then update our state accordingly, and call the "onHostUpdated()" prop, so that the MainScreen can update its internal state as well.
+
+
+tryDeleteHost() and cancelDeleteHost()
+--------------------------------------
+
+These methods handle whether the warning pop-up is showing or not.
+
+
+deleteHost()
+------------
+
+We submit a delete request to the server, and then call the "onLeftHost()" prop (this is the same method that is called when we stop being the admin of a host) - we need the MainScreen to refresh its list of hosts and take us back to the home page.
+
